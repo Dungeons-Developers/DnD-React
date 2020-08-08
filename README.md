@@ -38,7 +38,7 @@ Our plan for this project is to create a robust tool that allows players to crea
 
 ## [Domain Model](https://drive.google.com/file/d/196KsNOzzaqHivEBhvdhTOhMy3-asgoYp/view?usp=sharing)
 
-![domain model]()
+![domain model](/assets/DND_DomainModel.jpg)
 
 ## [Entity Relationship Diagram](https://drive.google.com/file/d/10cdamszok8mj23_CopDLEN0MhmDPcpwl/view?usp=sharing)
 
@@ -168,6 +168,8 @@ null
 
 ## Documentation
 tbd
+
+## [Software Requirements](/requirements.md)
 
 ### [Swagger]()
 tbd

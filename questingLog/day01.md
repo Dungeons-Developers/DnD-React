@@ -15,3 +15,6 @@ D&D Team
 
 **3:00pm:** ERD complete. Working on domain model and finishing up Readme to submit prep #4.
 
+**3:45pm:** Domain model mostly done. Building up file structuring and brainstorming on fun app names. Trying to get app live and accessing our API.
+
+**4:30pm:** Domain model done. Not great but done. We are building a basic homepage and the site is live now. Waiting to touch base with John to get sign off to proceed with the project. 
