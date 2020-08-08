@@ -1,4 +1,4 @@
-# DnD NPM Package
+# DnD React Character & Campaign Builder
 A space for our Dungeons and Dragons React Front End Development project!
 
 ### Team Members
@@ -36,9 +36,7 @@ Our plan for this project is to create a robust tool that allows players to crea
 
 ## [Project Board](https://github.com/orgs/Dungeons-Developers/projects/2)
 
-## [User Stories](https://docs.google.com/document/d/1SQk5x4nBMLqfr1e801awTJqUFwUpHibxPnDktqCBGuM/edit?usp=sharing)
-
-## [Domain Model]()
+## [Domain Model](https://drive.google.com/file/d/196KsNOzzaqHivEBhvdhTOhMy3-asgoYp/view?usp=sharing)
 
 ![domain model]()
 
@@ -48,7 +46,7 @@ Our plan for this project is to create a robust tool that allows players to crea
 
 ## [Wireframes](https://drive.google.com/file/d/1AUwJ9gqLfvr8a-ldhsPsCQoHdSrsm_4X/view?usp=sharing)
 
-![wireframes](/assets/DND_Wireframe.jpg)
+![wireframes](/assets/DND_Wireframes.jpg)
 
 ## [User Stories](https://docs.google.com/document/d/1SQk5x4nBMLqfr1e801awTJqUFwUpHibxPnDktqCBGuM/edit?usp=sharing)
 <details>
@@ -163,7 +161,7 @@ Regarding working windows, we will stick to class hours (6:30 to 9:30pm, M-Th) a
 
 ## Origin Story
 
-- We are all huge fans of the Dungeons & Dragons universe and the many, many fantasy worlds it has inspired. Building out some kind of D&D-focused application has been a goal for us ever since we started taking classes at Code Fellows. We are also tryhard gamers and wanted to incorporate some kind of shared tracking system into a gaming space that was traditionally managed with paper and pencil. We are hoping that our application can illustrate how making it easy to share, manipulate, and analyze D&D aggregate data could help create a digital online metagame for an analog gamespace.
+We are all huge fans of the Dungeons & Dragons universe and the many, many fantasy worlds it has inspired. Building out some kind of D&D-focused application has been a goal for us ever since we started taking classes at Code Fellows. We are also tryhard gamers and wanted to incorporate some kind of shared tracking system into a gaming space that was traditionally managed with paper and pencil. We are hoping that our application can illustrate how making it easy to share, manipulate, and analyze D&D aggregate data could help create a digital online metagame for an analog gamespace.
 
 ## Things To Watch For
 null
@@ -172,8 +170,10 @@ null
 tbd
 
 ### [Swagger]()
+tbd
 
 ### [JSDocs]()
+tbd
 
 ## [Questing Log](/questingLog/log.md)
 
