@@ -1,25 +1,42 @@
-// import axios from 'axios';
-// import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
 
 
-// const userSlice = createSlice({
-//   name: 'user',
+const userSlice = createSlice({
+  name: 'user',
 
-//   initialState: {
-//     userID: '',
-//     userName: '',
-//   },
+  initialState: {
+    userID: '',
+    userName: '',
+  },
 
-//   reducers: {
-//     getUser: (state, action) => {
-      
-//     }
+  reducers: {
+    getUser: (state, action) => {
+      state.userID = action.payload._id;
+      state.username = action.payload.username
+    }
+  }
+});
 
-//   }
-// });
+export const {getUser} = userSlice.actions;
 
-// export const login = (payload) => {
-//   return async dispatch => {
-//     let response = await axios.post('https://cf-dnd-character-creator.herokuapp.com/v1/api/user', {})
-//   }
-// }
+export const login = (payload) => {
+
+  const {username, password} = payload;
+
+  return async dispatch => {
+    try {
+
+      let response = await axios.post('https://cf-dnd-character-creator.herokuapp.com/v1/api/user', {username, password});
+
+      let user = response.data;
+
+      console.log('user:', user);
+      dispatch(getUser(user))
+    } catch(e) {
+      console.log(e);
+    }
+  }
+}
+
+export default userSlice.reducer;
