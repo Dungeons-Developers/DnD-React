@@ -5,6 +5,8 @@ import LandingPage from './pages/LandingPage';
 
 import './styles/index.scss';
 
+import Header from './components/Header';
+
 function App() {
   return (
     <div className="App">
@@ -12,6 +14,9 @@ function App() {
       <BrowserRouter>
         <Route exact path='/'>
           <LandingPage />
+        </Route>
+        <Route path='/testhead'>
+          <Header />
         </Route>
       </BrowserRouter>
     </div>
