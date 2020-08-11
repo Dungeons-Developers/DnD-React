@@ -29,7 +29,7 @@ function LoginForm({login}) {
   return (
     <form className='login-form' noValidate autoComplete="off" onSubmit={submit}>
       <TextField id="username" label="Username" onChange={formChange}/>
-      <TextField id="password" label="Password" type="password" />
+      <TextField id="password" label="Password" onChange={formChange} type="password" />
       <Button variant="contained" color="primary" type='submit'>
         Log In
       </Button>

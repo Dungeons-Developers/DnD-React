@@ -22,6 +22,8 @@ export const {getUser} = userSlice.actions;
 
 export const login = (payload) => {
 
+  console.log('payload:', payload);
+
   const {username, password} = payload;
 
   return async dispatch => {
