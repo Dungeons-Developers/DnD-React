@@ -18,24 +18,40 @@ const userSlice = createSlice({
   }
 });
 
-export const {getUser} = userSlice.actions;
+export const { getUser } = userSlice.actions;
 
 export const login = (payload) => {
 
-  console.log('payload:', payload);
-
-  const {username, password} = payload;
+  const { username, password } = payload;
 
   return async dispatch => {
     try {
 
-      let response = await axios.post('https://cf-dnd-character-creator.herokuapp.com/v1/api/user', {username, password});
+      let response = await axios.post('https://dnd-api-server.herokuapp.com//v1/api/user', { username, password });
 
       let user = response.data;
 
       console.log('user:', user);
       dispatch(getUser(user))
-    } catch(e) {
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
+
+export const create = (payload) => {
+
+  const { username, password } = payload;
+
+  return async dispatch => {
+    try {
+
+      let response = await axios.post('https://dnd-api-server.herokuapp.com//v1/api/signup', { username, password });
+
+      let user = response.data;
+
+      dispatch(getUser(user))
+    } catch (e) {
       console.log(e);
     }
   }
