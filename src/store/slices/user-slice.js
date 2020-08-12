@@ -27,7 +27,7 @@ export const login = (payload) => {
   return async dispatch => {
     try {
 
-      let response = await axios.post('https://dnd-api-server.herokuapp.com//v1/api/user', { username, password });
+      let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/user', { username, password });
 
       let user = response.data;
 
@@ -46,7 +46,7 @@ export const create = (payload) => {
   return async dispatch => {
     try {
 
-      let response = await axios.post('https://dnd-api-server.herokuapp.com//v1/api/signup', { username, password });
+      let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/signup', { username, password });
 
       let user = response.data;
 
