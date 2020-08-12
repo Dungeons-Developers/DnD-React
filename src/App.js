@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import CharacterCard from './components/Characters/CharacterCard';
-import CharacterDetails from './pages/Characters/CharacterDetail';
+
 
 import './styles/index.scss';
 
