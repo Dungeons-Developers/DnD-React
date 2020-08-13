@@ -85,8 +85,8 @@ export default function SimpleTabs() {
       {/* Make text fields dropdowns where necessary */}
       <TabPanel value={value} index={1}>
         <TextField id="outlined-basic" label="Character Name:" placeholder="placeholder" fullWidth variant="outlined"/><br/>
-        <TextField id="outlined-basic" label="Race:" placeholder="placeholder" /><br />
         <TextField id="outlined-basic" label="Level:" /><br/>
+        <TextField id="outlined-basic" label="Race:" placeholder="placeholder" /><br />
         <TextField id="outlined-basic" label="Class:" /><br/>
         <TextField id="outlined-basic" label="Alignment:" /><br/>
         <TextField id="outlined-basic" label="Deity:" /><br/>
