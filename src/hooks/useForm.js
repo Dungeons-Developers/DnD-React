@@ -11,7 +11,7 @@ const useForm = (defaults) => {
     submit(fields);
   };
 
-  return { handleChange, handleSubmit };
+  return { handleChange, handleSubmit, fields };
 };
 
 export default useForm;

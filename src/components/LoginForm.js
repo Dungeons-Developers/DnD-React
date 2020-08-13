@@ -10,12 +10,12 @@ import useForm from '../hooks/useForm'
 import { login } from '../store/slices/user-slice';
 
 function LoginForm({ login }) {
-  const fields = {
+  const defaults = {
     username: '',
     password: '',
   };
 
-  const { handleChange, handleSubmit } = useForm(fields);
+  const { handleChange, handleSubmit } = useForm(defaults);
 
   function submit(e) {
     e.preventDefault();
@@ -28,19 +28,19 @@ function LoginForm({ login }) {
   }
 
   return (
-    <form className='login-form' noValidate autoComplete="off" onSubmit={submit}>
+    <form className='login-form' autoComplete="off" onSubmit={submit}>
       <div>
-        <TextField id="username" label="Username" fullWidth onChange={formChange} />
+        <TextField id="username" label="Username" fullWidth onChange={formChange} required />
       </div>
       <div>
-        <TextField id="password" label="Password" fullWidth onChange={formChange} type="password" />
+        <TextField id="password" label="Password" fullWidth onChange={formChange} type="password" required />
       </div>
       <Box my="1rem">
         <Button variant="contained" color="primary" fullWidth type='submit'>
           Log In
         </Button>
       </Box>
-    </form >
+    </form>
   );
 }
 

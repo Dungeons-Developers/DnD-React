@@ -4,7 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import CharacterCard from './components/Characters/CharacterCard';
 
-
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -37,7 +36,7 @@ function App() {
           <Header />
           <CharacterCard />
         </Route>
-
+    
         <Route exact path='/create-campaign'>
           <Header />
 
@@ -58,6 +57,7 @@ function App() {
 
         </Route>
         <Footer />
+
       </BrowserRouter>
     </div>
   );
