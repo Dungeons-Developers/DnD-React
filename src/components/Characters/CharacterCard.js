@@ -7,18 +7,19 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+// import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
+import CharacterShowEdit from './CharacterShowEdit';
+import Box from '@material-ui/core/Box';
+
+
+import '../../styles/components/characterCards.scss';
 
 
 //modal styles
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
@@ -35,6 +36,10 @@ const useModalStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+
+  front: {
+    border: '1px solid red',
   },
 }));
 
@@ -61,14 +66,58 @@ export default function CharacterCard() {
     setOpen(false);
   };
 
-  const body = (
+  const handleFlip = (e) => {
+    e.target.closest(".note-side").classList.toggle("turn");
+  }
+
+  const modalTab = (
+    <Box my="1rem">
+      <CharacterShowEdit />
+    </Box>
+  );
+
+  const modalBody = (
+  <div className="note">
     <div style={modalStyle} className={modalClasses.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
+      <div className="note-side front">
+      <h2 id="simple-modal-title">Char Name</h2>
+      <p className="charStats">Level: </p>
+      <p className="charStats">Race: </p>
+      <p className="charStats">Class: </p>
+      <p className="charStats">Alignment: </p>
+      <p className="charStats">Deity: </p>
+      <p className="charStats">Proficiencies: </p>
+      <p className="charStats">Ability Scores: </p>
+      <p className="charStats">Equipment: </p>
       <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+      BIO COPY: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </p>
-      {/* <SimpleModal /> */}
+      </div>
+      <Button size="small" color="primary" onClick={handleFlip}>
+        Flip Card
+      </Button>
     </div>
+    <div style={modalStyle} className={modalClasses.paper}>
+      <div className="note-side back">
+    <h2 id="simple-modal-title">Backside Char Name</h2>
+      <p className="charStats">Level: </p>
+      <p className="charStats">Race: </p>
+      <p className="charStats">Class: </p>
+      <p className="charStats">Alignment: </p>
+      <p className="charStats">Deity: </p>
+      <p className="charStats">Proficiencies: </p>
+      <p className="charStats">Ability Scores: </p>
+      <p className="charStats">Equipment: </p>
+      <p id="simple-modal-description">
+      BIO COPY: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+      </p>
+    </div>
+    <Button size="small" color="primary" onClick={handleFlip}>
+        Flip Card
+      </Button>
+    </div>
+  </div>
+
   );
 
   //end modal stuff
@@ -105,50 +154,9 @@ export default function CharacterCard() {
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
       >
-        {body}
+        {modalTab}
       </Modal>
       </CardActions>
     </Card>
   );
 }
-
-// export function SimpleModal() {
-//   const classes = useModalStyles();
-//   // getModalStyle is not a pure function, we roll the style only on the first render
-//   const [modalStyle] = React.useState(getModalStyle);
-//   const [open, setOpen] = React.useState(false);
-
-//   const handleOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = () => {
-//     setOpen(false);
-//   };
-
-//   const body = (
-//     <div style={modalStyle} className={classes.paper}>
-//       <h2 id="simple-modal-title">Text in a modal</h2>
-//       <p id="simple-modal-description">
-//         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-//       </p>
-//       <SimpleModal />
-//     </div>
-//   );
-
-//   return (
-//     <div>
-//       <button type="button" onClick={handleOpen}>
-//         Open Modal
-//       </button>
-//       <Modal
-//         open={open}
-//         onClose={handleClose}
-//         aria-labelledby="simple-modal-title"
-//         aria-describedby="simple-modal-description"
-//       >
-//         {body}
-//       </Modal>
-//     </div>
-//   );
-// }
