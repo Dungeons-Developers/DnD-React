@@ -8,7 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
+import Player from './testChar.json';
+import { Card } from '@material-ui/core';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SimpleTabs() {
+export default function SimpleTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -58,17 +59,21 @@ export default function SimpleTabs() {
     setValue(newValue);
   };
 
+  
+  console.log('charprops', props.Character);
+  // need to get dynamic data into the show/edit Card
+  // maybe it can't be ina  return object?
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="CHAR details" {...a11yProps(0)} />
-          <Tab label="edit CHAR" {...a11yProps(1)} />
+          <Tab label="details" {...a11yProps(0)} />
+          <Tab label="edit" {...a11yProps(1)} />
       
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <h2 id="simple-modal-title">Char Name</h2>
+        <h2 id="simple-modal-title">Char Name {props.Character.CharacterName}</h2>
         <p className="charStats">Level: </p>
         <p className="charStats">Race: </p>
         <p className="charStats">Class: </p>
@@ -82,7 +87,10 @@ export default function SimpleTabs() {
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
       </TabPanel>
-      {/* Make text fields dropdowns where necessary */}
+      {/* Make text fields dropdowns where necessary 
+      Add onChange handlers for each text field
+      Add useForm hook to trigger on that onChange from the button submit
+      */}
       <TabPanel value={value} index={1}>
         <TextField id="outlined-basic" label="Character Name:" placeholder="placeholder" fullWidth variant="outlined"/><br/>
         <TextField id="outlined-basic" label="Level:" /><br/>
