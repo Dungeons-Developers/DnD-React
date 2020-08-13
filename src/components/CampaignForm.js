@@ -31,17 +31,71 @@ function CampaignForm(props) {
     <Container>
       <form class-name="campaign-form" autoComplete="off" onSubmit={submit}>
 
-        <div><TextField id="title" label="Title" color="primary" margin="normal" onChange={formChange} /></div>
-        <div><TextField id="setting" label="Setting" color="primary" margin="normal" onChange={formChange} /></div>
-        <div><TextField id="description" label="description" variant="outlined" margin="normal" multiline rows={6} color="primary" onChange={formChange} /></div>
-        <div><TextField id="notes" label="notes" variant="outlined" margin="normal" multiline rows={4} color="primary" onChange={formChange} /></div>
+        <div>
+          <TextField 
+            id="title" 
+            label="Title" 
+            color="primary" 
+            margin="normal" 
+            onChange={formChange} 
+          />
+        </div>
+
+        <div>
+          <TextField 
+            id="setting" 
+            label="Setting" 
+            color="primary" 
+            margin="normal" 
+            onChange={formChange} 
+          />
+        </div>
+
+        <div>
+          <TextField 
+            id="description" 
+            label="description" 
+            variant="outlined" 
+            margin="normal" 
+            multiline 
+            rows={6} 
+            color="primary" 
+            onChange={formChange} 
+          />
+        </div>
+
+        <div>
+          <TextField 
+            id="notes" 
+            label="notes" 
+            variant="outlined" 
+            margin="normal" 
+            multiline 
+            rows={4} 
+            color="primary" 
+            onChange={formChange} 
+          />
+        </div>
 
         {/* invite friends functionality? */}
-        <div><TextField  id="characters" label="Invite Friends" margin="normal" color="primary" onChange={formChange} /></div>
+        <div>
+          <TextField  
+            id="characters" 
+            label="Invite Friends" 
+            margin="normal" 
+            color="primary" 
+            onChange={formChange} 
+          />
+        </div>
 
-        <Button variant="contained" color="primary" type="submit" margin="normal">
+        <Button 
+          variant="contained" 
+          color="primary" 
+          type="submit" 
+          margin="normal" >
           Save
         </Button>
+        
       </form>
     </Container>
   );
