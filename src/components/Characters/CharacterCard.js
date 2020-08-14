@@ -11,31 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
 import CharacterShowEdit from './CharacterShowEdit';
 import Box from '@material-ui/core/Box';
-import '../../styles/components/characterCards.scss';
+
 import Player from './testChar.json';
-
-//modal styles
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
-const useModalStyles = makeStyles((theme) => ({
-  paper: {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-}));
 
 
 //card styles
@@ -108,8 +85,6 @@ export default function CharacterCard(props) {
       </Modal>
       </CardActions>
     </Card>
-
-
     </Grid>);
   }
 

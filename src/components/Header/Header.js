@@ -9,11 +9,13 @@ import {
 import Logo from '../Logo';
 import Nav from './Nav';
 
+
 export default function Header(props) {
 
   const styles = {
     appbar: {
       backgroundColor: 'inherit',
+      display: 'flex'
     },
     toolbar: {
       display: 'flex',
@@ -22,6 +24,7 @@ export default function Header(props) {
   }
 
   return (
+    <React.Fragment>
     <AppBar position='fixed' style={styles.appbar}>
       <Toolbar style={styles.toolbar}>
         <Tooltip title='Home'>
@@ -32,5 +35,7 @@ export default function Header(props) {
         <Nav />
       </Toolbar>
     </AppBar>
+    <Toolbar />
+    </React.Fragment>
   )
 }
