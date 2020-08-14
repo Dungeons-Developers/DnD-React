@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
 import Player from './testChar.json';
 import { Card } from '@material-ui/core';
 
@@ -51,14 +52,162 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const races = [
+  {
+    value: 'Dragonborn',
+    label: 'Dragonborn',
+  },
+  {
+    value: 'Dwarf',
+    label: 'Dwarf',
+  },
+  {
+    value: 'Elf',
+    label: 'Elf',
+  },
+  {
+    value: 'Gnome',
+    label: 'Gnome',
+  },
+  {
+    value: 'Half-Elf',
+    label: 'Half-Elf',
+  },
+  {
+    value: 'Halfling',
+    label: 'Halfling',
+  },
+  {
+    value: 'Half-Orc',
+    label: 'Half-Orc',
+  },
+  {
+    value: 'Human',
+    label: 'Human',
+  },
+  {
+    value: 'Tiefling',
+    label: 'Tiefling',
+  },
+];
+
+const dndClasses = [
+  {
+    value: 'Barbarian',
+    label: 'Barbarian',
+  },
+  {
+    value: 'Bard',
+    label: 'Bard',
+  },
+  {
+    value: 'Cleric',
+    label: 'Cleric',
+  },
+  {
+    value: 'Druid',
+    label: 'Druid',
+  },
+  {
+    value: 'Fighter',
+    label: 'Fighter',
+  },
+  {
+    value: 'Monk',
+    label: 'Monk',
+  },
+  {
+    value: 'Paladin',
+    label: 'Paladin',
+  },
+  {
+    value: 'Ranger',
+    label: 'Ranger',
+  },
+  {
+    value: 'Rogue',
+    label: 'Rogue',
+  },
+  {
+    value: 'Sorcerer',
+    label: 'Sorcerer',
+  },
+  {
+    value: 'Warlock',
+    label: 'Warlock',
+  },
+  {
+    value: 'Wizard',
+    label: 'Wizard',
+  },
+];
+
+const alignments = [
+  {
+    value: 'Lawful Good',
+    label: 'Lawful Good',
+  },
+  {
+    value: 'Neutral Good',
+    label: 'Neutral Good',
+  },
+  {
+    value: 'Chaotic Good',
+    label: 'Chaotic Good',
+  },
+  {
+    value: 'Lawful Neutral',
+    label: 'Lawful Neutral',
+  },
+  {
+    value: 'Neutral',
+    label: 'Neutral',
+  },
+  {
+    value: 'Chaotic Neutral',
+    label: 'Chaotic Neutral',
+  },
+  {
+    value: 'Lawful Evil',
+    label: 'Lawful Evil',
+  },
+  {
+    value: 'Neutral Evil',
+    label: 'Neutral Evil',
+  },
+  {
+    value: 'Chaotic Evil',
+    label: 'Chaotic Evil',
+  },
+  {
+    value: 'Unaligned',
+    label: 'Unaligned',
+  },
+];
+
+
 export default function SimpleTabs(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [tab, setTab] = React.useState(0);
+  const [race, setRace] = React.useState();
+  const [dndClass, setDndClass] = React.useState();
+  const [alignment, setAlignment] = React.useState();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleTab = (event, newValue) => {
+    setTab(newValue);
   };
 
+  const handleRace = (event) => {
+    setRace(event.target.value);
+  };
+
+  const handleDnDClass = (event) => {
+    setDndClass(event.target.value);
+  };
+
+  const handleAlignment = (event) => {
+    setAlignment(event.target.value);
+  };
   
   console.log('charprops', props.Character);
   // need to get dynamic data into the show/edit Card
@@ -66,7 +215,7 @@ export default function SimpleTabs(props) {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+        <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example">
           <Tab label="details" {...a11yProps(0)} />
           <Tab label="edit" {...a11yProps(1)} />
       
@@ -74,7 +223,7 @@ export default function SimpleTabs(props) {
       </AppBar>
 
       {/* need to get charName dynamically populating from store data */}
-      <TabPanel value={value} index={0}>
+      <TabPanel value={tab} index={0}>
         <h2 id="simple-modal-title">Char Name {props.Character.CharacterName}</h2>
         <p className="charStats">Level: </p>
         <p className="charStats">Race: </p>
@@ -93,13 +242,50 @@ export default function SimpleTabs(props) {
       Add onChange handlers for each text field
       Add useForm hook to trigger on that onChange from the button submit
       */}
-      <TabPanel value={value} index={1}>
+      <TabPanel value={tab} index={1}>
         <TextField id="outlined-basic" label="Character Name:" placeholder="placeholder" fullWidth variant="outlined"/><br/>
-        <TextField id="outlined-basic" label="Level:" /><br/>
-        <TextField id="outlined-basic" label="Race:" placeholder="placeholder" /><br />
-        <TextField id="outlined-basic" label="Class:" /><br/>
-        <TextField id="outlined-basic" label="Alignment:" /><br/>
-        <TextField id="outlined-basic" label="Deity:" /><br/>
+        <TextField 
+          id="outlined-basic" 
+          select 
+          label="Race" 
+          value={race} 
+          onChange={handleRace} 
+          helperText="Select a new race">
+            {races.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+            ))}
+        </TextField>
+            <br />
+        <TextField 
+          id="outlined-basic"
+          select 
+          label="Class:" 
+          value={dndClass}
+          onChange={handleDnDClass}
+          helperText="Select a new class">
+            {dndClasses.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+            ))}
+          </TextField><br/>
+        <TextField 
+        id="outlined-basic"
+        select 
+        label="Alignment:" 
+        value={alignment}
+        onChange={handleAlignment}
+        helperText="Select new alignment">
+          {alignments.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
+        <br/>
+       
         <TextField id="outlined-basic" label="Proficiencies:" /><br/>
         <TextField id="outlined-basic" label="Equipment:" /><br/><br/>
         <TextField id="outlined-basic" label="Bio:" multiline rows={4} fullWidth variant="outlined"/><br/><br/>
