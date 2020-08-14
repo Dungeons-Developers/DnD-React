@@ -72,6 +72,8 @@ export default function SimpleTabs(props) {
       
         </Tabs>
       </AppBar>
+
+      {/* need to get charName dynamically populating from store data */}
       <TabPanel value={value} index={0}>
         <h2 id="simple-modal-title">Char Name {props.Character.CharacterName}</h2>
         <p className="charStats">Level: </p>
