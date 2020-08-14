@@ -1,0 +1,60 @@
+{
+  "UserName":{
+     "Characters":[
+        {
+           "CharacterName":"TestWarrior",
+           "Level":20,
+           "Race":"Dwarf",
+           "Class":"Warrior",
+           "Alignment":"Chaotic Neutral",
+           "Deity":"GodPerson",
+           "Proficiencies":[
+              "Leatherworking",
+              "Jewelcrafting"
+           ],
+           "Ability Scores":[
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+           ],
+           "Equipment":[
+              "Sword",
+              "Shield"
+           ],
+           "Bio":"This warrior is hella buff buff buff sauce", 
+           "Avatar":"https://www.seekpng.com/png/detail/156-1568612_dwarf-paladin-dnd-dwarf-dnd-characters-fantasy-characters.png",
+           "InCampaign": "false"
+        },
+        {
+           "CharacterName":"TestMage",
+           "Level":30,
+           "Race":"High Elf",
+           "Class":"Mage",
+           "Alignment":"Chaotic Evil",
+           "Deity":"GoddessPerson",
+           "Proficiencies":[
+              "Mining",
+              "Engineering"
+           ],
+           "Ability Scores":[
+              20,
+              20,
+              20,
+              20,
+              20,
+              20
+           ],
+           "Equipment":[
+              "Wand",
+              "Staff"
+           ],
+           "Bio":"This mage is hella pew pew pew sauce",
+           "Avatar":"https://images.indianexpress.com/2018/07/wp-harrypotter-01.jpg",
+           "InCampaign": "true"
+        }
+     ]
+  }
+}
