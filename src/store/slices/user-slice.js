@@ -1,38 +1,51 @@
 import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
+import { encode } from 'js-base64';
 
+const encodeBase64 = ({ username, password }) => {
+  const encoded = encode(`${username}:${password}`);
+  return encoded;
+};
 
 const userSlice = createSlice({
   name: 'user',
 
   initialState: {
-    userID: '',
-    userName: '',
+    token: null,
+    user: null,
   },
 
   reducers: {
     getUser: (state, action) => {
-      state.userID = action.payload._id;
-      state.username = action.payload.username
+      state.token = action.payload.token;
+      state.user = action.payload.user;
+    },
+    logout: (state, action) => {
+      state.token = null;
+      state.user = null;
     }
   }
 });
 
-export const { getUser } = userSlice.actions;
+export const { getUser, logout } = userSlice.actions;
 
 export const login = (payload) => {
 
-  const { username, password } = payload;
-
+  const encoding = encodeBase64(payload)
   return async dispatch => {
     try {
+      let response = await axios.post(
+        'https://dnd-api-server.herokuapp.com/v1/api/user',
+        {},
+        {
+          headers: {
+            'Authorization': `Basic ${encoding}`,
+          },
+        }
+      );
 
-      let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/user', { username, password });
-
-      let user = response.data;
-
-      console.log('user:', user);
-      dispatch(getUser(user))
+      let res = response.data;
+      dispatch(getUser(res))
     } catch (e) {
       console.log(e);
     }
@@ -48,9 +61,8 @@ export const create = (payload) => {
 
       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/signup', { username, password });
 
-      let user = response.data;
-
-      dispatch(getUser(user))
+      let res = response.data;
+      dispatch(getUser(res))
     } catch (e) {
       console.log(e);
     }

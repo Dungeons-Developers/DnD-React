@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { If, Then, Else } from 'react-if';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -9,6 +11,8 @@ import Box from '@material-ui/core/Box';
 import Logo from '../components/Logo'
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
+
+import { logout } from '../store/slices/user-slice';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -38,6 +42,8 @@ TabPanel.propTypes = {
 
 function LandingPage(props) {
 
+  const { token, logout } = props;
+
   const [openTab, setOpenTab] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -45,41 +51,63 @@ function LandingPage(props) {
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="40vh">
-        <Logo />
-      </Box>
-      <Box display="flex"
-        flexDirection="column"
-        justifyContent="flex-start"
-        alignItems="center"
-        minHeight="60vh">
-        <Paper square>
-          <Tabs
-            variant="fullWidth"
-            value={openTab}
-            indicatorColor="primary"
-            textColor="primary"
-            onChange={handleChange}
-            aria-label="disabled tabs example"
+    <Container maxWidth="lg">
+      <If condition={(token === null)}>
+        <Then>
+          <Box display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="40vh">
+            <Logo />
+          </Box>
+          <Box display="flex"
+            flexDirection="column"
+            justifyContent="flex-start"
+            alignItems="center"
+            minHeight="60vh">
+            <Paper square>
+              <Tabs
+                variant="fullWidth"
+                value={openTab}
+                indicatorColor="primary"
+                textColor="primary"
+                onChange={handleChange}
+                aria-label="disabled tabs example"
+              >
+                <Tab label="Login" value={0} />
+                <Tab label="SignUp" value={1} />
+              </Tabs>
+              <TabPanel value={openTab} index={0}>
+                <LoginForm />
+              </TabPanel>
+              <TabPanel value={openTab} index={1}>
+                <SignupForm />
+              </TabPanel>
+            </Paper>
+          </Box>
+        </Then>
+        <Else>
+          <Box display="flex"
+            flexDirection="column"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="40vh"
           >
-            <Tab label="Login" value={0} />
-            <Tab label="SignUp" value={1} />
-          </Tabs>
-          <TabPanel value={openTab} index={0}>
-            <LoginForm />
-          </TabPanel>
-          <TabPanel value={openTab} index={1}>
-            <SignupForm />
-          </TabPanel>
-        </Paper>
-      </Box>
+            you logged in!<br />
+            <button onClick={() => logout()}>logout</button>
+          </Box>
+        </Else>
+      </If>
     </Container>
   );
 }
 
-export default LandingPage;
+const mapStateToProps = (state) => ({
+  token: state.users.token
+});
+
+const mapDispatchToProps = { logout };
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
