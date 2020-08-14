@@ -8,6 +8,7 @@ const useForm = (defaults) => {
   };
 
   const handleSubmit = (submit) => {
+    console.log('fields:', fields);
     submit(fields);
   };
 
