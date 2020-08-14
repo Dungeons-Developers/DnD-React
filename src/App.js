@@ -5,13 +5,15 @@ import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import CharacterCard from './components/Characters/CharacterCard';
+
 import CampaignForm from './components/CampaignForm';
 import CampaignPage from './pages/CampaignPage';
 
+
+import Main from './components/Main';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
-
-
 import './styles/index.scss';
 
 function App({campaignID}) {
@@ -20,8 +22,8 @@ function App({campaignID}) {
 
   const styles = {
     app: {
-      position: 'relative'
-    }
+      display: 'flex',
+    },
   }
 
   return (
@@ -43,9 +45,14 @@ function App({campaignID}) {
           </Route>
       
           <Route exact path='/create-campaign'>
+            <CampaignForm />
           </Route>
 
           <Route exact path='/join'>
+          </Route>
+    
+          <Route exact path='/play'>
+            <CampaignPage />
           </Route>
 
           <Route exact path='/invites'>
