@@ -9,7 +9,7 @@ import useForm from '../hooks/useForm'
 
 import { create } from '../store/slices/user-slice';
 
-function SignupForm(props) {
+function SignupForm({create}) {
 
   const defaults = {
     username: '',
