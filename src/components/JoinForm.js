@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {If} from 'react-if';
 import {Redirect} from 'react-router-dom';
@@ -8,11 +8,15 @@ import {TextField, Container, Button} from '@material-ui/core';
 
 import useForm from '../hooks/useForm';
 
-import {findCampaign} from '../store/slices/campaign-slice';
+import {findCampaign, getUserCampaigns} from '../store/slices/campaign-slice';
 
 
 
-function JoinForm({findCampaign, campaignID, campaigns}) {
+function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaigns}) {
+
+  useEffect(() => {
+    getUserCampaigns(username);
+  }, [getUserCampaigns, username])
 
   const defaults = {
     campaignID: ''
@@ -66,12 +70,13 @@ function JoinForm({findCampaign, campaignID, campaigns}) {
   )
 }
 
-const mapDispatchToProps = {findCampaign};
+const mapDispatchToProps = {findCampaign, getUserCampaigns};
 
 const mapStateToProps = state => {
   return {
     campaignID: state.campaign.campaignID,
-    campaigns: state.users.campaigns
+    campaigns: state.campaign.allCampaigns,
+    username: state.users.username
   }
 }
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-import {Breadcrumbs, Typography} from '@material-ui/core';
+import { Breadcrumbs, Typography } from '@material-ui/core';
 
 
 
@@ -27,28 +27,28 @@ export default function Nav(props) {
   }
 
   return (
-   <Breadcrumbs aria-label="breadcrumb">
-     <Link to='/characters' style={styles.link}>
+    <Breadcrumbs aria-label="breadcrumb">
+      <Link to='/characters' style={styles.link}>
         <Typography >
           My Characters
         </Typography>
-     </Link>
-     <Link to='/create-campaign' style={styles.link}>
+      </Link>
+      <Link to='/create-campaign' style={styles.link}>
         <Typography >
           Create Campaign
         </Typography>
-     </Link>
-     <Link to='/join' style={styles.link}>
+      </Link>
+      <Link to='/join' style={styles.link}>
         <Typography >
           Join Campaign
         </Typography>
-     </Link>
-     <Link to='/invites' style={styles.link}>
+      </Link>
+      <Link to='/invites' style={styles.link}>
         <Typography >
           Invites
         </Typography>
-     </Link>
-   </Breadcrumbs>
+      </Link>
+    </Breadcrumbs>
   )
 }
 

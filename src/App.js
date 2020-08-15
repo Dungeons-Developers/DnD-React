@@ -1,14 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
+import CharacterDisplay from './components/Characters/CharacterDisplay';
 import Dashboard from './components/Dashboard';
 import CharacterCard from './components/Characters/CharacterCard';
 import CharacterForm from './components/CharacterForm';
 
+import CharacterForm from './components/CharacterForm';
 import CampaignForm from './components/CampaignForm';
 import CampaignPage from './pages/CampaignPage';
 import JoinForm from './components/JoinForm';
@@ -19,7 +20,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import './styles/index.scss';
 
-function App({ campaignID }) {
+export default function App() {
   const styles = {
     app: {
       display: 'flex',
@@ -49,7 +50,7 @@ function App({ campaignID }) {
 
           <PrivateRoute exact path='/characters'>
             <Container>
-            <CharacterCard />
+            <CharacterDisplay />
             </Container>
           </PrivateRoute>
 
@@ -80,12 +81,3 @@ function App({ campaignID }) {
     </div>
   );
 }
-
-const mapStateToProps = (state) => {
-  console.log('state:', state);
-  return {
-    campaignID: state.campaign.campaignID
-  }
-}
-
-export default connect(mapStateToProps)(App);

@@ -9,14 +9,10 @@ import Button from '@material-ui/core/Button';
 
 import useForm from '../hooks/useForm';
 
-import {createCampaign, resetCurrentCampaign} from '../store/slices/campaign-slice';
+import {createCampaign} from '../store/slices/campaign-slice';
 
 
-function CampaignForm({createCampaign, user, campaignID, resetCurrentCampaign}) {
-
-  useEffect(() => {
-    resetCurrentCampaign();
-  }, []);
+function CampaignForm({createCampaign, user, campaignID}) {
 
   const defaults = {
     user: user ? user.username : 'u',
@@ -121,7 +117,7 @@ function CampaignForm({createCampaign, user, campaignID, resetCurrentCampaign}) 
   );
 }
 
-const mapDispatchToProps = { createCampaign, resetCurrentCampaign };
+const mapDispatchToProps = { createCampaign };
 
 const mapStateToProps = (state) => {
   return {
