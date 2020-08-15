@@ -96,7 +96,6 @@ function LandingPage(props) {
             alignItems="center"
             minHeight="40vh"
           >
-            <Header />
             <CharacterForm />
             <button onClick={() => logout()}>logout</button>
           </Box>
