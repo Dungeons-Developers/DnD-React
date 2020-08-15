@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {
-  AppBar,
+  // AppBar,
   Toolbar,
   Tooltip,
 } from '@material-ui/core';
@@ -15,17 +15,20 @@ export default function Header(props) {
   const styles = {
     appbar: {
       backgroundColor: 'inherit',
-      display: 'flex'
+      display: 'flex',
+      // position: 'sticky',
+      boxShadow: '0 6px 6px -6px black',
     },
     toolbar: {
       display: 'flex',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      width: '100%',
     }
   }
 
   return (
     <React.Fragment>
-    <AppBar position='fixed' style={styles.appbar}>
+    <header position='fixed' style={styles.appbar}>
       <Toolbar style={styles.toolbar}>
         <Tooltip title='Home'>
           <Link to='/home'>
@@ -34,8 +37,8 @@ export default function Header(props) {
         </Tooltip>
         <Nav />
       </Toolbar>
-    </AppBar>
-    <Toolbar />
+    </header>
+    {/* <Toolbar /> */}
     </React.Fragment>
   )
 }
