@@ -12,8 +12,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
 import useForm from '../hooks/useForm';
+import Dice from '../components/Dice';
 
-import { createCharacter } from '../store/slices/character-slice';
+import { createCharacter, insertScore } from '../store/slices/character-slice';
 
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../data/charOptions.json';
 
@@ -34,7 +35,14 @@ function CharacterForm(props) {
     pack: '',
     weapon_1: '',
     weapon_2: '',
-    ability_scores: '',
+    ability_scores: {
+      'str': 13,
+      'dex': 14,
+      'con': 15,
+      'int': 18,
+      'wis': 14,
+      'cha': 15
+    },
     level: '1',
     isInCampaign: false,
   };
@@ -288,6 +296,11 @@ function CharacterForm(props) {
                   defaultValue={1}
                 />
               </Grid>
+
+              <Grid item xs={12}>
+                <Dice insertScore={insertScore} />
+              </Grid>
+                  
               <Grid item xs={12}>
                 <Button
                   variant="contained"
@@ -302,6 +315,7 @@ function CharacterForm(props) {
           </form>
         </Box>
       </Paper >
+
     </Box>
   )
 }
@@ -312,6 +326,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   create: createCharacter,
+  insertScore: insertScore,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterForm);

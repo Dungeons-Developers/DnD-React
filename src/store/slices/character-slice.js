@@ -9,6 +9,7 @@ const characterSlice = createSlice({
     class: '',
     race: '',
     ability_scores: null,
+    score_options: [],
     alignment: '',
     deity: '',
     proficient_skills: null,
@@ -29,10 +30,14 @@ const characterSlice = createSlice({
       state.equipment = action.payload.equipment;
       state.level = action.payload.level;
     },
+    insertScore: (state, action) => {
+      state.score_options.push(action.payload.score);
+      console.log(state.score_options);
+    }
   }
 });
 
-export const { create } = characterSlice.actions;
+export const { create, insertScore } = characterSlice.actions;
 
 export const createCharacter = payload => {
   console.log(payload)

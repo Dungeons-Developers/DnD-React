@@ -9,6 +9,8 @@ import CharacterCard from './components/Characters/CharacterCard';
 import CampaignForm from './components/CampaignForm';
 import CampaignPage from './pages/CampaignPage';
 
+import CharacterForm from './components/CharacterForm';
+
 import Main from './components/Main';
 
 import Header from './components/Header';
@@ -45,6 +47,10 @@ function App({campaignID}) {
       
           <Route exact path='/create-campaign'>
             <CampaignForm />
+          </Route>
+
+          <Route exact path='/create-character'>
+            <CharacterForm />
           </Route>
 
           <Route exact path='/join'>
