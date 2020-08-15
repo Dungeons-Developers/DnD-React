@@ -16,7 +16,6 @@ import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
 
-
 import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
 import { updateCharacter } from '../../store/slices/character-slice';
@@ -108,13 +107,15 @@ export function CharacterDetails(props) {
         <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example">
           <Tab label="details" {...a11yProps(0)} />
           <Tab label="edit" {...a11yProps(1)} />
+          <Tab label="delete" {...a11yProps(2)} />
+
       
         </Tabs>
       </AppBar>
 
       {/* need to get charName dynamically populating from store data */}
       <TabPanel value={tab} index={0}>
-        <h2 id="simple-modal-title">Char Name {props.Character.CharacterName}</h2>
+        <h2 id="simple-modal-title">Char Name {props.Character.name}</h2>
         <p className="charStats">Level: </p>
         <p className="charStats">Race: </p>
         <p className="charStats">Class: </p>
@@ -407,6 +408,11 @@ export function CharacterDetails(props) {
         </Grid>
         </Grid>
         </form>
+      </TabPanel>
+
+      <TabPanel value={tab} index={2}>
+        <h2 id="simple-modal-title">Delete {props.Character.name}?</h2>
+        
       </TabPanel>
     </div>
   );
