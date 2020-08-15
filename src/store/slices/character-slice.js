@@ -16,6 +16,7 @@ const characterSlice = createSlice({
     level: '1',
     isInCampaign: false,
     character_id: null,
+    allCharacters: []
   },
 
   reducers: {
@@ -41,11 +42,24 @@ const characterSlice = createSlice({
       state.proficient_skills = null;
       state.equipment = null;
       state.level = null;
+    },
+    setAllCharacters: (state, action) => {
+      state.allCharacters = action.payload;
     }
   }
 });
 
-export const { create, remove } = characterSlice.actions;
+export const { create, remove, setAllCharacters } = characterSlice.actions;
+
+// '/:username/characters'
+
+export const getCharacters = payload => {
+  return async dispatch => {
+    let response = await axios.get(`https://dnd-api-server.herokuapp.com/v1/api/${payload}/characters`);
+    let characters = response.data;
+    dispatch(setAllCharacters(characters));
+  }
+}
 
 export const createCharacter = payload => {
   console.log('CharacterSlice payload:', payload)

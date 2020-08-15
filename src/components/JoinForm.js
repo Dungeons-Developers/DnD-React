@@ -76,7 +76,7 @@ const mapStateToProps = state => {
   return {
     campaignID: state.campaign.campaignID,
     campaigns: state.campaign.allCampaigns,
-    username: state.users.user.username
+    username: state.users.username
   }
 }
 

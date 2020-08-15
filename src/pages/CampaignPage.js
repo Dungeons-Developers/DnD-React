@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import io from 'socket.io-client';
 
 import {saveCampaign, disconnectFromCampaign} from '../store/slices/campaign-slice';
+import {getCharacters} from '../store/slices/character-slice';
 
 const socket = io.connect('http://localhost:4000');
 
@@ -24,12 +25,13 @@ function CampaignPage(props) {
     saving,
     saveCampaign,
     wholeCampaign,
-    disconnectFromCampaign
+    disconnectFromCampaign,
+    getCharacters
   } = props;
 
   const [currentChars, setCurrentChars] = useState(campaignCharacters);
 
-  const [playerChar, setPlayerChar] = useState(campaignCharacters.filter(char => char.user === user.username)[0]);
+  const [playerChar, setPlayerChar] = useState(campaignCharacters.filter(char => char.user === user)[0]);
   
 
   console.log('player char:', playerChar);
@@ -41,6 +43,7 @@ function CampaignPage(props) {
   socket.emit('join', campaignID);
 
   useEffect(() => {
+    getCharacters();
 
     socket.on('character-joined', payload => {
       console.log('character joining...', payload);
@@ -55,7 +58,7 @@ function CampaignPage(props) {
       console.log('from server:', payload.message);
     });
 
-  }, [campaignID]);
+  }, [campaignID, getCharacters]);
 
   function testSocket() {
     socket.emit('test', {room: campaignID, message: 'HI'});
@@ -144,12 +147,12 @@ const mapStateToProps = (state) => {
     description: state.campaign.description,
     notes: state.campaign.notes,
     campaignCharacters: state.campaign.characters,
-    user: state.users.user,
-    userCharacters: state.users.characters,
+    user: state.users.username,
+    userCharacters: state.characters.allCharacters,
     saving: state.campaign.saving,
   }
 }
 
-const mapDispatchToProps = {saveCampaign, disconnectFromCampaign}
+const mapDispatchToProps = {saveCampaign, disconnectFromCampaign, getCharacters}
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignPage);
