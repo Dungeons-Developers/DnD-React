@@ -12,7 +12,8 @@ const campaignSlice = createSlice({
     description: '',
     notes: [],
     characters: [],
-    saving: false
+    saving: false,
+    allCampaigns: []
   },
   
   reducers: {
@@ -25,8 +26,11 @@ const campaignSlice = createSlice({
       state.notes = action.payload.notes;
       state.characters = action.payload.characters;
     },
+    setUsersCampaigns: (state, action) => {
+      state.allCampaigns = action.payload;
+    },
 
-    resetCurrentCampaign: (state, action) => {
+    disconnectFromCampaign: (state, action) => {
       state.campaignID = '';
     },
 
@@ -36,7 +40,23 @@ const campaignSlice = createSlice({
   }
 });
 
-export const { getCampaign, resetCurrentCampaign, toggleSaving } = campaignSlice.actions;
+export const { getCampaign, disconnectFromCampaign, toggleSaving, setUsersCampaigns } = campaignSlice.actions;
+
+export const getUserCampaigns = (payload) => {
+
+  return async dispatch => {
+    try {
+
+      let response = await axios.get(`https://dnd-api-server.herokuapp.com/v1/api/${payload}/campaigns/`);
+      let allCampaigns = response.data;
+
+      dispatch(setUsersCampaigns(allCampaigns));
+
+    } catch(e) {
+      console.log(e);
+    }
+  }
+}
 
 export const findCampaign = (payload) => {
   return async dispatch => {
