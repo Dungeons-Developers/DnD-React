@@ -6,9 +6,10 @@ import io from 'socket.io-client';
 
 function CampaignPage(props) {
 
-  const {campaignID, userID, title, description, notes, characters, user} = props;
+  const {campaignID, owner, title, description, notes, characters, user} = props;
   
   const socket = io.connect('http://localhost:4000');
+
   useEffect(() => {
     // const socket = io.connect('https://dnd-api-server.herokuapp.com/');
 
@@ -16,13 +17,24 @@ function CampaignPage(props) {
 
     socket.emit('join', campaignID);
 
+    socket.on('hello', payload => {
+      console.log('from server:', payload.message);
+    });
+
   }, [campaignID, socket]);
+
+  function testSocket() {
+    socket.emit('test', {room: campaignID, message: 'HI'});
+  }
 
 
   return (
     <>
     <h1>Welcome {user.username}!</h1>
     <h2>CampaignID: {campaignID}</h2>
+    <h3>Owner: {owner}</h3>
+
+    {owner === user.username && <button onClick={testSocket}>TEST</button>}
 
     </>
   )
@@ -40,7 +52,7 @@ function CampaignPage(props) {
 const mapStateToProps = (state) => {
   return {
     campaignID: state.campaign.campaignID,
-    userID: state.campaign.userID,
+    owner: state.campaign.user,
     title: state.campaign.title,
     description: state.campaign.description,
     notes: state.campaign.notes,

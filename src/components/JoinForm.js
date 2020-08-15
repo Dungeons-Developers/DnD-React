@@ -12,7 +12,7 @@ import {findCampaign} from '../store/slices/campaign-slice';
 
 
 
-function JoinForm({findCampaign, campaignID}) {
+function JoinForm({findCampaign, campaignID, campaigns}) {
 
   const defaults = {
     campaignID: ''
@@ -53,6 +53,12 @@ function JoinForm({findCampaign, campaignID}) {
           Join
         </Button>
       </form>
+      <div>
+        <p>Your campaigns:</p>
+        {campaigns.map((cam, i) => (
+          <p key={i}>{cam._id}</p>
+        ))}
+      </div>
       <If condition={!!campaignID}>
           <Redirect to='/play'/>
       </If>
@@ -64,7 +70,8 @@ const mapDispatchToProps = {findCampaign};
 
 const mapStateToProps = state => {
   return {
-    campaignID: state.campaign.campaignID
+    campaignID: state.campaign.campaignID,
+    campaigns: state.users.campaigns
   }
 }
 
