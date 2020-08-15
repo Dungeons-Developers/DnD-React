@@ -1,18 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import ReactDice from 'react-dice-complete';
 import 'react-dice-complete/dist/react-dice-complete.css';
 
-import { insertScore } from '../store/slices/character-slice';
 
 import Button from '@material-ui/core/Button';
 
 class RollDice extends React.Component {
   constructor(props) {
     super(props)
-    console.log('CONSTRUCTOR PROPS', this.props);
-    this.insertScore = props.insertScore
   }
 
   rollAll() {
@@ -20,9 +16,8 @@ class RollDice extends React.Component {
   }
 
   rollDoneCallback(num) {
-    console.log('CALLBACK PROPS', this.props);
     console.log(`You rolled a ${num}`);
-    this.insertScore(num);
+    this.props.insertScore(num);
   }
 
   render() {
@@ -37,7 +32,7 @@ class RollDice extends React.Component {
 
         <ReactDice
           numDice={3}
-          rollDone={this.rollDoneCallback}
+          rollDone={this.rollDoneCallback.bind(this)}
           margin={25}
           outline={true}
           outlineColor='#000'
@@ -51,8 +46,6 @@ class RollDice extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  insertScore: insertScore,
-}
 
-export default connect(null, mapDispatchToProps)(RollDice);
+export default RollDice;
+

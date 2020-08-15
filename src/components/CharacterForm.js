@@ -23,7 +23,7 @@ function CharacterForm(props) {
 
   const {character_id} = props;
 
-  const { create, user } = props;
+  const { create, user, addScore } = props;
 
   const defaults = {
     user: user.username,
@@ -51,6 +51,10 @@ function CharacterForm(props) {
   };
 
   const { handleChange, handleSubmit, fields } = useForm(defaults);
+
+  function tryAddScore(num) {
+    props.addScore(num);
+  }
 
   function submit(e) {
     e.preventDefault();
@@ -302,7 +306,7 @@ function CharacterForm(props) {
               </Grid>
 
               <Grid item xs={12}>
-                <Dice insertScore={insertScore} />
+                <Dice insertScore={tryAddScore} />
               </Grid>
                   
               <Grid item xs={12}>
@@ -339,7 +343,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   create: createCharacter,
-  insertScore: insertScore,
+  addScore: insertScore,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterForm);
