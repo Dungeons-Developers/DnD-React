@@ -45,7 +45,6 @@ export const login = (payload) => {
       );
 
       let res = response.data;
-      console.log(res.user);
       dispatch(getUser(res))
     } catch (e) {
       console.log(e);
@@ -54,12 +53,12 @@ export const login = (payload) => {
 }
 
 export const create = (payload) => {
-
   const { username, password } = payload;
 
   return async dispatch => {
     try {
 
+      // let response = await axios.post('http://localhost:4000/v1/api/signup', { username, password });
       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/signup', { username, password });
 
       let res = response.data;

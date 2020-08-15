@@ -8,6 +8,7 @@ import CharacterCard from './components/Characters/CharacterCard';
 
 import CampaignForm from './components/CampaignForm';
 import CampaignPage from './pages/CampaignPage';
+import JoinForm from './components/JoinForm';
 
 
 import Main from './components/Main';
@@ -49,6 +50,7 @@ function App({campaignID}) {
           </Route>
 
           <Route exact path='/join'>
+            <JoinForm />
           </Route>
     
           <Route exact path='/play'>
