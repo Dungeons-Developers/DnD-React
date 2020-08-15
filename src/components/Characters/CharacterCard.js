@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -12,9 +13,6 @@ import Modal from '@material-ui/core/Modal';
 import CharacterShowEdit from './CharacterShowEdit';
 import Box from '@material-ui/core/Box';
 
-import Player from './testChar.json';
-
-
 //card styles
 const useStyles = makeStyles({
   root: {
@@ -22,11 +20,8 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CharacterCard(props) {
+export function CharacterCard(props) {
   const classes = useStyles();
-  //below is bringing in modal stuff to see if i can get modal functionality in charcard
-  // const modalClasses = useModalStyles();
-  // const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -37,17 +32,9 @@ export default function CharacterCard(props) {
     setOpen(false);
   };
 
-
-  const modalTab = (
-    <Box my="1rem">
-      <CharacterShowEdit />
-    </Box>
-  );
-  //end modal stuff
-
   let charactersHTML = [];
 
-  for (let i = 0; i < Player.UserName.Characters.length; i++) {
+  for (let i = 0; i < props.characters.length; i++) {
     charactersHTML.push(<Grid item xs={6} md={4} lg={3} key={i}>
       <Card className={classes.root} key={i}>
       <CardActionArea>
@@ -55,20 +42,20 @@ export default function CharacterCard(props) {
           component="img"
           alt="D&D Avatar"
           height="180"
-          image={Player.UserName.Characters[i].Avatar}
-          title={Player.UserName.Characters[i].CharacterName}
+          image=''
+          title={props.characters[i].name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {Player.UserName.Characters[i].CharacterName}
+            {props.characters[i].name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lvl {Player.UserName.Characters[i].Level} {Player.UserName.Characters[i].Race} {Player.UserName.Characters[i].Class} ... In Campaign
+            {/* Lvl {props.characters[i].level}  */}
+            {props.characters[i].race} {props.characters[i].class} ... In Campaign
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-       
        
       <Button size="small" color="primary" onClick={handleOpen}>
         Character Details
@@ -80,14 +67,13 @@ export default function CharacterCard(props) {
         aria-describedby="simple-modal-description"
       >
          <Box my="1rem">
-      <CharacterShowEdit Character={Player.UserName.Characters[i]} />
+      <CharacterShowEdit Character={props.characters[i]} />
         </Box>
       </Modal>
       </CardActions>
     </Card>
     </Grid>);
   }
-
 
   return (
 
@@ -100,3 +86,10 @@ export default function CharacterCard(props) {
     </>
   );
 }
+
+const mapStateToProps = state => ({
+  user: state.users.user,
+  characters: state.users.characters,
+})
+
+export default connect(mapStateToProps)(CharacterCard);

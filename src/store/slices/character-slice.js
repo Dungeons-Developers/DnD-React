@@ -52,4 +52,22 @@ export const createCharacter = payload => {
   }
 }
 
+export const updateCharacter = payload => {
+  console.log(payload)
+
+  // Format Payload
+
+  return async dispatch => {
+    try {
+      let response = await axios.patch(`https://dnd-api-server.herokuapp.com/v1/api/character/${payload.id}`, payload);
+
+      let res = response.data;
+      console.log(res);
+      dispatch(create(res))
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
+
 export default characterSlice.reducer;
