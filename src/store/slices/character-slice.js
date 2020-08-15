@@ -14,7 +14,8 @@ const characterSlice = createSlice({
     proficient_skills: null,
     equipment: null,
     level: '1',
-    isInCampaign: false
+    isInCampaign: false,
+    character_id: null,
   },
 
   reducers: {
@@ -28,6 +29,7 @@ const characterSlice = createSlice({
       state.proficient_skills = action.payload.proficient_skills;
       state.equipment = action.payload.equipment;
       state.level = action.payload.level;
+      state.character_id = action.payload.character_id; 
     },
   }
 });
