@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import Player from './testChar.json';
-import { Card } from '@material-ui/core';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
