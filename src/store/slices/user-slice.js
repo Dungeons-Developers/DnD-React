@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
 import { encode } from 'js-base64';
+import Cookies from 'js-cookie';
 
 const encodeBase64 = ({ username, password }) => {
   const encoded = encode(`${username}:${password}`);
@@ -11,42 +12,29 @@ const userSlice = createSlice({
   name: 'user',
 
   initialState: {
-    token: null,
-    user: null,
-    characters: [],
-    campaigns: []
+    token: Cookies.getJSON().token || null,
+    username: Cookies.getJSON().username || null,
+    userId: Cookies.getJSON().userId || null,
   },
 
   reducers: {
     getUser: (state, action) => {
       state.token = action.payload.token;
-      state.user = action.payload.user;
-      state.characters = action.payload.user.characters;
-      state.campaigns = action.payload.user.campaigns;
+      state.username = action.payload.user.username;
+      state.userId = action.payload.user._id;
     },
     logout: (state, action) => {
-      state.token = null;
-      state.user = null;
-      state.characters = null;
-      state.campaigns = null;
+      state.token = action.payload;
+      state.username = action.payload;
+      state.userId = action.payload;
+      Cookies.remove('token');
+      Cookies.remove('username');
+      Cookies.remove('userId');
     },
-    addCharacter: (state, action) => {
-      state.characters.push(action.payload)
-      console.log('STATE CHARACTERS', state.characters);
-    }
   }
 });
 
-export const { getUser, logout, addCharacter } = userSlice.actions;
-
-export const characterAdd = (payload) => {
-  console.log('HELLO THIS IS FUNCTION')
-
-  return dispatch => {
-    console.log('I AM IN THE DISPATCH')
-    dispatch(addCharacter(payload));
-  }
-}
+export const { getUser, logout } = userSlice.actions;
 
 export const login = (payload) => {
   const encoding = encodeBase64(payload)
@@ -63,6 +51,9 @@ export const login = (payload) => {
       );
 
       let res = response.data;
+      Cookies.set('token', res.token, { expires: 1 });
+      Cookies.set('username', res.user.username, { expires: 1 });
+      Cookies.set('userId', res.user._id, { expires: 1 });
       dispatch(getUser(res))
     } catch (e) {
       console.log(e);
@@ -80,6 +71,9 @@ export const create = (payload) => {
       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/signup', { username, password });
 
       let res = response.data;
+      Cookies.set('token', res.token, { expires: 1 });
+      Cookies.set('username', res.user.username, { expires: 1 });
+      Cookies.set('userId', res.user._id, { expires: 1 });
       dispatch(getUser(res))
     } catch (e) {
       console.log(e);

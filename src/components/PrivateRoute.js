@@ -22,8 +22,8 @@ function PrivateRoute({ token, children, ...rest }) {
   );
 }
 
-const mapDispatchToProps = state => ({
+const mapStateToProps = state => ({
   token: state.users.token
 });
 
-export default connect(mapDispatchToProps)(PrivateRoute);
+export default connect(mapStateToProps)(PrivateRoute);

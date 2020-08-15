@@ -11,7 +11,9 @@ import AddToQueueIcon from '@material-ui/icons/AddToQueue';
 import PeopleIcon from '@material-ui/icons/People';
 import Typography from '@material-ui/core/Typography';
 
-function Dashboard({ user }) {
+import { logout } from '../store/slices/user-slice'
+
+function Dashboard({ username, logout }) {
 
   return (
     <Box
@@ -22,7 +24,8 @@ function Dashboard({ user }) {
       flexDirection='column'
     >
 
-      <Typography variant="h2">Welcome {user.username}</Typography>
+      <Typography variant="h2">Welcome {username}</Typography>
+      <button onClick={() => logout(null)}>Logout</button>
       <Box
         display="flex"
         flex="1"
@@ -78,7 +81,11 @@ function Dashboard({ user }) {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.users.user
+  username: state.users.username
 });
 
-export default connect(mapStateToProps)(Dashboard);
+const mapDispatchToProps = {
+  logout,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
