@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
 import CharacterShowEdit from './CharacterShowEdit';
 import Box from '@material-ui/core/Box';
+import { Link } from 'react-router-dom';
 
 //card styles
 const useStyles = makeStyles({
@@ -34,8 +35,42 @@ export function CharacterCard(props) {
 
   let charactersHTML = [];
 
+  //push character create form as card
+  charactersHTML.push(<Grid item xs={4} md={3} lg={2} key="characterCreateFormGrid">
+    <Card className={classes.root} key="characterCreateFormCard">
+    <CardActionArea>
+      <CardMedia
+        component="img"
+        alt="D&D Avatar"
+        height="180"
+        image=''
+        title=''
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="h2">
+          New Character?
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+         v~Start here!~v
+        </Typography>
+      </CardContent>
+    </CardActionArea>
+    <CardActions>
+     
+    <Link to="/create-character">
+    <Button size="small" color="primary" >
+      Create Character
+    </Button>
+    </Link>
+
+    </CardActions>
+  </Card>
+  </Grid>
+    );
+
+    //populate existing character cards
   for (let i = 0; i < props.characters.length; i++) {
-    charactersHTML.push(<Grid item xs={6} md={4} lg={3} key={i}>
+    charactersHTML.push(<Grid item xs={4} md={3} lg={2} key={i}>
       <Card className={classes.root} key={i}>
       <CardActionArea>
         <CardMedia

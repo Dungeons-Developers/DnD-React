@@ -10,7 +10,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-
+import { Redirect } from "react-router-dom"
+import { If, Then, Else } from 'react-if';
 import useForm from '../hooks/useForm';
 
 import { createCharacter } from '../store/slices/character-slice';
@@ -18,6 +19,8 @@ import { createCharacter } from '../store/slices/character-slice';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../data/charOptions.json';
 
 function CharacterForm(props) {
+
+  const {character_id} = props;
 
   const { create, user } = props;
 
@@ -52,7 +55,8 @@ function CharacterForm(props) {
   }
 
   return (
-    <Box mt="8rem">
+    <>
+    <Box mt="0.5rem">
       <Paper square>
         <Box p='1rem'>
           <form className="character-form" autoComplete="off" onSubmit={submit}>
@@ -303,6 +307,15 @@ function CharacterForm(props) {
         </Box>
       </Paper >
     </Box>
+
+    {/* NOT WORKING */}
+     {/* <If condition={character_id == true}>
+     <Then>
+       console.log('in here');
+       <Redirect to={{ pathname: "/characters"}} />
+     </Then>
+     </If> */}
+     </>
   )
 }
 
