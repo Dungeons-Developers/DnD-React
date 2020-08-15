@@ -5,7 +5,7 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
-import CharacterCard from './components/Characters/CharacterDisplay';
+import CharacterCard, { CharacterDisplay } from './components/Characters/CharacterDisplay';
 import CharacterForm from './components/CharacterForm';
 import CampaignForm from './components/CampaignForm';
 import CampaignPage from './pages/CampaignPage';
@@ -47,7 +47,7 @@ function App({ campaignID }) {
 
           <PrivateRoute exact path='/characters'>
             <Container>
-            <CharacterCard />
+            <CharacterDisplay />
             </Container>
           </PrivateRoute>
 
