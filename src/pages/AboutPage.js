@@ -25,54 +25,54 @@ function About() {
       margin: 3
     }
   };
-  
+
 
   return (
-    <div>
-    <Container>
-      <Paper style={styles.paper}>
-        <img src='http://via.placeholder.com/150x150' />
-        <div style={styles.info}>
-          <h2 style ={styles.text}>Example Human</h2>
-          <h3 style ={styles.text}>Title</h3>
-          <p style ={styles.text}>Look a description</p>
-        </div>
-      </Paper>
-    </Container>
+    <>
+      <Container>
+        <Paper style={styles.paper}>
+          <img src='http://via.placeholder.com/150x150' />
+          <div style={styles.info}>
+            <h2 style={styles.text}>Example Human</h2>
+            <h3 style={styles.text}>Title</h3>
+            <p style={styles.text}>Look a description</p>
+          </div>
+        </Paper>
+      </Container>
 
-    <Container>
-      <Paper style={styles.paper}>
-        <div style={styles.info}>
-          <h2 style ={styles.text}>Example Human</h2>
-          <h3 style ={styles.text}>Title</h3>
-          <p style ={styles.text}>Look a description</p>
-        </div>
-        <img src='http://via.placeholder.com/150x150' />
-      </Paper>
-    </Container>
+      <Container>
+        <Paper style={styles.paper}>
+          <div style={styles.info}>
+            <h2 style={styles.text}>Example Human</h2>
+            <h3 style={styles.text}>Title</h3>
+            <p style={styles.text}>Look a description</p>
+          </div>
+          <img src='http://via.placeholder.com/150x150' />
+        </Paper>
+      </Container>
 
-    <Container>
-      <Paper style={styles.paper}>
-        <img src='http://via.placeholder.com/150x150' />
-        <div style={styles.info}>
-          <h2 style ={styles.text}>Example Human</h2>
-          <h3 style ={styles.text}>Title</h3>
-          <p style ={styles.text}>Look a description</p>
-        </div>
-      </Paper>
-    </Container>
+      <Container>
+        <Paper style={styles.paper}>
+          <img src='http://via.placeholder.com/150x150' />
+          <div style={styles.info}>
+            <h2 style={styles.text}>Example Human</h2>
+            <h3 style={styles.text}>Title</h3>
+            <p style={styles.text}>Look a description</p>
+          </div>
+        </Paper>
+      </Container>
 
-    <Container>
-      <Paper style={styles.paper}>
-        <div style={styles.info}>
-          <h2 style ={styles.text}>Example Human</h2>
-          <h3 style ={styles.text}>Title</h3>
-          <p style ={styles.text}>Look a description</p>
-        </div>
-        <img src='http://via.placeholder.com/150x150' />
-      </Paper>
-    </Container>
-    </div>
+      <Container>
+        <Paper style={styles.paper}>
+          <div style={styles.info}>
+            <h2 style={styles.text}>Example Human</h2>
+            <h3 style={styles.text}>Title</h3>
+            <p style={styles.text}>Look a description</p>
+          </div>
+          <img src='http://via.placeholder.com/150x150' />
+        </Paper>
+      </Container>
+    </>
   )
 }
 
