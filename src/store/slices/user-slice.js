@@ -29,14 +29,26 @@ const userSlice = createSlice({
       state.user = null;
       state.characters = null;
       state.campaigns = null;
+    },
+    addCharacter: (state, action) => {
+      state.characters.push(action.payload)
+      console.log('STATE CHARACTERS', state.characters);
     }
   }
 });
 
-export const { getUser, logout } = userSlice.actions;
+export const { getUser, logout, addCharacter } = userSlice.actions;
+
+export const characterAdd = (payload) => {
+  console.log('HELLO THIS IS FUNCTION')
+
+  return dispatch => {
+    console.log('I AM IN THE DISPATCH')
+    dispatch(addCharacter(payload));
+  }
+}
 
 export const login = (payload) => {
-
   const encoding = encodeBase64(payload)
   return async dispatch => {
     try {
