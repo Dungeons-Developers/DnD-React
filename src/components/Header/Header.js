@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { If, Then } from 'react-if'
 import {
-  AppBar,
+  // AppBar,
   Toolbar,
   Tooltip,
 } from '@material-ui/core';
@@ -15,18 +15,21 @@ function Header({ token }) {
   const styles = {
     appbar: {
       backgroundColor: 'inherit',
-      display: 'flex'
+      display: 'flex',
+      // position: 'sticky',
+      boxShadow: '0 6px 6px -6px black',
     },
     toolbar: {
       display: 'flex',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      width: '100%',
     }
   }
   return (
     <React.Fragment>
       <If condition={token}>
         <Then>
-          <AppBar position='fixed' style={styles.appbar}>
+          <header position='fixed' style={styles.appbar}>
             <Toolbar style={styles.toolbar}>
               <Tooltip title='Home'>
                 <Link to='/home'>
@@ -35,10 +38,9 @@ function Header({ token }) {
               </Tooltip>
               <Nav />
             </Toolbar>
-          </AppBar>
-          <Toolbar />
+          </header>
         </Then>
-      </If>
+      </If>    
     </React.Fragment>
   )
 }
