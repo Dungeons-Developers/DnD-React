@@ -34,7 +34,7 @@ function About() {
     <div style={styles.div}>
     <Container maxWidth='xl'>
       <Paper style={styles.paper}>
-        <img src='http://via.placeholder.com/150x150' />
+        <img src='/assets/claytonjones.png' alt='Clayton Jones'/>
         <div style={styles.info}>
           <h2 style ={styles.text}>Clayton Jones</h2>
           <h3 style ={styles.text}>Lead Developer</h3>
@@ -50,13 +50,13 @@ function About() {
           <h3 style ={styles.text}>Project Manager</h3>
           <p style ={styles.text}>Look, a description</p>
         </div>
-        <img src='http://via.placeholder.com/150x150' />
+        <img src='/assets/dannguyen.png' alt='Daniel Nguyen' />
       </Paper>
     </Container>
 
     <Container>
       <Paper style={styles.paper}>
-        <img src='http://via.placeholder.com/150x150' />
+        <img src='/assets/madisonstehle.png' alt='Madison Stehle' />
         <div style={styles.info}>
           <h2 style ={styles.text}>Madison Stehle</h2>
           <h3 style ={styles.text}>Code Reviewer</h3>
@@ -72,7 +72,7 @@ function About() {
           <h3 style ={styles.text}>DevOps</h3>
           <p style ={styles.text}>Look, a description</p>
         </div>
-        <img src='http://via.placeholder.com/150x150' />
+        <img src='/assets/joelwatson.png' alt='Joel Watson' />
       </Paper>
     </Container>
     </div>
