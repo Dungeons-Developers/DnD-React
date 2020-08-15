@@ -104,6 +104,8 @@ export function CharacterDetails(props) {
   return (
     <div className={styleClasses.root}>
       <AppBar position="static">
+
+   {/* DETAILS TAB  */}
         <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example">
           <Tab label="details" {...a11yProps(0)} />
           <Tab label="edit" {...a11yProps(1)} />
@@ -133,6 +135,8 @@ export function CharacterDetails(props) {
       Add onChange handlers for each text field
       Add useForm hook to trigger on that onChange from the button submit
       */}
+
+  {/* UPDATE TAB  */}
       <TabPanel value={tab} index={1}>
       <form className="character-form" autoComplete="off" onSubmit={submit}>
 
@@ -410,8 +414,12 @@ export function CharacterDetails(props) {
         </form>
       </TabPanel>
 
+{/* DELETE TAB */}
       <TabPanel value={tab} index={2}>
         <h2 id="simple-modal-title">Delete {props.Character.name}?</h2>
+        <Button fullWidth color="primary" variant="contained" type="submit">
+          Delete
+        </Button>
         
       </TabPanel>
     </div>
