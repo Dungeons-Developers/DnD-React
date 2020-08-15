@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from "react-router-dom"
+
 import { If, Then, Else } from 'react-if';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
@@ -11,10 +13,6 @@ import Box from '@material-ui/core/Box';
 import Logo from '../components/Logo'
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
-import CharacterForm from '../components/CharacterForm';
-import Header from '../components/Header'
-
-import { logout } from '../store/slices/user-slice';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,7 +42,7 @@ TabPanel.propTypes = {
 
 function LandingPage(props) {
 
-  const { token, logout } = props;
+  const { token } = props;
 
   const [openTab, setOpenTab] = React.useState(0);
 
@@ -54,8 +52,11 @@ function LandingPage(props) {
 
   return (
     <Container maxWidth="lg">
-      <If condition={(token === null)}>
+      <If condition={token !== null}>
         <Then>
+          <Redirect to={{ pathname: "/" }} />
+        </Then>
+        <Else>
           <Box display="flex"
             flexDirection="column"
             justifyContent="center"
@@ -88,20 +89,10 @@ function LandingPage(props) {
               </TabPanel>
             </Paper>
           </Box>
-        </Then>
-        <Else>
-          <Box display="flex"
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            minHeight="40vh"
-          >
-            <CharacterForm />
-            <button onClick={() => logout()}>logout</button>
-          </Box>
         </Else>
       </If>
-    </Container>
+
+    </Container >
   );
 }
 
@@ -109,7 +100,4 @@ const mapStateToProps = (state) => ({
   token: state.users.token
 });
 
-const mapDispatchToProps = { logout };
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(LandingPage);
+export default connect(mapStateToProps)(LandingPage);
