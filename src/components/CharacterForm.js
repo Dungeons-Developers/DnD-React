@@ -48,6 +48,7 @@ function CharacterForm(props) {
     e.preventDefault();
     handleSubmit(create);
     e.target.reset();
+    //make redirect into fn here
   }
 
   function formChange(e) {

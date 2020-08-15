@@ -88,7 +88,7 @@ export function CharacterDisplay(props) {
 }
 
 const mapStateToProps = state => ({
-  user: state.users.user,
+  user: state.users.username,
   characters: state.users.characters,
 })
 
