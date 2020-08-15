@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
-
+import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
@@ -47,7 +47,13 @@ function App({ campaignID }) {
           </PrivateRoute>
 
           <PrivateRoute exact path='/characters'>
+            <Container>
             <CharacterCard />
+            </Container>
+          </PrivateRoute>
+
+          <PrivateRoute exact path='/create-character'>
+            <CharacterForm />
           </PrivateRoute>
 
           <PrivateRoute exact path='/create-campaign'>
@@ -65,6 +71,7 @@ function App({ campaignID }) {
           <PrivateRoute exact path='/invites'>
 
           </PrivateRoute>
+
 
         </Main>
         <Footer />
