@@ -6,7 +6,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import CharacterCard from './components/Characters/CharacterCard';
-import CharacterForm from './components/CharacterForm';
+
 import CampaignForm from './components/CampaignForm';
 import CampaignPage from './pages/CampaignPage';
 import JoinForm from './components/JoinForm';
@@ -70,6 +70,7 @@ function App({ campaignID }) {
           <PrivateRoute exact path='/invites'>
 
           </PrivateRoute>
+
 
         </Main>
         <Footer />
