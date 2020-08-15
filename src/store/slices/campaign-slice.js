@@ -36,7 +36,8 @@ export const { getCampaign, resetCurrentCampaign } = campaignSlice.actions;
 export const findCampaign = (payload) => {
   return async dispatch => {
     try {
-      let response = await axios.get(`https://dnd-api-server.herokuapp.com/v1/api/campaigns/${payload.campaignID}`);
+      // let response = await axios.get(`http://localhost:4000/v1/api/campaign/${payload.campaignID}`);
+      let response = await axios.get(`https://dnd-api-server.herokuapp.com/v1/api/campaign/${payload.campaignID}`);
 
       let campaign = response.data;
 
@@ -51,8 +52,8 @@ export const createCampaign = (payload) => {
    return async dispatch => {
      try {
 
-      //  let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/campaign', {payload});
-       let response = await axios.post('http://localhost:4000/v1/api/campaign', payload);
+       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/campaign', {payload});
+      //  let response = await axios.post('http://localhost:4000/v1/api/campaign', payload);
 
        let campaign = response.data;
 

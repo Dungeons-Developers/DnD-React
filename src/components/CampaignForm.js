@@ -15,13 +15,11 @@ import {createCampaign, resetCurrentCampaign} from '../store/slices/campaign-sli
 function CampaignForm({createCampaign, user, campaignID, resetCurrentCampaign}) {
 
   useEffect(() => {
-    console.log('ID:',campaignID);
     resetCurrentCampaign();
-    console.log('ID:',campaignID);
   }, []);
 
   const defaults = {
-    user: user ? user.user.username : 'u',
+    user: user ? user.username : 'u',
     title: 'Simple Title',
     setting: '',
     description: '',
@@ -44,7 +42,7 @@ function CampaignForm({createCampaign, user, campaignID, resetCurrentCampaign}) 
 
   return (
     <Container>
-      <form class-name="campaign-form" autoComplete="off" onSubmit={submit}>
+      <form className="campaign-form" autoComplete="off" onSubmit={submit}>
 
         <div>
           <TextField 
