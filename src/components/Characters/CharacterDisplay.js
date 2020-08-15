@@ -51,8 +51,8 @@ export function CharacterDisplay(props) {
       <CardMedia
         component="img"
         alt="D&D Avatar"
-        height="180"
-        image=''
+        height="150"
+        image='https://d3n8a8pro7vhmx.cloudfront.net/sdleadership/pages/259/attachments/original/1404272641/NEW-2.gif?1404272641'
         title=''
       />
       <CardContent>

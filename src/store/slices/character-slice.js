@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
 
+import { characterAdd } from './user-slice';
+
 const characterSlice = createSlice({
   name: 'character',
 
@@ -30,7 +32,7 @@ const characterSlice = createSlice({
       state.proficient_skills = action.payload.proficient_skills;
       state.equipment = action.payload.equipment;
       state.level = action.payload.level;
-      state.character_id = action.payload.character_id;
+      state.character_id = action.payload.character_id; 
     },
     remove: (state, action) => {
       state.name = null;
@@ -42,24 +44,11 @@ const characterSlice = createSlice({
       state.proficient_skills = null;
       state.equipment = null;
       state.level = null;
-    },
-    setAllCharacters: (state, action) => {
-      state.allCharacters = action.payload;
     }
   }
 });
 
-export const { create, remove, setAllCharacters } = characterSlice.actions;
-
-// '/:username/characters'
-
-export const getCharacters = payload => {
-  return async dispatch => {
-    let response = await axios.get(`https://dnd-api-server.herokuapp.com/v1/api/${payload}/characters`);
-    let characters = response.data;
-    dispatch(setAllCharacters(characters));
-  }
-}
+export const { create, remove } = characterSlice.actions;
 
 export const createCharacter = payload => {
   console.log('CharacterSlice payload:', payload)
@@ -73,6 +62,7 @@ export const createCharacter = payload => {
       console.log('res', res);
 
       dispatch(create(res))
+      characterAdd(res);
     } catch (e) {
       console.log(e);
     }

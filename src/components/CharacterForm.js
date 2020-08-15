@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
@@ -10,8 +9,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import { Redirect } from "react-router-dom"
-import { If, Then, Else } from 'react-if';
 import useForm from '../hooks/useForm';
 
 import { createCharacter } from '../store/slices/character-slice';
@@ -20,12 +17,10 @@ import { races, classes, weapons, alignment, deity, skills, adventuring_packs, a
 
 function CharacterForm(props) {
 
-  const {character_id} = props;
-
   const { create, user } = props;
 
   const defaults = {
-    user: user.username,
+    user: user,
     name: '',
     class: '',
     race: '',
@@ -48,7 +43,7 @@ function CharacterForm(props) {
     e.preventDefault();
     handleSubmit(create);
     e.target.reset();
-    //make redirect into fn here
+    window.location.replace('/characters');
   }
 
   function formChange(e) {
@@ -308,20 +303,12 @@ function CharacterForm(props) {
         </Box>
       </Paper >
     </Box>
-
-    {/* NOT WORKING */}
-     {/* <If condition={character_id == true}>
-     <Then>
-       console.log('in here');
-       <Redirect to={{ pathname: "/characters"}} />
-     </Then>
-     </If> */}
      </>
   )
 }
 
 const mapStateToProps = state => ({
-  user: state.users.user
+  user: state.users.username
 })
 
 const mapDispatchToProps = {
