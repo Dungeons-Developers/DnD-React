@@ -91,7 +91,6 @@ function LandingPage(props) {
           </Box>
         </Else>
       </If>
-
     </Container >
   );
 }

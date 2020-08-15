@@ -28,7 +28,7 @@ function About() {
       margin: 3
     }
   };
-  
+
 
   return (
     <div style={styles.div}>
@@ -76,6 +76,7 @@ function About() {
       </Paper>
     </Container>
     </div>
+
   )
 }
 

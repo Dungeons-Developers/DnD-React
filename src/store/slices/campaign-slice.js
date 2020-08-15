@@ -12,6 +12,7 @@ const campaignSlice = createSlice({
     description: '',
     notes: [],
     characters: [],
+    saving: false
   },
   
   reducers: {
@@ -27,11 +28,15 @@ const campaignSlice = createSlice({
 
     resetCurrentCampaign: (state, action) => {
       state.campaignID = '';
+    },
+
+    toggleSaving: (state, action) => {
+      state.saving = !state.saving;
     }
   }
 });
 
-export const { getCampaign, resetCurrentCampaign } = campaignSlice.actions;
+export const { getCampaign, resetCurrentCampaign, toggleSaving } = campaignSlice.actions;
 
 export const findCampaign = (payload) => {
   return async dispatch => {
@@ -40,6 +45,8 @@ export const findCampaign = (payload) => {
       let response = await axios.get(`https://dnd-api-server.herokuapp.com/v1/api/campaign/${payload.campaignID}`);
 
       let campaign = response.data;
+
+      console.log('camp:', campaign);
 
       dispatch(getCampaign(campaign));
     } catch(e) {
@@ -63,6 +70,23 @@ export const createCampaign = (payload) => {
        console.log(e);
      }
    }
+}
+
+export const saveCampaign = (payload) => {
+  const {campaignID, campaign} = payload;
+  console.log('campaign:', campaign);
+  return async dispatch => {
+    try {
+      dispatch(toggleSaving());
+      console.log('saving...');
+      let response = await axios.patch(`https://dnd-api-server.herokuapp.com/v1/api/campaign/${campaignID}`, campaign);
+      console.log('save successful?', response.data);
+      dispatch(toggleSaving());
+
+    } catch(e) {
+      console.log(e);
+    }
+  }
 }
 
 export default campaignSlice.reducer;
