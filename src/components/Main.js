@@ -5,8 +5,15 @@ import React from 'react';
 
 export default function Main(props) {
 
+  const styles = {
+    main: {
+      display: 'flex',
+      flex: 1,
+    }
+  }
+
   return (
-    <div className="main">
+    <div className="main" style={styles.main}>
       {props.children}
     </div>
   )

@@ -24,6 +24,8 @@ function App({campaignID}) {
   const styles = {
     app: {
       display: 'flex',
+      minHeight: '100vh',
+      flexDirection: 'column'
     },
   }
 
