@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import {If} from 'react-if';
+import {Redirect} from 'react-router-dom';
 
 import {connect} from 'react-redux';
 
 import io from 'socket.io-client';
 
-import {saveCampaign} from '../store/slices/campaign-slice';
+import {saveCampaign, disconnectFromCampaign} from '../store/slices/campaign-slice';
 
 const socket = io.connect('http://localhost:4000');
 
@@ -21,7 +23,8 @@ function CampaignPage(props) {
     userCharacters,
     saving,
     saveCampaign,
-    wholeCampaign
+    wholeCampaign,
+    disconnectFromCampaign
   } = props;
 
   const [currentChars, setCurrentChars] = useState(campaignCharacters);
@@ -76,9 +79,14 @@ function CampaignPage(props) {
     saveCampaign(toSave);
   }
 
+  function disconnect() {
+    disconnectFromCampaign(null);
+  }
+
 
   return (
     <div>
+    <button onClick={disconnect}>Disconnect</button>
     <h1>Welcome {user.username}!</h1>
     <h2>CampaignID: {campaignID}</h2>
     <h3>Owner: {owner}</h3>
@@ -111,7 +119,9 @@ function CampaignPage(props) {
 
     {owner === user.username && <button onClick={testSocket}>TEST</button>}
     {owner === user.username && <button onClick={save} disabled={saving}>Save Campaign</button>}
-
+    <If condition={!campaignID}>
+      <Redirect to='/join'/>
+    </If>
     </div>
   )
 }
@@ -140,6 +150,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {saveCampaign}
+const mapDispatchToProps = {saveCampaign, disconnectFromCampaign}
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignPage);
