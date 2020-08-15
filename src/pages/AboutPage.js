@@ -5,6 +5,9 @@ import { Container, Paper } from '@material-ui/core';
 
 function About() {
   const styles = {
+    div: {
+      width: '100%',
+    },
     container: {
       display: 'flex',
     },
@@ -12,11 +15,11 @@ function About() {
       display: 'flex',
       border: 5,
       borderRadius: 10,
-      margin: 10,
+      margin: '20px 10px',
       padding: '10px 30px'
     },
     info: {
-      margin: 10,
+      margin: '10px 20px',
       display: 'flex',
       flexDirection: 'column',
       width: '100%',
@@ -28,14 +31,14 @@ function About() {
   
 
   return (
-    <div>
-    <Container>
+    <div style={styles.div}>
+    <Container maxWidth='xl'>
       <Paper style={styles.paper}>
         <img src='http://via.placeholder.com/150x150' />
         <div style={styles.info}>
-          <h2 style ={styles.text}>Example Human</h2>
-          <h3 style ={styles.text}>Title</h3>
-          <p style ={styles.text}>Look a description</p>
+          <h2 style ={styles.text}>Clayton Jones</h2>
+          <h3 style ={styles.text}>Lead Developer</h3>
+          <p style ={styles.text}>Look, a description</p>
         </div>
       </Paper>
     </Container>
@@ -43,9 +46,9 @@ function About() {
     <Container>
       <Paper style={styles.paper}>
         <div style={styles.info}>
-          <h2 style ={styles.text}>Example Human</h2>
-          <h3 style ={styles.text}>Title</h3>
-          <p style ={styles.text}>Look a description</p>
+          <h2 style ={styles.text}>Daniel Nguyen</h2>
+          <h3 style ={styles.text}>Project Manager</h3>
+          <p style ={styles.text}>Look, a description</p>
         </div>
         <img src='http://via.placeholder.com/150x150' />
       </Paper>
@@ -55,9 +58,9 @@ function About() {
       <Paper style={styles.paper}>
         <img src='http://via.placeholder.com/150x150' />
         <div style={styles.info}>
-          <h2 style ={styles.text}>Example Human</h2>
-          <h3 style ={styles.text}>Title</h3>
-          <p style ={styles.text}>Look a description</p>
+          <h2 style ={styles.text}>Madison Stehle</h2>
+          <h3 style ={styles.text}>Code Reviewer</h3>
+          <p style ={styles.text}>Look, a description</p>
         </div>
       </Paper>
     </Container>
@@ -65,9 +68,9 @@ function About() {
     <Container>
       <Paper style={styles.paper}>
         <div style={styles.info}>
-          <h2 style ={styles.text}>Example Human</h2>
-          <h3 style ={styles.text}>Title</h3>
-          <p style ={styles.text}>Look a description</p>
+          <h2 style ={styles.text}>Joel Watson</h2>
+          <h3 style ={styles.text}>DevOps</h3>
+          <p style ={styles.text}>Look, a description</p>
         </div>
         <img src='http://via.placeholder.com/150x150' />
       </Paper>
