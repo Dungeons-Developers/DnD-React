@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -15,6 +15,8 @@ import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import CharacterCard from '../Characters/CharacterCard';
 
+import {getCharacters} from '../../store/slices/character-slice';
+
 //card styles
 const useStyles = makeStyles({
   root: {
@@ -23,6 +25,12 @@ const useStyles = makeStyles({
 });
 
 export function CharacterDisplay(props) {
+  const {getCharacters, user} = props;
+
+  useEffect(() => {
+    getCharacters(user);
+  }, [getCharacters, user]);
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -87,9 +95,11 @@ export function CharacterDisplay(props) {
   );
 }
 
+const mapDispatchToProps = {getCharacters};
+
 const mapStateToProps = state => ({
   user: state.users.username,
-  characters: state.users.characters,
+  characters: state.characters.allCharacters,
 })
 
-export default connect(mapStateToProps)(CharacterDisplay);
+export default connect(mapStateToProps, mapDispatchToProps)(CharacterDisplay);
