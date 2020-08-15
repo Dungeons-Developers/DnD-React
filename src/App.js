@@ -4,6 +4,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import CharacterCard from './components/Characters/CharacterCard';
 
+import Dice from './components/Dice';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -56,6 +58,11 @@ function App() {
           <Header />
 
         </Route>
+
+        <Route exact path='/dice'>
+          <Dice />
+        </Route>
+
         <Footer />
 
       </BrowserRouter>
