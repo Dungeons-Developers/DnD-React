@@ -6,16 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import CharacterCard from './components/Characters/CharacterCard';
 
-<<<<<<< HEAD
-import Dice from './components/Dice';
-
-import Header from './components/Header';
-import Footer from './components/Footer';
-=======
 import CampaignForm from './components/CampaignForm';
 import CampaignPage from './pages/CampaignPage';
-
->>>>>>> 5d2124d0f0c3a5b80aa5ead497c399b1f036274f
 
 import Main from './components/Main';
 
