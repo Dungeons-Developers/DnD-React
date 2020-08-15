@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
+import Dashboard from './components/Dashboard';
 import CharacterCard from './components/Characters/CharacterCard';
 
 import CampaignForm from './components/CampaignForm';
@@ -42,7 +43,7 @@ function App({ campaignID }) {
           </Route>
 
           <PrivateRoute exact path='/'>
-            <div>YOU ARE LOGGED IN</div>
+            <Dashboard />
           </PrivateRoute>
 
           <PrivateRoute exact path='/characters'>

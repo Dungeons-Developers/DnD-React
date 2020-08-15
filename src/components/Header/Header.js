@@ -27,12 +27,12 @@ function Header({ token }) {
   }
   return (
     <React.Fragment>
-      <If condition={token}>
+      <If condition={token !== null}>
         <Then>
           <header position='fixed' style={styles.appbar}>
             <Toolbar style={styles.toolbar}>
               <Tooltip title='Home'>
-                <Link to='/home'>
+                <Link to='/'>
                   <Logo />
                 </Link>
               </Tooltip>
@@ -40,7 +40,7 @@ function Header({ token }) {
             </Toolbar>
           </header>
         </Then>
-      </If>    
+      </If>
     </React.Fragment>
   )
 }
