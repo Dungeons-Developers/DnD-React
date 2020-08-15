@@ -13,16 +13,22 @@ const userSlice = createSlice({
   initialState: {
     token: null,
     user: null,
+    characters: [],
+    campaigns: []
   },
 
   reducers: {
     getUser: (state, action) => {
       state.token = action.payload.token;
       state.user = action.payload.user;
+      state.characters = action.payload.user.characters;
+      state.campaigns = action.payload.user.campaigns;
     },
     logout: (state, action) => {
       state.token = null;
       state.user = null;
+      state.characters = null;
+      state.campaigns = null;
     }
   }
 });
