@@ -18,8 +18,7 @@ import Grid from '@material-ui/core/Grid';
 
 import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
-import { updateCharacter } from '../../store/slices/character-slice';
-
+import { updateCharacter, deleteCharacter } from '../../store/slices/character-slice';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -63,9 +62,11 @@ const useStyles = makeStyles((theme) => ({
 
 
 export function CharacterDetails(props) {
+
+  console.log('charprop from show/edit', props.Character);
   const styleClasses = useStyles();
   const [tab, setTab] = React.useState(0);
-  const { create, user } = props;
+  const { create, user, remove } = props;
 
   const defaults = {
     user: user,
@@ -81,15 +82,21 @@ export function CharacterDetails(props) {
     weapon_1: '',
     weapon_2: '',
     ability_scores: '',
-    level: '2',
+    level: '1',
     isInCampaign: false,
   };
 
   const { handleChange, handleSubmit, fields } = useForm(defaults);
 
-  function submit(e) {
+  function editSubmit(e) {
     e.preventDefault();
     handleSubmit(create);
+    e.target.reset();
+  }
+
+  function deleteSubmit(e) {
+    e.preventDefault();
+    handleSubmit(remove);
     e.target.reset();
   }
 
@@ -105,30 +112,29 @@ export function CharacterDetails(props) {
     <div className={styleClasses.root}>
       <AppBar position="static">
 
-   {/* DETAILS TAB  */}
         <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example">
           <Tab label="details" {...a11yProps(0)} />
           <Tab label="edit" {...a11yProps(1)} />
           <Tab label="delete" {...a11yProps(2)} />
-
       
         </Tabs>
       </AppBar>
 
       {/* need to get charName dynamically populating from store data */}
+  {/* DETAILS TAB  */}
       <TabPanel value={tab} index={0}>
         <h2 id="simple-modal-title">Char Name {props.Character.name}</h2>
-        <p className="charStats">Level: </p>
-        <p className="charStats">Race: </p>
-        <p className="charStats">Class: </p>
-        <p className="charStats">Alignment: </p>
-        <p className="charStats">Deity: </p>
-        <p className="charStats">Proficiencies: </p>
-        <p className="charStats">Ability Scores: </p>
-        <p className="charStats">Equipment: </p>
+        <p className="charStats">Level: {props.Character.level} </p>
+        <p className="charStats">Race: {props.Character.race}</p>
+        <p className="charStats">Class: {props.Character.class}</p>
+        <p className="charStats">Alignment: {props.Character.alignment}</p>
+        <p className="charStats">Deity: {props.Character.deity}</p>
+        <p className="charStats">Proficiencies: {props.Character.skill_1}, {props.Character.skill_2}</p>
+        <p className="charStats">Ability Scores: {props.Character.ability_scores}</p>
+        <p className="charStats">Equipment: {props.Character.pack}, {props.Character.weapon_1}, {props.Character.weapon_2}</p>
         <p id="simple-modal-description">
         BIO COPY: 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
         </p>
       </TabPanel>
       {/* Make text fields dropdowns where necessary 
@@ -138,8 +144,7 @@ export function CharacterDetails(props) {
 
   {/* UPDATE TAB  */}
       <TabPanel value={tab} index={1}>
-      <form className="character-form" autoComplete="off" onSubmit={submit}>
-
+      <form className="character-edit-form" autoComplete="off" onSubmit={editSubmit}>
        
       <Grid container spacing={3}>
       {/* NAME CHANGE */}
@@ -417,10 +422,11 @@ export function CharacterDetails(props) {
 {/* DELETE TAB */}
       <TabPanel value={tab} index={2}>
         <h2 id="simple-modal-title">Delete {props.Character.name}?</h2>
+        <form className="character-delete-form" autoComplete="off" onSubmit={deleteSubmit}>
         <Button fullWidth color="primary" variant="contained" type="submit">
           Delete
         </Button>
-        
+        </form>
       </TabPanel>
     </div>
   );
@@ -432,6 +438,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   create: updateCharacter,
+  remove: deleteCharacter,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterDetails);
