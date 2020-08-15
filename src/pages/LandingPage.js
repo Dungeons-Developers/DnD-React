@@ -11,6 +11,8 @@ import Box from '@material-ui/core/Box';
 import Logo from '../components/Logo'
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
+import CharacterForm from '../components/CharacterForm';
+import Header from '../components/Header'
 
 import { logout } from '../store/slices/user-slice';
 
@@ -94,7 +96,8 @@ function LandingPage(props) {
             alignItems="center"
             minHeight="40vh"
           >
-            you logged in!<br />
+            <Header />
+            <CharacterForm />
             <button onClick={() => logout()}>logout</button>
           </Box>
         </Else>
