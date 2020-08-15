@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
 import CharacterShowEdit from './CharacterShowEdit';
 import Box from '@material-ui/core/Box';
-import { Link } from 'react-router-dom';
 
 //card styles
 const useStyles = makeStyles({
@@ -21,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function CharacterCard(props) {
+export default function CharacterCard(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -32,61 +31,27 @@ export function CharacterCard(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  let charactersHTML = [];
-
-  //push character create form as card
-  charactersHTML.push(<Grid item xs={4} md={3} lg={2} key="characterCreateFormGrid">
-    <Card className={classes.root} key="characterCreateFormCard">
-    <CardActionArea>
-      <CardMedia
-        component="img"
-        alt="D&D Avatar"
-        height="180"
-        image=''
-        title=''
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="h2">
-          New Character?
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-         v~Start here!~v
-        </Typography>
-      </CardContent>
-    </CardActionArea>
-    <CardActions>
-     
-    <Link to="/create-character">
-    <Button size="small" color="primary" >
-      Create Character
-    </Button>
-    </Link>
-
-    </CardActions>
-  </Card>
-  </Grid>
-    );
-
-    //populate existing character cards
-  for (let i = 0; i < props.characters.length; i++) {
-    charactersHTML.push(<Grid item xs={4} md={3} lg={2} key={i}>
-      <Card className={classes.root} key={i}>
+  
+  return (
+    <>
+    <div className="CharacterCard">
+    <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
           component="img"
           alt="D&D Avatar"
           height="180"
           image=''
-          title={props.characters[i].name}
+          title={props.character.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.characters[i].name}
+            {props.character.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {/* Lvl {props.characters[i].level}  */}
-            {props.characters[i].race} {props.characters[i].class} ... In Campaign
+            Lvl {props.character.level} 
+            {props.character.race} {props.character.class} 
+            ... In Campaign
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -102,29 +67,12 @@ export function CharacterCard(props) {
         aria-describedby="simple-modal-description"
       >
          <Box my="1rem">
-      <CharacterShowEdit Character={props.characters[i]} />
+      <CharacterShowEdit Character={props.character}/>
         </Box>
       </Modal>
       </CardActions>
     </Card>
-    </Grid>);
-  }
-
-  return (
-
-    <>
-    <div className="CharactersGrid">
-      <Grid container spacing={3} direction='row'>
-        {charactersHTML}
-      </Grid>
     </div>
     </>
   );
 }
-
-const mapStateToProps = state => ({
-  user: state.users.user,
-  characters: state.users.characters,
-})
-
-export default connect(mapStateToProps)(CharacterCard);
