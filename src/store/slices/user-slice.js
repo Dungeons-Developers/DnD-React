@@ -45,6 +45,7 @@ export const login = (payload) => {
       );
 
       let res = response.data;
+      console.log(res.user);
       dispatch(getUser(res))
     } catch (e) {
       console.log(e);

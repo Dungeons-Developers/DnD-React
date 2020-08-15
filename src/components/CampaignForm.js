@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {If} from 'react-if';
+import {Redirect} from 'react-router-dom';
 
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
@@ -6,20 +9,32 @@ import Button from '@material-ui/core/Button';
 
 import useForm from '../hooks/useForm';
 
-function CampaignForm(props) {
-  const fields = {
-    title: '',
+import {createCampaign, resetCurrentCampaign} from '../store/slices/campaign-slice';
+
+
+function CampaignForm({createCampaign, user, campaignID, resetCurrentCampaign}) {
+
+  useEffect(() => {
+    console.log('ID:',campaignID);
+    resetCurrentCampaign();
+    console.log('ID:',campaignID);
+  }, []);
+
+  const defaults = {
+    user: user ? user.user.username : 'u',
+    title: 'Simple Title',
     setting: '',
     description: '',
     notes: [],
-    characters: []
+    characters: [],
+    isComplete: false
   }
 
-  const { handleChange, handleSubmit } = useForm(fields);
+  const { handleChange, handleSubmit, fields } = useForm(defaults);
 
   function submit(e) {
     e.preventDefault();
-    handleSubmit();
+    handleSubmit(createCampaign);
     e.target.reset();
   }
 
@@ -38,6 +53,7 @@ function CampaignForm(props) {
             color="primary" 
             margin="normal" 
             onChange={formChange} 
+            value={fields.title}
           />
         </div>
 
@@ -78,7 +94,7 @@ function CampaignForm(props) {
         </div>
 
         {/* invite friends functionality? */}
-        <div>
+        {/* <div>
           <TextField  
             id="characters" 
             label="Invite Friends" 
@@ -86,20 +102,35 @@ function CampaignForm(props) {
             color="primary" 
             onChange={formChange} 
           />
-        </div>
+        </div> */}
 
         <Button 
           variant="contained" 
           color="primary" 
           type="submit" 
-          margin="normal" >
-          Save
+          margin="normal" 
+          disabled={ !fields.title || !fields.setting || !fields.description }
+          >
+          Create
         </Button>
+
+        <If condition={!!campaignID}>
+            <Redirect to='/play'/>
+        </If>
         
       </form>
     </Container>
   );
 }
 
+const mapDispatchToProps = { createCampaign, resetCurrentCampaign };
 
-export default CampaignForm;
+const mapStateToProps = (state) => {
+  return {
+    user: state.users.user,
+    campaignID: state.campaign.campaignID
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CampaignForm);
