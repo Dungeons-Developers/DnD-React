@@ -1,5 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
+import { If, Then } from 'react-if'
 import {
   AppBar,
   Toolbar,
@@ -9,9 +11,7 @@ import {
 import Logo from '../Logo';
 import Nav from './Nav';
 
-
-export default function Header(props) {
-
+function Header({ token }) {
   const styles = {
     appbar: {
       backgroundColor: 'inherit',
@@ -22,20 +22,29 @@ export default function Header(props) {
       justifyContent: 'space-between'
     }
   }
-
   return (
     <React.Fragment>
-    <AppBar position='fixed' style={styles.appbar}>
-      <Toolbar style={styles.toolbar}>
-        <Tooltip title='Home'>
-          <Link to='/home'>
-            <Logo />
-          </Link>
-        </Tooltip>
-        <Nav />
-      </Toolbar>
-    </AppBar>
-    <Toolbar />
+      <If condition={token}>
+        <Then>
+          <AppBar position='fixed' style={styles.appbar}>
+            <Toolbar style={styles.toolbar}>
+              <Tooltip title='Home'>
+                <Link to='/home'>
+                  <Logo />
+                </Link>
+              </Tooltip>
+              <Nav />
+            </Toolbar>
+          </AppBar>
+          <Toolbar />
+        </Then>
+      </If>
     </React.Fragment>
   )
 }
+
+const mapStateToProps = (state) => ({
+  token: state.users.token
+});
+
+export default connect(mapStateToProps)(Header)
