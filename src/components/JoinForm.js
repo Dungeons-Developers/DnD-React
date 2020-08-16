@@ -57,15 +57,20 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
     paper: {
       width: '30%',
       padding: '5px',
-      marginBottom: '10px'
+      marginBottom: '10px',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minWidth: '220px'
     }
   }
 
   return (
     <Container style={styles.container}>
-      <div>
-        <h1>Enter the ID of the campaign you wish to join.</h1>
-        <p>If you don't have any campaigns of your own, create one, or ask a friend to join theirs!</p>
+      <div style={styles.container}>
+        <h2 style={{textAlign: 'center'}}>Enter the ID of the campaign you wish to join, or select on from below.</h2>
+        <p style={{textAlign: 'center'}}>If you don't have any campaigns of your own, create one, or ask a friend to join theirs!</p>
       </div>
       <form autoComplete='off' onSubmit={submit} style={styles.form}>
         <div>
@@ -90,10 +95,13 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
       </form>
       <If condition={campaigns.length > 0}>
         <div>
-          <p>Your campaigns:</p>
+          <h3>Your campaigns:</h3>
           <div style={styles.campList}>
             {campaigns.map((cam, i) => (
-              <Paper style={styles.paper}>
+              <Paper 
+                style={styles.paper}
+                variant='outlined'
+              >
                 <h4>{cam.title}</h4>
                 <p>ID: {cam._id}</p>
               </Paper>
