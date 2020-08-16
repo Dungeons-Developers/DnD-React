@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
 
+import { characterAdd } from './user-slice';
+
 const characterSlice = createSlice({
   name: 'character',
 

@@ -15,7 +15,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
-
+import {If, Then, Else} from 'react-if';
 import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
 import { updateCharacter, deleteCharacter } from '../../store/slices/character-slice';
@@ -82,7 +82,7 @@ export function CharacterDetails(props) {
     weapon_1: '',
     weapon_2: '',
     ability_scores: '',
-    level: '1',
+    level: '',
     isInCampaign: false,
   };
 
@@ -143,6 +143,7 @@ export function CharacterDetails(props) {
       */}
 
   {/* UPDATE TAB  */}
+  <If condition={props.edit}>
       <TabPanel value={tab} index={1}>
       <form className="character-edit-form" autoComplete="off" onSubmit={editSubmit}>
        
@@ -152,9 +153,10 @@ export function CharacterDetails(props) {
                 <TextField
                   id="update-character-name"
                   name='name'
-                  label="Name"
+                  label={props.Character.name}
                   onChange={formChange}
                   fullWidth
+                  placeholder={props.Character.name}
                   helperText="Update your name"
                 />
               </Grid>
@@ -181,7 +183,7 @@ export function CharacterDetails(props) {
                   name="level"
                   label="Level"
                   fullWidth
-                  defaultValue={1}
+                  defaultValue={props.Character.level}
                 />
                 <FormHelperText>Update your level</FormHelperText>
                 </FormControl>
@@ -190,11 +192,12 @@ export function CharacterDetails(props) {
       {/* RACE CHANGE */}
       <Grid item xs={12} sm={6}>
         <FormControl fullWidth>
-                  <InputLabel id="update-character-race-label">Race</InputLabel>
+                  <InputLabel id="update-character-race-label">{props.Character.race}</InputLabel>
                   <Select
                     labelId="update-character-race-label"
                     id="update-character-race"
                     name='race'
+                    placeholder={props.Character.race}
                     value={fields.race}
                     onChange={formChange}
                   >
@@ -212,11 +215,11 @@ export function CharacterDetails(props) {
       {/* CLASS CHANGE  */}
       <Grid item xs={12} sm={4}>
         <FormControl fullWidth>
-                  <InputLabel id="update-character-class-label">Class</InputLabel>
+                  <InputLabel id="update-character-class-label">{props.Character.class}</InputLabel>
                   <Select
                     labelId="update-character-class-label"
                     id="update-character-class"
-                    name='class'
+                    name={props.Character.class}
                     value={fields.class}
                     onChange={formChange}
                   >
@@ -234,11 +237,11 @@ export function CharacterDetails(props) {
       {/* ALIGNMENT CHANGE  */}
       <Grid item xs={12} sm={4}>
         <FormControl fullWidth>
-                  <InputLabel id="update-character-alignment-label">Alignment</InputLabel>
+                  <InputLabel id="update-character-alignment-label">{props.Character.alignment}</InputLabel>
                   <Select
                     labelId="update-character-alignment-label"
                     id="update-character-alignment"
-                    name='alignment'
+                    name={props.Character.alignment}
                     value={fields.alignment}
                     onChange={formChange}
                   >
@@ -256,11 +259,11 @@ export function CharacterDetails(props) {
       {/* DEITY CHANGE  */}
       <Grid item xs={12} sm={4}>
         <FormControl fullWidth>
-                  <InputLabel id="update-character-deity-label">Deity</InputLabel>
+                  <InputLabel id="update-character-deity-label">{props.Character.deity}</InputLabel>
                   <Select
                     labelId="update-character-deity-label"
                     id="update-character-deity"
-                    name='deity'
+                    name={props.Character.deity}
                     value={fields.deity}
                     onChange={formChange}
                   >
@@ -282,7 +285,7 @@ export function CharacterDetails(props) {
                   <Select
                     labelId="update-character-skill-one-label"
                     id="update-character-skill-one"
-                    name='skill_1'
+                    name="Skill 1"
                     value={fields.skill_1}
                     onChange={formChange}
                   >
@@ -351,7 +354,6 @@ export function CharacterDetails(props) {
                     name='pack'
                     value={fields.pack}
                     onChange={formChange}
-                    required
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -374,7 +376,6 @@ export function CharacterDetails(props) {
                     name='weapon_1'
                     value={fields.weapon_1}
                     onChange={formChange}
-                    required
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -383,6 +384,7 @@ export function CharacterDetails(props) {
                       return <MenuItem key={index} value={value}>{value}</MenuItem>
                     })}
                   </Select>
+                  <FormHelperText>Select a new weapon 1</FormHelperText>
                 </FormControl>
               </Grid>
 
@@ -396,7 +398,6 @@ export function CharacterDetails(props) {
                     name='weapon_2'
                     value={fields.weapon_2}
                     onChange={formChange}
-                    required
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -405,6 +406,7 @@ export function CharacterDetails(props) {
                       return <MenuItem key={index} value={value}>{value}</MenuItem>
                     })}
                   </Select>
+                  <FormHelperText>Select a new weapon 2</FormHelperText>
                 </FormControl>
               </Grid>
        <br/>
@@ -418,8 +420,9 @@ export function CharacterDetails(props) {
         </Grid>
         </form>
       </TabPanel>
-
+  </If>
 {/* DELETE TAB */}
+    <If condition={props.delete}>
       <TabPanel value={tab} index={2}>
         <h2 id="simple-modal-title">Delete {props.Character.name}?</h2>
         <form className="character-delete-form" autoComplete="off" onSubmit={deleteSubmit}>
@@ -428,6 +431,7 @@ export function CharacterDetails(props) {
         </Button>
         </form>
       </TabPanel>
+    </If>
     </div>
   );
 }

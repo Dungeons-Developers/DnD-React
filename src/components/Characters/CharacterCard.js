@@ -17,6 +17,7 @@ import Box from '@material-ui/core/Box';
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    maxHeight: 300,
   },
 });
 
@@ -40,8 +41,8 @@ export default function CharacterCard(props) {
         <CardMedia
           component="img"
           alt="D&D Avatar"
-          height="180"
-          image=''
+          height="130"
+          image='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png'
           title={props.character.name}
         />
         <CardContent>
@@ -50,8 +51,9 @@ export default function CharacterCard(props) {
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             Lvl {props.character.level} 
-            {props.character.race} {props.character.class} 
-            ... In Campaign
+            &nbsp;{props.character.race} &nbsp;{props.character.class}&nbsp; <br/>
+         In Campaign = {props.character.isInCampaign}
+            
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -67,7 +69,7 @@ export default function CharacterCard(props) {
         aria-describedby="simple-modal-description"
       >
          <Box my="1rem">
-      <CharacterShowEdit Character={props.character}/>
+      <CharacterShowEdit Character={props.character} edit={props.edit} delete={props.delete}/>
         </Box>
       </Modal>
       </CardActions>

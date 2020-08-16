@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
@@ -10,8 +9,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
-import { Redirect } from "react-router-dom"
-import { If, Then, Else } from 'react-if';
 import useForm from '../hooks/useForm';
 import Dice from '../components/Dice';
 
@@ -61,6 +58,7 @@ function CharacterForm(props) {
     e.preventDefault();
     handleSubmit(create);
     e.target.reset();
+    window.location.replace('/characters');
   }
 
   function formChange(e) {
@@ -305,48 +303,9 @@ function CharacterForm(props) {
                     defaultValue={1}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    color="primary"
-                    type='submit'
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {weapons.map((value, index) => {
-                      return <MenuItem key={index} value={value}>{value}</MenuItem>
-                    })}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                {/* TODO: Roll for Ability Scores */}
-                <TextField
-                  id="character-ability-score"
-                  name="abilityScore"
-                  label="Ability Scores"
-                  disabled
-                  fullWidth
-                  defaultValue="ABILITY SCORE ROLL WILL GO HERE"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  id="character-level"
-                  name="level"
-                  label="Level"
-                  disabled
-                  fullWidth
-                  defaultValue={1}
-                />
-              </Grid>
-
               <Grid item xs={12}>
                 <Dice insertScore={tryAddScore} />
               </Grid>
-                  
               <Grid item xs={12}>
                 <Button
                   variant="contained"
@@ -357,25 +316,17 @@ function CharacterForm(props) {
                   Create
                 </Button>
                 </Grid>
-              </Grid>
+                </Grid>
             </form>
           </Box>
         </Paper >
       </Box>
-
-      {/* NOT WORKING */}
-      {/* <If condition={character_id == true}>
-     <Then>
-       console.log('in here');
-       <Redirect to={{ pathname: "/characters"}} />
-     </Then>
-     </If> */}
     </>
   )
 }
 
 const mapStateToProps = state => ({
-  user: state.users.user
+  user: state.users.username
 })
 
 const mapDispatchToProps = {

@@ -51,8 +51,8 @@ export function CharacterDisplay(props) {
       <CardMedia
         component="img"
         alt="D&D Avatar"
-        height="180"
-        image=''
+        height="150"
+        image='https://d3n8a8pro7vhmx.cloudfront.net/sdleadership/pages/259/attachments/original/1404272641/NEW-2.gif?1404272641'
         title=''
       />
       <CardContent>
@@ -80,7 +80,7 @@ export function CharacterDisplay(props) {
     //populate existing character cards
   for (let i = 0; i < props.characters.length; i++) {
     charactersHTML.push(<Grid item xs={4} md={3} lg={2} key={i}>
-     <CharacterCard character={props.characters[i]}/>
+     <CharacterCard character={props.characters[i]} edit={true} delete={true}/>
     </Grid>);
   }
   
