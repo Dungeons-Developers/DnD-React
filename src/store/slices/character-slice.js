@@ -7,62 +7,50 @@ const characterSlice = createSlice({
   name: 'character',
 
   initialState: {
-    name: '',
-    class: '',
-    race: '',
-    ability_scores: null,
-    alignment: '',
-    deity: '',
-    proficient_skills: null,
-    equipment: null,
-    level: '1',
-    isInCampaign: false,
-    character_id: null,
+    score_options: [],
     allCharacters: []
   },
 
   reducers: {
-    create: (state, action) => {
-      state.name = action.payload.name;
-      state.class = action.payload.class;
-      state.race = action.payload.race;
-      state.ability_scores = action.payload.ability_scores;
-      state.alignment = action.payload.alignment;
-      state.deity = action.payload.deity;
-      state.proficient_skills = action.payload.proficient_skills;
-      state.equipment = action.payload.equipment;
-      state.level = action.payload.level;
-      state.character_id = action.payload.character_id; 
+    insertScore(state, action) {
+      state.score_options = [...state.score_options, action.payload]
     },
-    remove: (state, action) => {
-      state.name = null;
-      state.class = null;
-      state.race = null;
-      state.ability_scores = null;
-      state.alignment = null;
-      state.deity = null;
-      state.proficient_skills = null;
-      state.equipment = null;
-      state.level = null;
+    setAllCharacters: (state, action) => {
+      state.allCharacters = action.payload;
+    },
+    addChar: (state, action) => {
+      state.allCharacters.push(action.payload)
+    },
+    updateChar: (state, action) => {
+      state.allCharacters = state.allCharacters.map((char) => {
+        if (action.payload._id === char._id) char = action.payload;
+        return char;
+      })
     }
   }
 });
 
-export const { create, remove } = characterSlice.actions;
+
+export const { setAllCharacters, addChar, updateChar, insertScore } = characterSlice.actions;
+
+export const getCharacters = payload => {
+  return async dispatch => {
+    let response = await axios.get(`https://dnd-api-server.herokuapp.com/v1/api/${payload}/characters`);
+    let characters = response.data;
+    dispatch(setAllCharacters(characters));
+  }
+}
+
 
 export const createCharacter = payload => {
-  console.log('CharacterSlice payload:', payload)
-  // Format Payload
-
+  payload.ability_scores = { str: '5' };
   return async dispatch => {
     try {
       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/character', payload);
 
       let res = response.data;
-      console.log('res', res);
-
-      dispatch(create(res))
-      characterAdd(res);
+      console.log(res)
+      dispatch(addChar(res))
     } catch (e) {
       console.log(e);
     }
@@ -70,17 +58,12 @@ export const createCharacter = payload => {
 }
 
 export const updateCharacter = payload => {
-  console.log(payload)
-
-  // Format Payload
-
   return async dispatch => {
     try {
       let response = await axios.patch(`https://dnd-api-server.herokuapp.com/v1/api/character/${payload._id}`, payload);
 
       let res = response.data;
-      console.log(res);
-      dispatch(create(res))
+      dispatch(updateChar(res))
     } catch (e) {
       console.log(e);
     }
@@ -96,7 +79,6 @@ export const deleteCharacter = payload => {
 
       let res = response.data;
       console.log(res);
-      dispatch(remove(res))
     } catch (e) {
       console.log(e);
     }

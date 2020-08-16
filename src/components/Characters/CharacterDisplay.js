@@ -80,7 +80,7 @@ export function CharacterDisplay(props) {
     //populate existing character cards
   for (let i = 0; i < props.characters.length; i++) {
     charactersHTML.push(<Grid item xs={4} md={3} lg={2} key={i}>
-     <CharacterCard character={props.characters[i]}/>
+     <CharacterCard character={props.characters[i]} edit={true} delete={true}/>
     </Grid>);
   }
   

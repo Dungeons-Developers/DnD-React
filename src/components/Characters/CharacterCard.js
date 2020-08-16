@@ -69,7 +69,7 @@ export default function CharacterCard(props) {
         aria-describedby="simple-modal-description"
       >
          <Box my="1rem">
-      <CharacterShowEdit Character={props.character}/>
+      <CharacterShowEdit Character={props.character} edit={props.edit} delete={props.delete}/>
         </Box>
       </Modal>
       </CardActions>

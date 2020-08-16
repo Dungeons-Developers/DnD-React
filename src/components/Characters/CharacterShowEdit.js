@@ -15,7 +15,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Grid from '@material-ui/core/Grid';
-
+import {If, Then, Else} from 'react-if';
 import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
 import { updateCharacter, deleteCharacter } from '../../store/slices/character-slice';
@@ -143,6 +143,7 @@ export function CharacterDetails(props) {
       */}
 
   {/* UPDATE TAB  */}
+  <If condition={props.edit}>
       <TabPanel value={tab} index={1}>
       <form className="character-edit-form" autoComplete="off" onSubmit={editSubmit}>
        
@@ -419,8 +420,9 @@ export function CharacterDetails(props) {
         </Grid>
         </form>
       </TabPanel>
-
+  </If>
 {/* DELETE TAB */}
+    <If condition={props.delete}>
       <TabPanel value={tab} index={2}>
         <h2 id="simple-modal-title">Delete {props.Character.name}?</h2>
         <form className="character-delete-form" autoComplete="off" onSubmit={deleteSubmit}>
@@ -429,6 +431,7 @@ export function CharacterDetails(props) {
         </Button>
         </form>
       </TabPanel>
+    </If>
     </div>
   );
 }
