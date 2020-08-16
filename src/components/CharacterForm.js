@@ -13,8 +13,9 @@ import Button from '@material-ui/core/Button';
 import { Redirect } from "react-router-dom"
 import { If, Then, Else } from 'react-if';
 import useForm from '../hooks/useForm';
+import Dice from '../components/Dice';
 
-import { createCharacter } from '../store/slices/character-slice';
+import { createCharacter, insertScore } from '../store/slices/character-slice';
 
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../data/charOptions.json';
 
@@ -22,7 +23,7 @@ function CharacterForm(props) {
 
   const {character_id} = props;
 
-  const { create, user } = props;
+  const { create, user, addScore } = props;
 
   const defaults = {
     user: user.username,
@@ -37,12 +38,23 @@ function CharacterForm(props) {
     pack: '',
     weapon_1: '',
     weapon_2: '',
-    ability_scores: '',
+    ability_scores: {
+      'str': 13,
+      'dex': 14,
+      'con': 15,
+      'int': 18,
+      'wis': 14,
+      'cha': 15
+    },
     level: '1',
     isInCampaign: false,
   };
 
   const { handleChange, handleSubmit, fields } = useForm(defaults);
+
+  function tryAddScore(num) {
+    props.addScore(num);
+  }
 
   function submit(e) {
     e.preventDefault();
@@ -292,6 +304,11 @@ function CharacterForm(props) {
                   defaultValue={1}
                 />
               </Grid>
+
+              <Grid item xs={12}>
+                <Dice insertScore={tryAddScore} />
+              </Grid>
+                  
               <Grid item xs={12}>
                 <Button
                   variant="contained"
@@ -306,6 +323,7 @@ function CharacterForm(props) {
           </form>
         </Box>
       </Paper >
+
     </Box>
 
     {/* NOT WORKING */}
@@ -325,6 +343,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   create: createCharacter,
+  addScore: insertScore,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterForm);
