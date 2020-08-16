@@ -4,7 +4,7 @@ import {If} from 'react-if';
 import {Redirect} from 'react-router-dom';
 
 
-import {TextField, Container, Button} from '@material-ui/core';
+import {TextField, Container, Button, Paper} from '@material-ui/core';
 
 import useForm from '../hooks/useForm';
 
@@ -34,14 +34,45 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
 
   const {handleChange, handleSubmit, fields} = useForm(defaults);
 
+  const styles = {
+    container: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column'
+    },
+    form: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column'
+    },
+    campList: {
+      width: '100%',
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      alignItems: 'center'
+    },
+    paper: {
+      width: '30%',
+      padding: '5px',
+      marginBottom: '10px'
+    }
+  }
+
   return (
-    <Container>
-      <form autoComplete='off' onSubmit={submit}>
+    <Container style={styles.container}>
+      <div>
+        <h1>Enter the ID of the campaign you wish to join.</h1>
+        <p>If you don't have any campaigns of your own, create one, or ask a friend to join theirs!</p>
+      </div>
+      <form autoComplete='off' onSubmit={submit} style={styles.form}>
         <div>
           <TextField 
             id="campaignID" 
             label="CampaignID" 
-            color="primary" 
+            color="secondary"
             margin="normal" 
             onChange={formChange} 
             value={fields.campaignID}
@@ -49,7 +80,7 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
         </div>
         <Button 
           variant="contained" 
-          color="primary" 
+          color="secondary" 
           type="submit" 
           margin="normal"
           disabled={!fields.campaignID}
@@ -57,12 +88,20 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
           Join
         </Button>
       </form>
-      <div>
-        <p>Your campaigns:</p>
-        {campaigns.map((cam, i) => (
-          <p key={i}>{cam._id}</p>
-        ))}
-      </div>
+      <If condition={campaigns.length > 0}>
+        <div>
+          <p>Your campaigns:</p>
+          <div style={styles.campList}>
+            {campaigns.map((cam, i) => (
+              <Paper style={styles.paper}>
+                <h4>{cam.title}</h4>
+                <p>ID: {cam._id}</p>
+              </Paper>
+            ))}
+          </div>
+        </div>
+      </If>
+
       <If condition={!!campaignID}>
           <Redirect to='/play'/>
       </If>
