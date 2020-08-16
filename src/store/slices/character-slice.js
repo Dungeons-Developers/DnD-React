@@ -5,62 +5,31 @@ const characterSlice = createSlice({
   name: 'character',
 
   initialState: {
-    name: '',
-    class: '',
-    race: '',
-    ability_scores: null,
     score_options: [],
-    alignment: '',
-    deity: '',
-    proficient_skills: null,
-    equipment: null,
-    level: '1',
-    isInCampaign: false,
-    character_id: null,
     allCharacters: []
   },
 
   reducers: {
-    create: (state, action) => {
-      state.name = action.payload.name;
-      state.class = action.payload.class;
-      state.race = action.payload.race;
-      state.ability_scores = action.payload.ability_scores;
-      state.alignment = action.payload.alignment;
-      state.deity = action.payload.deity;
-      state.proficient_skills = action.payload.proficient_skills;
-      state.equipment = action.payload.equipment;
-      state.level = action.payload.level;
-      state.character_id = action.payload.character_id;
-    },
     insertScore(state, action) {
-      console.log('REDUCER PAYLOAD', action.payload);
-      // console.log('HELLOOOO')
-      console.log('SCORE OPTIONS', state.score_options);
       state.score_options = [...state.score_options, action.payload]
-      console.log('SCORE OPTIONS', state.score_options);
-    },
-    remove: (state, action) => {
-      state.name = null;
-      state.class = null;
-      state.race = null;
-      state.ability_scores = null;
-      state.alignment = null;
-      state.deity = null;
-      state.proficient_skills = null;
-      state.equipment = null;
-      state.level = null;
     },
     setAllCharacters: (state, action) => {
       state.allCharacters = action.payload;
+    },
+    addChar: (state, action) => {
+      state.allCharacters.push(action.payload)
+    },
+    updateChar: (state, action) => {
+      state.allCharacters = state.allCharacters.map((char) => {
+        if (action.payload._id === char._id) char = action.payload;
+        return char;
+      })
     }
   }
 });
 
 
-export const { create, remove, insertScore, setAllCharacters } = characterSlice.actions;
-
-// '/:username/characters'
+export const { setAllCharacters, addChar, updateChar, insertScore } = characterSlice.actions;
 
 export const getCharacters = payload => {
   return async dispatch => {
@@ -72,17 +41,14 @@ export const getCharacters = payload => {
 
 
 export const createCharacter = payload => {
-  console.log('CharacterSlice payload:', payload)
-  // Format Payload
-
+  payload.ability_scores = { str: '5' };
   return async dispatch => {
     try {
       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/character', payload);
 
       let res = response.data;
-      console.log('res', res);
-
-      dispatch(create(res))
+      console.log(res)
+      dispatch(addChar(res))
     } catch (e) {
       console.log(e);
     }
@@ -90,17 +56,12 @@ export const createCharacter = payload => {
 }
 
 export const updateCharacter = payload => {
-  console.log(payload)
-
-  // Format Payload
-
   return async dispatch => {
     try {
       let response = await axios.patch(`https://dnd-api-server.herokuapp.com/v1/api/character/${payload._id}`, payload);
 
       let res = response.data;
-      console.log(res);
-      dispatch(create(res))
+      dispatch(updateChar(res))
     } catch (e) {
       console.log(e);
     }
@@ -116,7 +77,6 @@ export const deleteCharacter = payload => {
 
       let res = response.data;
       console.log(res);
-      dispatch(remove(res))
     } catch (e) {
       console.log(e);
     }
