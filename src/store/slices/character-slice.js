@@ -5,21 +5,14 @@ const characterSlice = createSlice({
   name: 'character',
 
   initialState: {
-    name: '',
-    class: '',
-    race: '',
-    ability_scores: null,
-    alignment: '',
-    deity: '',
-    proficient_skills: null,
-    equipment: null,
-    level: '1',
-    isInCampaign: false,
-    character_id: null,
+    score_options: [],
     allCharacters: []
   },
 
   reducers: {
+    insertScore(state, action) {
+      state.score_options = [...state.score_options, action.payload]
+    },
     setAllCharacters: (state, action) => {
       state.allCharacters = action.payload;
     },
@@ -35,7 +28,8 @@ const characterSlice = createSlice({
   }
 });
 
-export const { setAllCharacters, addChar, updateChar } = characterSlice.actions;
+
+export const { setAllCharacters, addChar, updateChar, insertScore } = characterSlice.actions;
 
 export const getCharacters = payload => {
   return async dispatch => {
@@ -44,6 +38,7 @@ export const getCharacters = payload => {
     dispatch(setAllCharacters(characters));
   }
 }
+
 
 export const createCharacter = payload => {
   payload.ability_scores = { str: '5' };

@@ -13,8 +13,9 @@ import Button from '@material-ui/core/Button';
 import { Redirect } from "react-router-dom"
 import { If, Then, Else } from 'react-if';
 import useForm from '../hooks/useForm';
+import Dice from '../components/Dice';
 
-import { createCharacter } from '../store/slices/character-slice';
+import { createCharacter, insertScore } from '../store/slices/character-slice';
 
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../data/charOptions.json';
 
@@ -22,7 +23,7 @@ function CharacterForm(props) {
 
   const { character_id } = props;
 
-  const { create, user } = props;
+  const { create, user, addScore } = props;
 
   const defaults = {
     user: user,
@@ -38,12 +39,23 @@ function CharacterForm(props) {
     pack: '',
     weapon_1: '',
     weapon_2: '',
-    ability_scores: '',
+    ability_scores: {
+      'str': 13,
+      'dex': 14,
+      'con': 15,
+      'int': 18,
+      'wis': 14,
+      'cha': 15
+    },
     level: '1',
     isInCampaign: false,
   };
 
   const { handleChange, handleSubmit, fields } = useForm(defaults);
+
+  function tryAddScore(num) {
+    props.addScore(num);
+  }
 
   function submit(e) {
     e.preventDefault();
@@ -300,7 +312,49 @@ function CharacterForm(props) {
                     color="primary"
                     type='submit'
                   >
-                    Create
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {weapons.map((value, index) => {
+                      return <MenuItem key={index} value={value}>{value}</MenuItem>
+                    })}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                {/* TODO: Roll for Ability Scores */}
+                <TextField
+                  id="character-ability-score"
+                  name="abilityScore"
+                  label="Ability Scores"
+                  disabled
+                  fullWidth
+                  defaultValue="ABILITY SCORE ROLL WILL GO HERE"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  id="character-level"
+                  name="level"
+                  label="Level"
+                  disabled
+                  fullWidth
+                  defaultValue={1}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Dice insertScore={tryAddScore} />
+              </Grid>
+                  
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  color="primary"
+                  type='submit'
+                >
+                  Create
                 </Button>
                 </Grid>
               </Grid>
@@ -326,6 +380,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   create: createCharacter,
+  addScore: insertScore,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterForm);

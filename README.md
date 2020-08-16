@@ -185,3 +185,4 @@ tbd
 * [D&D 5th Edition API](https://www.dnd5eapi.co/)
 * [Gary Gygax](https://en.wikipedia.org/wiki/Gary_Gygax)
 * [D&D 5th Edition Reference for Terminal](https://github.com/cachance7/fuzzy5e)
+* [React Dice](https://www.npmjs.com/package/react-dice-complete)
