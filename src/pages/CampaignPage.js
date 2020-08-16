@@ -43,8 +43,6 @@ function CampaignPage(props) {
   socket.emit('join', campaignID);
 
   useEffect(() => {
-    getCharacters();
-
     socket.on('character-joined', payload => {
       console.log('character joining...', payload);
       setCurrentChars(c => {
@@ -58,7 +56,11 @@ function CampaignPage(props) {
       console.log('from server:', payload.message);
     });
 
-  }, [campaignID, getCharacters]);
+  }, [campaignID]);
+
+  useEffect(() => {
+    getCharacters(user);
+  }, []);
 
   function testSocket() {
     socket.emit('test', {room: campaignID, message: 'HI'});
@@ -120,23 +122,14 @@ function CampaignPage(props) {
     </div>
     }
 
-    {owner === user.username && <button onClick={testSocket}>TEST</button>}
-    {owner === user.username && <button onClick={save} disabled={saving}>Save Campaign</button>}
+    {owner === user && <button onClick={testSocket}>TEST</button>}
+    {owner === user && <button onClick={save} disabled={saving}>Save Campaign</button>}
     <If condition={!campaignID}>
       <Redirect to='/join'/>
     </If>
     </div>
   )
 }
-
-/*
-    title: '',
-    setting: '',
-    description: '',
-    notes: [],
-    characters: [],
-
-*/
 
 const mapStateToProps = (state) => {
   return {
