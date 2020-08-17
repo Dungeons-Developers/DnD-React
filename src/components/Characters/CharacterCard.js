@@ -35,7 +35,7 @@ export default function CharacterCard(props) {
   
   return (
     <>
-    <div className="CharacterCard">
+    <div className="CharacterCard" style={props.style}>
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
