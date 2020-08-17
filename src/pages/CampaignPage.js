@@ -194,6 +194,7 @@ function CampaignPage(props) {
     main: {
       display: 'flex',
       width: '100%',
+      height: '100%',
       alignItems: 'center',
       justifyContent: 'space-evenly'
     },
