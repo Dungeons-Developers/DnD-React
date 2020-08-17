@@ -4,13 +4,43 @@ import {If} from 'react-if';
 import {Redirect} from 'react-router-dom';
 
 
+
 import {TextField, Container, Button, Paper} from '@material-ui/core';
+import {withStyles} from '@material-ui/core/styles';
+import {red, gray} from '@material-ui/core/colors'
 
 import useForm from '../hooks/useForm';
 
 import {findCampaign, getUserCampaigns} from '../store/slices/campaign-slice';
 
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
+    },
+  },
+}))(Button);
 
+const CssTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: 'red',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: 'red',
+    },
+    '& .MuiOutlinedInput-root': {
+      '& fieldset': {
+        borderColor: 'red',
+      },
+      '&.Mui-focused fieldset': {
+        borderColor: 'red',
+      },
+    },
+  },
+})(TextField);
 
 function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaigns}) {
 
@@ -57,6 +87,7 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
     paper: {
       width: '30%',
       padding: '5px',
+      paddingBottom: '15px',
       marginBottom: '10px',
       display: 'flex',
       flexDirection: 'column',
@@ -74,16 +105,16 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
       </div>
       <form autoComplete='off' onSubmit={submit} style={styles.form}>
         <div>
-          <TextField 
+          <CssTextField 
             id="campaignID" 
             label="CampaignID" 
-            color="secondary"
+            color="default"
             margin="normal" 
             onChange={formChange} 
             value={fields.campaignID}
           />
         </div>
-        <Button 
+        <ColorButton 
           variant="contained" 
           color="secondary" 
           type="submit" 
@@ -91,7 +122,7 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
           disabled={!fields.campaignID}
         >
           Join
-        </Button>
+        </ColorButton>
       </form>
       <If condition={campaigns.length > 0}>
         <div>
@@ -101,9 +132,17 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
               <Paper 
                 style={styles.paper}
                 variant='outlined'
+                key={i}
               >
                 <h4>{cam.title}</h4>
                 <p>ID: {cam._id}</p>
+                <ColorButton
+                  size='small'
+                  margin='normal'
+                  onClick={() => findCampaign({campaignID: cam._id})}
+                >
+                  Join
+                </ColorButton>
               </Paper>
             ))}
           </div>
