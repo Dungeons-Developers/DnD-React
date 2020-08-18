@@ -9,8 +9,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Modal from '@material-ui/core/Modal';
-import CharacterShowEdit from './CharacterShowEdit';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import CharacterCard from '../Characters/CharacterCard';

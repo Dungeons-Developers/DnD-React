@@ -7,7 +7,6 @@ const characterSlice = createSlice({
   name: 'character',
 
   initialState: {
-    disabled_scores: [],
     score_options: [],
     allCharacters: []
   },
@@ -15,12 +14,6 @@ const characterSlice = createSlice({
   reducers: {
     insertScore(state, action) {
       state.score_options = [...state.score_options, action.payload]
-    },
-    removeScore(state, action) {
-      state.score_options.splice(action.payload, 1);
-    },
-    disableScore(state, action) {
-      state.disabled_scores = [...state.disabled_scores, parseInt(action.payload)];
     },
     setAllCharacters: (state, action) => {
       state.allCharacters = action.payload;
@@ -38,7 +31,7 @@ const characterSlice = createSlice({
 });
 
 
-export const { setAllCharacters, addChar, updateChar, insertScore, disableScore, removeScore } = characterSlice.actions;
+export const { setAllCharacters, addChar, updateChar, insertScore } = characterSlice.actions;
 
 export const getCharacters = payload => {
   return async dispatch => {
@@ -50,7 +43,6 @@ export const getCharacters = payload => {
 
 
 export const createCharacter = payload => {
-  payload.ability_scores = { str: '5' };
   return async dispatch => {
     try {
       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/character', payload);
