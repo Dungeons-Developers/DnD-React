@@ -114,8 +114,8 @@ export function CharacterDetails(props) {
 
         <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example">
           <Tab label="details" {...a11yProps(0)} />
-          <Tab label="edit" {...a11yProps(1)} />
-          <Tab label="delete" {...a11yProps(2)} />
+          {props.edit && <Tab label="edit" {...a11yProps(1)} />}
+          {props.delete && <Tab label="delete" {...a11yProps(2)} />}
       
         </Tabs>
       </AppBar>
