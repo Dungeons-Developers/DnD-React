@@ -42,17 +42,18 @@ export default function CharacterCard(props) {
           component="img"
           alt="D&D Avatar"
           height="130"
-          image='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png'
+          image={`https://source.unsplash.com/300x300/?${props.character.class}`}
           title={props.character.name}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography gutterBottom variant="h6" component="h3">
             {props.character.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lvl {props.character.level} 
-            &nbsp;{props.character.race} &nbsp;{props.character.class}&nbsp; <br/>
-         In Campaign = {props.character.isInCampaign}
+            Lvl {props.character.level}&nbsp;
+            {props.character.race}&nbsp;
+            {props.character.class}<br/>
+            {props.character.isInCampaign ? "In Campaign" : "Not in Campaign"}
             
           </Typography>
         </CardContent>

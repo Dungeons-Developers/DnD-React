@@ -51,7 +51,7 @@ export function CharacterDisplay(props) {
       <CardMedia
         component="img"
         alt="D&D Avatar"
-        height="150"
+        height="130"
         image='https://d3n8a8pro7vhmx.cloudfront.net/sdleadership/pages/259/attachments/original/1404272641/NEW-2.gif?1404272641'
         title=''
       />
@@ -60,7 +60,9 @@ export function CharacterDisplay(props) {
           +
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-         v~Start here!~v
+         Start here!
+         <br/>
+        
         </Typography>
       </CardContent>
     </CardActionArea>
