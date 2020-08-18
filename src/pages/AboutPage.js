@@ -48,7 +48,7 @@ function About() {
         <div style={styles.info}>
           <h2 style ={styles.text}>Daniel Nguyen</h2>
           <h3 style ={styles.text}>Project Manager</h3>
-          <p style ={styles.text}>Look, a description</p>
+          <p style ={styles.text}>Chaotic Neutral problem wrangler. Underwhelmed until overwhelmed. Enjoys pwning noobz and staying hydrated.</p>
         </div>
         <img src='/assets/dannguyen.png' alt='Daniel Nguyen' />
       </Paper>
