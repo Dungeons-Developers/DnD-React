@@ -50,7 +50,6 @@ export const getCharacters = payload => {
 
 
 export const createCharacter = payload => {
-  payload.ability_scores = { str: '5' };
   return async dispatch => {
     try {
       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/character', payload);
