@@ -7,6 +7,7 @@ const characterSlice = createSlice({
   name: 'character',
 
   initialState: {
+    disabled_scores: [],
     score_options: [],
     allCharacters: []
   },
@@ -14,6 +15,14 @@ const characterSlice = createSlice({
   reducers: {
     insertScore(state, action) {
       state.score_options = [...state.score_options, action.payload]
+    },
+    removeScore(state, action) {
+      state.score_options.splice(action.payload, 1);
+    },
+    disableScore(state, action) {
+      // console.log('action', action.payload)
+      state.disabled_scores = [...state.disabled_scores, parseInt(action.payload)];
+      console.log('DISABLED ARRAY', state.disabled_scores);
     },
     setAllCharacters: (state, action) => {
       state.allCharacters = action.payload;
@@ -31,7 +40,7 @@ const characterSlice = createSlice({
 });
 
 
-export const { setAllCharacters, addChar, updateChar, insertScore } = characterSlice.actions;
+export const { setAllCharacters, addChar, updateChar, insertScore, disableScore, removeScore } = characterSlice.actions;
 
 export const getCharacters = payload => {
   return async dispatch => {

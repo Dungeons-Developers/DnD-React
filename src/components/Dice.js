@@ -3,8 +3,19 @@ import React from 'react';
 import ReactDice from 'react-dice-complete';
 import 'react-dice-complete/dist/react-dice-complete.css';
 
-
 import Button from '@material-ui/core/Button';
+import {withStyles} from '@material-ui/core/styles';
+import {red, gray} from '@material-ui/core/colors';
+
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
+    },
+  },
+}))(Button);
 
 class RollDice extends React.Component {
   constructor(props) {
@@ -23,12 +34,13 @@ class RollDice extends React.Component {
   render() {
     return (
       <div>
-        <Button
+        <ColorButton
           color="primary"
           variant="contained"
+          disabled={ this.props.scoreOptions.length > 5 ? true : false }
           onClick={this.rollAll.bind(this)}>
             Roll For Ability Scores!
-        </Button>
+        </ColorButton>
 
         <ReactDice
           numDice={3}

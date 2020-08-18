@@ -10,17 +10,40 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import useForm from '../hooks/useForm';
+import {withStyles} from '@material-ui/core/styles';
+import {red, gray} from '@material-ui/core/colors';
 import Dice from '../components/Dice';
 
-import { createCharacter, insertScore } from '../store/slices/character-slice';
+import { createCharacter, insertScore, disableScore, removeScore } from '../store/slices/character-slice';
 
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../data/charOptions.json';
+import { Typography } from '@material-ui/core';
+
+
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
+    },
+  },
+}))(Button);
 
 function CharacterForm(props) {
 
-  const { character_id } = props;
+  const { character_id, scoreOptions, create, user, addScore, disableScore, disabledScores, removeScore } = props;
 
-  const { create, user, addScore } = props;
+  const styles = {
+    menu: {
+      width: '150px',
+    },
+    grid: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      flexWrap: 'wrap',
+    }
+  }
 
   const defaults = {
     user: user,
@@ -36,14 +59,12 @@ function CharacterForm(props) {
     pack: '',
     weapon_1: '',
     weapon_2: '',
-    ability_scores: {
-      'str': 13,
-      'dex': 14,
-      'con': 15,
-      'int': 18,
-      'wis': 14,
-      'cha': 15
-    },
+    str: '',
+    dex: '',
+    con: '',
+    int: '',
+    wis: '',
+    cha: '',
     level: '1',
     isInCampaign: false,
   };
@@ -63,6 +84,11 @@ function CharacterForm(props) {
 
   function formChange(e) {
     handleChange(e.target.name, e.target.value);
+  }
+
+  function abilityFormChange(e) {
+    handleChange(e.target.name, e.target.value);
+    disableScore(e.currentTarget.dataset.idx);
   }
 
   return (
@@ -282,39 +308,145 @@ function CharacterForm(props) {
                     </Select>
                   </FormControl>
                 </Grid>
+
                 <Grid item xs={12} sm={6}>
-                  {/* TODO: Roll for Ability Scores */}
-                  <TextField
-                    id="character-ability-score"
-                    name="abilityScore"
-                    label="Ability Scores"
-                    disabled
-                    fullWidth
-                    defaultValue="ABILITY SCORE ROLL WILL GO HERE"
-                  />
+                  <Dice insertScore={tryAddScore} scoreOptions={scoreOptions} />
                 </Grid>
+
                 <Grid item xs={12} sm={6}>
-                  <TextField
-                    id="character-level"
-                    name="level"
-                    label="Level"
-                    disabled
-                    fullWidth
-                    defaultValue={1}
-                  />
+                    {scoreOptions.map((value, index) => {
+                          return <Typography key={index} value={value}>{value}</Typography>
+                        })}
                 </Grid>
+
+                <Grid item xs={12} direction='row' style={styles.grid}>
+                    <FormControl style={styles.menu}>
+                      <InputLabel id="create-character-ability-str-label">Strength</InputLabel>
+                      <Select
+                        labelId="create-character-ability-str"
+                        id="create-character-ability-str"
+                        name='str'
+                        value={fields.str}
+                        onChange={abilityFormChange}
+                        required
+                      >  
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {scoreOptions.map((value, index) => {
+                          return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
+                        })}
+                      </Select> 
+                    </FormControl>
+
+                    <FormControl style={styles.menu}>
+                      <InputLabel id="create-character-ability-dex-label">Dexterity</InputLabel>
+                      <Select
+                        labelId="create-character-ability-dex"
+                        id="create-character-ability-dex"
+                        name='dex'
+                        value={fields.dex}
+                        onChange={abilityFormChange}
+                        required
+                      >  
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {scoreOptions.map((value, index) => {
+                          return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
+                        })}
+                      </Select> 
+                    </FormControl>
+
+                    <FormControl style={styles.menu}>
+                      <InputLabel id="create-character-ability-con-label">Constitution</InputLabel>
+                      <Select
+                        labelId="create-character-ability-con"
+                        id="create-character-ability-con"
+                        name='con'
+                        value={fields.con}
+                        onChange={abilityFormChange}
+                        required
+                      >  
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {scoreOptions.map((value, index) => {
+                          return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
+                        })}
+                      </Select> 
+                    </FormControl>
+
+                    <FormControl style={styles.menu}>
+                      <InputLabel id="create-character-ability-int-label">Intelligence</InputLabel>
+                      <Select
+                        labelId="create-character-ability-int"
+                        id="create-character-ability-int"
+                        name='int'
+                        value={fields.int}
+                        onChange={abilityFormChange}
+                        required
+                      >  
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {scoreOptions.map((value, index) => {
+                          return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
+                        })}
+                      </Select> 
+                    </FormControl>
+
+                    <FormControl style={styles.menu}>
+                      <InputLabel id="create-character-ability-wis-label">Wisdom</InputLabel>
+                      <Select
+                        labelId="create-character-ability-wis"
+                        id="create-character-ability-wis"
+                        name='wis'
+                        value={fields.wis}
+                        onChange={abilityFormChange}
+                        required
+                      >  
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {scoreOptions.map((value, index) => {
+                          return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
+                        })}
+                      </Select> 
+                    </FormControl>
+
+                    <FormControl style={styles.menu}>
+                      <InputLabel id="create-character-ability-cha-label">Charisma</InputLabel>
+                      <Select
+                        labelId="create-character-ability-cha"
+                        id="create-character-ability-cha"
+                        name='cha'
+                        value={fields.cha}
+                        onChange={abilityFormChange}
+                        required
+                      >  
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {scoreOptions.map((value, index) => {
+                          // console.log('disabledScores', disabledScores);
+                          // console.log('includes?', disabledScores.includes(index));
+                          return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
+                        })}
+                      </Select> 
+                    </FormControl>
+
+                </Grid>
+
               <Grid item xs={12}>
-                <Dice insertScore={tryAddScore} />
-              </Grid>
-              <Grid item xs={12}>
-                <Button
+                <ColorButton
                   variant="contained"
                   fullWidth
                   color="primary"
                   type='submit'
                 >
                   Create
-                </Button>
+                </ColorButton>
                 </Grid>
                 </Grid>
             </form>
@@ -326,12 +458,16 @@ function CharacterForm(props) {
 }
 
 const mapStateToProps = state => ({
-  user: state.users.username
+  user: state.users.username,
+  scoreOptions: state.characters.score_options,
+  disabledScores: state.characters.disabled_scores
 })
 
 const mapDispatchToProps = {
   create: createCharacter,
   addScore: insertScore,
+  disableScore: disableScore,
+  removeScore: removeScore
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterForm);
