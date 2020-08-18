@@ -89,9 +89,11 @@ export function CharacterDisplay(props) {
   return (
     <>
     <div className="CharactersGrid">
+    <Box mt="1rem">
       <Grid container spacing={3} direction='row'>
         {charactersHTML}
       </Grid>
+      </Box>
     </div>
     </>
   );
