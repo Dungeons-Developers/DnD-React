@@ -161,7 +161,7 @@ export function CharacterDetails(props) {
                 />
               </Grid>
 
-      {/* ABILITY SCORES CHANGE */}
+      {/* ABILITY SCORES CHANGE
       <Grid item xs={12} sm={12}>
         <FormControl fullWidth>
                 <TextField
@@ -173,7 +173,7 @@ export function CharacterDetails(props) {
                 />
                 <FormHelperText>Update your ability scores</FormHelperText>
                 </FormControl>
-              </Grid>
+              </Grid> */}
 
       {/* LEVEL CHANGE */}
       <Grid item xs={12} sm={6}>
@@ -184,6 +184,8 @@ export function CharacterDetails(props) {
                   label="Level"
                   fullWidth
                   defaultValue={props.Character.level}
+                  type="number"
+                  onChange={formChange}
                 />
                 <FormHelperText>Update your level</FormHelperText>
                 </FormControl>
@@ -219,7 +221,8 @@ export function CharacterDetails(props) {
                   <Select
                     labelId="update-character-class-label"
                     id="update-character-class"
-                    name={props.Character.class}
+                    name='class'
+                    placeholder={props.Character.class}
                     value={fields.class}
                     onChange={formChange}
                   >
@@ -241,7 +244,8 @@ export function CharacterDetails(props) {
                   <Select
                     labelId="update-character-alignment-label"
                     id="update-character-alignment"
-                    name={props.Character.alignment}
+                    name='alignment'
+                    placeholder={props.Character.alignment}
                     value={fields.alignment}
                     onChange={formChange}
                   >
@@ -263,7 +267,8 @@ export function CharacterDetails(props) {
                   <Select
                     labelId="update-character-deity-label"
                     id="update-character-deity"
-                    name={props.Character.deity}
+                    name="deity"
+                    placeholder={props.Character.deity}
                     value={fields.deity}
                     onChange={formChange}
                   >
@@ -285,7 +290,8 @@ export function CharacterDetails(props) {
                   <Select
                     labelId="update-character-skill-one-label"
                     id="update-character-skill-one"
-                    name="Skill 1"
+                    name="skill_1"
+                    placeholder={props.Character.skill_1}
                     value={fields.skill_1}
                     onChange={formChange}
                   >
@@ -308,6 +314,7 @@ export function CharacterDetails(props) {
                     labelId="update-character-skill-two-label"
                     id="update-character-skill-two"
                     name='skill_2'
+                    placeholder={props.Character.skill_2}
                     value={fields.skill_2}
                     onChange={formChange}
                   >
@@ -330,6 +337,7 @@ export function CharacterDetails(props) {
                     labelId="update-character-armor-label"
                     id="update-character-armor"
                     name='armor'
+                    placeholder={props.Character.armor}
                     value={fields.armor}
                     onChange={formChange}
                   >
@@ -352,6 +360,7 @@ export function CharacterDetails(props) {
                     labelId="update-character-pack-label"
                     id="update-character-pack"
                     name='pack'
+                    placeholder={props.Character.pack}
                     value={fields.pack}
                     onChange={formChange}
                   >
@@ -374,6 +383,7 @@ export function CharacterDetails(props) {
                     labelId="update-character-weapon-one-label"
                     id="update-character-weapon-one"
                     name='weapon_1'
+                    placeholder={props.Character.weapon_1}
                     value={fields.weapon_1}
                     onChange={formChange}
                   >
@@ -396,6 +406,7 @@ export function CharacterDetails(props) {
                     labelId="update-character-weapon-two-label"
                     id="update-character-weapon-two"
                     name='weapon_2'
+                    placeholder={props.Character.weapon_2}
                     value={fields.weapon_2}
                     onChange={formChange}
                   >
@@ -411,7 +422,22 @@ export function CharacterDetails(props) {
               </Grid>
        <br/>
        <br/>
-        <TextField id="outlined-basic" label="Bio:" multiline rows={4} fullWidth variant="outlined"/><br/><br/><br/>
+           {/* BIO */}
+           <Grid item xs={12} sm={12} >
+                <FormControl fullWidth>
+                  <InputLabel id="update-character-bio"></InputLabel>
+                  <TextField 
+                  id="outlined-basic" 
+                  label="Bio:" 
+                  name='bio'
+                  placeholder={props.Character.bio}
+                  multiline rows={4} 
+                  fullWidth variant="outlined"
+                  onChange={formChange}
+                  />
+                  <FormHelperText>Edit your bio</FormHelperText>
+                </FormControl>
+              </Grid>
         <Grid item xs={12}>
         <Button fullWidth color="primary" variant="contained" type="submit">
           Save

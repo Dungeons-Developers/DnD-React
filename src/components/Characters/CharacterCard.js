@@ -53,7 +53,7 @@ export default function CharacterCard(props) {
             Lvl {props.character.level}&nbsp;
             {props.character.race}&nbsp;
             {props.character.class}<br/>
-            {props.character.isInCampaign ? "In Campaign" : "Not in Campaign"}
+            {/* {props.character.isInCampaign ? "In Campaign" : "Not in Campaign"} */}
             
           </Typography>
         </CardContent>
