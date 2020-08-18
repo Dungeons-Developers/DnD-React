@@ -129,7 +129,7 @@ export function CharacterDetails(props) {
       {/* need to get charName dynamically populating from store data */}
   {/* DETAILS TAB  */}
       <TabPanel value={tab} index={0}>
-        <h2 id="simple-modal-title">Char Name {props.Character.name}</h2>
+        <h2 id="simple-modal-title">{props.Character.name}</h2>
         <p className="charStats">Level: {props.Character.level} </p>
         <p className="charStats">Race: {props.Character.race}</p>
         <p className="charStats">Class: {props.Character.class}</p>
