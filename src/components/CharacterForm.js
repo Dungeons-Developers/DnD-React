@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from "react-router-dom"
+import { If, Then, Else } from 'react-if';
+
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
@@ -10,8 +13,8 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import useForm from '../hooks/useForm';
-import {withStyles} from '@material-ui/core/styles';
-import {red, gray} from '@material-ui/core/colors';
+import { withStyles } from '@material-ui/core/styles';
+import { red, gray } from '@material-ui/core/colors';
 import Dice from '../components/Dice';
 
 import { createCharacter, insertScore, disableScore, removeScore } from '../store/slices/character-slice';
@@ -33,6 +36,8 @@ const ColorButton = withStyles((theme) => ({
 function CharacterForm(props) {
 
   const { character_id, scoreOptions, create, user, addScore, disableScore, disabledScores, removeScore } = props;
+
+  const [submitted, setSubmitted] = useState(false)
 
   const styles = {
     menu: {
@@ -79,7 +84,7 @@ function CharacterForm(props) {
     e.preventDefault();
     handleSubmit(create);
     e.target.reset();
-    window.location.replace('/characters');
+    setSubmitted(true);
   }
 
   function formChange(e) {
@@ -92,235 +97,236 @@ function CharacterForm(props) {
   }
 
   return (
-    <>
-      <Box mt="0.5rem">
-        <Paper square>
-          <Box p='1rem'>
-            <form className="character-form" autoComplete="off" onSubmit={submit}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <TextField
-                    id="create-character-name"
-                    name='name'
-                    label="Name"
-                    onChange={formChange}
-                    fullWidth
-                    required
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-race-label">Race</InputLabel>
-                    <Select
-                      labelId="create-character-race-label"
-                      id="create-character-race"
-                      name='race'
-                      value={fields.race}
+    <If condition={submitted === false}>
+      <Then>
+        <Box mt="0.5rem">
+          <Paper square>
+            <Box p='1rem'>
+              <form className="character-form" autoComplete="off" onSubmit={submit}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="create-character-name"
+                      name='name'
+                      label="Name"
                       onChange={formChange}
+                      fullWidth
                       required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {races.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-class-label">Class</InputLabel>
-                    <Select
-                      labelId="create-character-class-label"
-                      id="create-character-class"
-                      name='class'
-                      value={fields.class}
-                      onChange={formChange}
-                      required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {classes.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-alignment-label">Alignment</InputLabel>
-                    <Select
-                      labelId="create-character-alignment-label"
-                      id="create-character-alignment"
-                      name='alignment'
-                      value={fields.alignment}
-                      onChange={formChange}
-                      required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {alignment.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-deity-label">Deity</InputLabel>
-                    <Select
-                      labelId="create-character-deity-label"
-                      id="create-character-deity"
-                      name='deity'
-                      value={fields.deity}
-                      onChange={formChange}
-                      required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {deity.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-skill-one-label">Proficient Skill #1</InputLabel>
-                    <Select
-                      labelId="create-character-skill-one-label"
-                      id="create-character-skill-one"
-                      name='skill_1'
-                      value={fields.skill_1}
-                      onChange={formChange}
-                      required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {skills.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-skill-two-label">Proficient Skill #2</InputLabel>
-                    <Select
-                      labelId="create-character-skill-two-label"
-                      id="create-character-skill-two"
-                      name='skill_2'
-                      value={fields.skill_2}
-                      onChange={formChange}
-                      required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {skills.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-armor-label">Armor</InputLabel>
-                    <Select
-                      labelId="create-character-armor-label"
-                      id="create-character-armor"
-                      name='armor'
-                      value={fields.armor}
-                      onChange={formChange}
-                      required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {armor.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-pack-label">Adventure Pack</InputLabel>
-                    <Select
-                      labelId="create-character-pack-label"
-                      id="create-character-pack"
-                      name='pack'
-                      value={fields.pack}
-                      onChange={formChange}
-                      required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {adventuring_packs.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-weapon-one-label">Weapon #1</InputLabel>
-                    <Select
-                      labelId="create-character-weapon-one-label"
-                      id="create-character-weapon-one"
-                      name='weapon_1'
-                      value={fields.weapon_1}
-                      onChange={formChange}
-                      required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {weapons.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl fullWidth>
-                    <InputLabel id="create-character-weapon-two-label">Weapon #2</InputLabel>
-                    <Select
-                      labelId="create-character-weapon-two-label"
-                      id="create-character-weapon-two"
-                      name='weapon_2'
-                      value={fields.weapon_2}
-                      onChange={formChange}
-                      required
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {weapons.map((value, index) => {
-                        return <MenuItem key={index} value={value}>{value}</MenuItem>
-                      })}
-                    </Select>
-                  </FormControl>
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <Dice insertScore={tryAddScore} scoreOptions={scoreOptions} />
-                </Grid>
-
-                <Grid item xs={12} sm={6}>
-                  <Typography>You rolled a...</Typography>
-                    {scoreOptions.map((value, index) => {
-                          return <Typography key={index} value={value}>{value}</Typography>
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-race-label">Race</InputLabel>
+                      <Select
+                        labelId="create-character-race-label"
+                        id="create-character-race"
+                        name='race'
+                        value={fields.race}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {races.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
                         })}
-                </Grid>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-class-label">Class</InputLabel>
+                      <Select
+                        labelId="create-character-class-label"
+                        id="create-character-class"
+                        name='class'
+                        value={fields.class}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {classes.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-alignment-label">Alignment</InputLabel>
+                      <Select
+                        labelId="create-character-alignment-label"
+                        id="create-character-alignment"
+                        name='alignment'
+                        value={fields.alignment}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {alignment.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-deity-label">Deity</InputLabel>
+                      <Select
+                        labelId="create-character-deity-label"
+                        id="create-character-deity"
+                        name='deity'
+                        value={fields.deity}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {deity.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-skill-one-label">Proficient Skill #1</InputLabel>
+                      <Select
+                        labelId="create-character-skill-one-label"
+                        id="create-character-skill-one"
+                        name='skill_1'
+                        value={fields.skill_1}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {skills.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-skill-two-label">Proficient Skill #2</InputLabel>
+                      <Select
+                        labelId="create-character-skill-two-label"
+                        id="create-character-skill-two"
+                        name='skill_2'
+                        value={fields.skill_2}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {skills.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-armor-label">Armor</InputLabel>
+                      <Select
+                        labelId="create-character-armor-label"
+                        id="create-character-armor"
+                        name='armor'
+                        value={fields.armor}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {armor.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-pack-label">Adventure Pack</InputLabel>
+                      <Select
+                        labelId="create-character-pack-label"
+                        id="create-character-pack"
+                        name='pack'
+                        value={fields.pack}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {adventuring_packs.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-weapon-one-label">Weapon #1</InputLabel>
+                      <Select
+                        labelId="create-character-weapon-one-label"
+                        id="create-character-weapon-one"
+                        name='weapon_1'
+                        value={fields.weapon_1}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {weapons.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <FormControl fullWidth>
+                      <InputLabel id="create-character-weapon-two-label">Weapon #2</InputLabel>
+                      <Select
+                        labelId="create-character-weapon-two-label"
+                        id="create-character-weapon-two"
+                        name='weapon_2'
+                        value={fields.weapon_2}
+                        onChange={formChange}
+                        required
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {weapons.map((value, index) => {
+                          return <MenuItem key={index} value={value}>{value}</MenuItem>
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
 
-                <Grid item xs={12} direction='row' style={styles.grid}>
+                  <Grid item xs={12} sm={6}>
+                    <Dice insertScore={tryAddScore} scoreOptions={scoreOptions} />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <Typography>You rolled a...</Typography>
+                    {scoreOptions.map((value, index) => {
+                      return <Typography key={index} value={value}>{value}</Typography>
+                    })}
+                  </Grid>
+
+                  <Grid item xs={12} direction='row' style={styles.grid}>
                     <FormControl style={styles.menu}>
                       <InputLabel id="create-character-ability-str-label">Strength</InputLabel>
                       <Select
@@ -330,14 +336,14 @@ function CharacterForm(props) {
                         value={fields.str}
                         onChange={abilityFormChange}
                         required
-                      >  
+                      >
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
                         {scoreOptions.map((value, index) => {
                           return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
                         })}
-                      </Select> 
+                      </Select>
                     </FormControl>
 
                     <FormControl style={styles.menu}>
@@ -349,14 +355,14 @@ function CharacterForm(props) {
                         value={fields.dex}
                         onChange={abilityFormChange}
                         required
-                      >  
+                      >
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
                         {scoreOptions.map((value, index) => {
                           return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
                         })}
-                      </Select> 
+                      </Select>
                     </FormControl>
 
                     <FormControl style={styles.menu}>
@@ -368,14 +374,14 @@ function CharacterForm(props) {
                         value={fields.con}
                         onChange={abilityFormChange}
                         required
-                      >  
+                      >
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
                         {scoreOptions.map((value, index) => {
                           return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
                         })}
-                      </Select> 
+                      </Select>
                     </FormControl>
 
                     <FormControl style={styles.menu}>
@@ -387,14 +393,14 @@ function CharacterForm(props) {
                         value={fields.int}
                         onChange={abilityFormChange}
                         required
-                      >  
+                      >
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
                         {scoreOptions.map((value, index) => {
                           return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
                         })}
-                      </Select> 
+                      </Select>
                     </FormControl>
 
                     <FormControl style={styles.menu}>
@@ -406,14 +412,14 @@ function CharacterForm(props) {
                         value={fields.wis}
                         onChange={abilityFormChange}
                         required
-                      >  
+                      >
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
                         {scoreOptions.map((value, index) => {
                           return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
                         })}
-                      </Select> 
+                      </Select>
                     </FormControl>
 
                     <FormControl style={styles.menu}>
@@ -425,34 +431,38 @@ function CharacterForm(props) {
                         value={fields.cha}
                         onChange={abilityFormChange}
                         required
-                      >  
+                      >
                         <MenuItem value="">
                           <em>None</em>
                         </MenuItem>
                         {scoreOptions.map((value, index) => {
                           return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
                         })}
-                      </Select> 
+                      </Select>
                     </FormControl>
 
-                </Grid>
+                  </Grid>
 
-              <Grid item xs={12}>
-                <ColorButton
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                  type='submit'
-                >
-                  Create
+                  <Grid item xs={12}>
+                    <ColorButton
+                      variant="contained"
+                      fullWidth
+                      color="primary"
+                      type='submit'
+                    >
+                      Create
                 </ColorButton>
+                  </Grid>
                 </Grid>
-                </Grid>
-            </form>
-          </Box>
-        </Paper >
-      </Box>
-    </>
+              </form>
+            </Box>
+          </Paper >
+        </Box>
+      </Then>
+      <Else>
+        <Redirect to={{ pathname: "/characters" }} />
+      </Else>
+    </If>
   )
 }
 
