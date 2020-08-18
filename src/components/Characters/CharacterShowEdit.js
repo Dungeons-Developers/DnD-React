@@ -81,9 +81,15 @@ export function CharacterDetails(props) {
     pack: '',
     weapon_1: '',
     weapon_2: '',
-    ability_scores: '',
+    // ability_scores: '',
+    str:'',
+    dex:'',
+    con:'',
+    int:'',
+    wis:'',
+    cha:'',
     level: '',
-    isInCampaign: false,
+    // isInCampaign: false,
   };
 
   const { handleChange, handleSubmit, fields } = useForm(defaults);
@@ -129,12 +135,24 @@ export function CharacterDetails(props) {
         <p className="charStats">Class: {props.Character.class}</p>
         <p className="charStats">Alignment: {props.Character.alignment}</p>
         <p className="charStats">Deity: {props.Character.deity}</p>
-        <p className="charStats">Proficiencies: {props.Character.skill_1}, {props.Character.skill_2}</p>
-        <p className="charStats">Ability Scores: {props.Character.ability_scores}</p>
-        <p className="charStats">Equipment: {props.Character.pack}, {props.Character.weapon_1}, {props.Character.weapon_2}</p>
+        <p className="charStats">Proficiencies: Skill 1: {props.Character.skill_1}, Skill 2: {props.Character.skill_2}</p>
+        <p className="charStats">Ability Scores:<br/>
+        STR: {props.Character.str}<br/>
+        DEX: {props.Character.dex}<br/>
+        CON: {props.Character.con}<br/>
+        INT: {props.Character.int}<br/>
+        WIS: {props.Character.wis}<br/>
+        CHA: {props.Character.cha}
+        </p>
+        <p className="charEquip">Equipment:<br/>
+         Pack: {props.Character.pack}, 
+         Armor: {props.Character.armor}, 
+         Weapon 1: {props.Character.weapon_1}, 
+         Weapon 2: {props.Character.weapon_2}</p>
         <p id="simple-modal-description">
-        BIO COPY: 
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+        Bio: 
+        {props.Character.bio ? props.Character.bio : " This character has a mysterious past, yet to be written."}
+
         </p>
       </TabPanel>
       {/* Make text fields dropdowns where necessary 
