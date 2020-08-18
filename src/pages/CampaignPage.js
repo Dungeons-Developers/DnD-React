@@ -15,6 +15,8 @@ import CharacterCard from '../components/Characters/CharacterCard';
 import {saveCampaign, disconnectFromCampaign} from '../store/slices/campaign-slice';
 import {getCharacters} from '../store/slices/character-slice';
 
+import Roller from '../components/CampaignRoller';
+
 const socket = io.connect('http://localhost:4000');
 
 const ColorButton = withStyles((theme) => ({
@@ -59,6 +61,8 @@ function CampaignPage(props) {
   const [currentChars, setCurrentChars] = useState(campaignCharacters);
 
   const [playerChar, setPlayerChar] = useState(campaignCharacters.filter(char => char.user === user)[0]);
+
+  const [log, setLog] = useState([]);
   
 
   console.log('player char:', playerChar);
@@ -78,6 +82,15 @@ function CampaignPage(props) {
         return arr;
       });
     });
+
+    socket.on('roll', payload => {
+      console.log('rolled!', payload);
+      setLog(l => {
+        let arr = [...l];
+        arr.push(payload);
+        return arr;
+      });
+    })
 
     socket.on('hello', payload => {
       console.log('from server:', payload.message);
@@ -153,7 +166,9 @@ function CampaignPage(props) {
       alignItems: 'center'
     },
     campChars: {
-      width: '100%',
+      width: '65%',
+      height: '100%',
+      overflow: 'scroll',
       display: 'flex',
       flexWrap: 'wrap',
       alignItems: 'center',
@@ -175,12 +190,34 @@ function CampaignPage(props) {
       padding: '2px 0',
       fontWeight: 'bold',
       fontSize: '12px'
+    },
+    main: {
+      display: 'flex',
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+      justifyContent: 'space-evenly'
+    },
+    log: {
+      display: 'flex',
+      width: '30%',
+      padding: '0 5px',
+      minWidth: '150px',
+      height: '100%',
+      maxHeight: '100%',
+      overflow: 'scroll',
+      border: '1px solid black',
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
     }
   }
 
 
   return (
     <div style={styles.container}>
+
+      {/* Title */}
       <div style={styles.titleContainer}>
         <div style={styles.campInfo}>
           <h4 style={{margin: 0}}>Owner: {owner}</h4>
@@ -199,19 +236,35 @@ function CampaignPage(props) {
           </ColorButton>
         </div>
       </div>
+
       <h3>Characters in campaign:</h3>
-      <div style={styles.campChars}> 
-        {currentChars.map((char, i) => (
-          <CharacterCard 
-            character={char}
-            delete={false}
-            edit={owner === user ? true : false}
-            style={{width: '25%'}}
-            key={i}
-          />
-        ))}
+      <div style={styles.main}>
+
+        {/* Camapaign Characters List */}
+        <div style={styles.campChars}> 
+          {currentChars.map((char, i) => (
+            <CharacterCard 
+              character={char}
+              delete={false}
+              edit={owner === user ? true : false}
+              style={{width: '25%'}}
+              key={i}
+            />
+          ))}
+        </div>
+
+        {/* roll log */}
+        <div style={styles.log}>
+          {log.map((roll, i) => (
+            <p key={i}><span style={{fontWeight: 'bold'}}>{roll.time} - </span><span style={{fontWeight: 'bold'}}>{roll.char.name}</span> rolled {roll.number} D{roll.type}: <span style={{fontWeight: 'bold'}}>{roll.total}</span></p>
+          ))}
+        </div>
+
       </div>
 
+      {playerChar && <Roller socket={socket}/>}
+
+      {/* Shows list of user characters if they don't have any in the campaign */}
       {
         !playerChar &&
         <>
