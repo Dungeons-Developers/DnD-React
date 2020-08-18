@@ -9,9 +9,6 @@ export default function Footer() {
     footer: {
       width: '100%',
       padding: '1rem',
-      position: 'fixed',
-      top: 'auto',
-      bottom: 0,
       backgroundColor: 'inherit',
       height: '3rem',
       display: 'flex',
@@ -19,6 +16,7 @@ export default function Footer() {
       
     },
     toolbar: {
+      width: '100%',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between'
@@ -28,14 +26,15 @@ export default function Footer() {
       color: 'black'
     }
   }
+
   return (
-    <AppBar style={styles.footer}>
-      <Toolbar style={styles.toolbar}>
+    <div style={styles.footer}>
+      <div style={styles.toolbar}>
         <Typography component='p' style={styles.link}>&copy; Dungeons & Developers</Typography>
         <Link to='/about' style={styles.link}>
           <Typography>About</Typography>
         </Link>
-      </Toolbar>
-    </AppBar>
+      </div>
+    </div>
   )
 }
