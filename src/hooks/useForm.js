@@ -5,7 +5,6 @@ const useForm = (defaults) => {
 
   const handleChange = (field, value) => {
     setFields({ ...fields, [field]: value });
-    console.log('Fields:', fields)
   };
 
   const handleSubmit = (submit) => {

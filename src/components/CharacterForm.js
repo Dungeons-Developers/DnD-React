@@ -314,6 +314,7 @@ function CharacterForm(props) {
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
+                  <Typography>You rolled a...</Typography>
                     {scoreOptions.map((value, index) => {
                           return <Typography key={index} value={value}>{value}</Typography>
                         })}
@@ -429,8 +430,6 @@ function CharacterForm(props) {
                           <em>None</em>
                         </MenuItem>
                         {scoreOptions.map((value, index) => {
-                          // console.log('disabledScores', disabledScores);
-                          // console.log('includes?', disabledScores.includes(index));
                           return <MenuItem key={index} data-idx={index} disabled={disabledScores.includes(index) ? true : false} value={value}>{value}</MenuItem>
                         })}
                       </Select> 

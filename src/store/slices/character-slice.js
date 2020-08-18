@@ -20,9 +20,7 @@ const characterSlice = createSlice({
       state.score_options.splice(action.payload, 1);
     },
     disableScore(state, action) {
-      // console.log('action', action.payload)
       state.disabled_scores = [...state.disabled_scores, parseInt(action.payload)];
-      console.log('DISABLED ARRAY', state.disabled_scores);
     },
     setAllCharacters: (state, action) => {
       state.allCharacters = action.payload;
