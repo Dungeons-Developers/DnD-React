@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { If, Then } from 'react-if'
@@ -11,7 +11,8 @@ import {
 import Logo from '../Logo';
 import Nav from './Nav';
 
-function Header({ token }) {
+function Header({ token, path }) {
+
   const styles = {
     appbar: {
       backgroundColor: 'inherit',
@@ -27,7 +28,7 @@ function Header({ token }) {
   }
   return (
     <React.Fragment>
-      <If condition={token !== null}>
+      <If condition={token !== null && path !== '/play'}>
         <Then>
           <header position='fixed' style={styles.appbar}>
             <Toolbar style={styles.toolbar}>
@@ -46,7 +47,8 @@ function Header({ token }) {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.users.token
+  token: state.users.token,
+  path: state.campaign.campaignPath
 });
 
 export default connect(mapStateToProps)(Header)

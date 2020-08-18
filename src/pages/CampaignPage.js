@@ -12,7 +12,7 @@ import {red} from '@material-ui/core/colors';
 
 import CharacterCard from '../components/Characters/CharacterCard';
 
-import {saveCampaign, disconnectFromCampaign} from '../store/slices/campaign-slice';
+import {saveCampaign, disconnectFromCampaign, setCampaignPath} from '../store/slices/campaign-slice';
 import {getCharacters} from '../store/slices/character-slice';
 
 import Roller from '../components/CampaignRoller';
@@ -55,7 +55,8 @@ function CampaignPage(props) {
     saveCampaign,
     wholeCampaign,
     disconnectFromCampaign,
-    getCharacters
+    getCharacters,
+    setCampaignPath
   } = props;
 
   const [currentChars, setCurrentChars] = useState(campaignCharacters);
@@ -100,6 +101,9 @@ function CampaignPage(props) {
 
   useEffect(() => {
     getCharacters(user);
+    setCampaignPath('/play');
+
+    return () => {setCampaignPath('')}
   }, []);
 
   function testSocket() {
@@ -166,13 +170,13 @@ function CampaignPage(props) {
       alignItems: 'center'
     },
     campChars: {
-      width: '65%',
+      width: '60%',
       height: '100%',
       overflow: 'scroll',
       display: 'flex',
       flexWrap: 'wrap',
       alignItems: 'center',
-      justifyContent: 'space-around'
+      justifyContent: 'flex-start'
     },
     paper: {
       width: '20%',
@@ -200,16 +204,29 @@ function CampaignPage(props) {
     },
     log: {
       display: 'flex',
-      width: '30%',
+      width: '100%',
       padding: '0 5px',
       minWidth: '150px',
-      height: '100%',
-      maxHeight: '100%',
+      height: '60%',
       overflow: 'scroll',
       border: '1px solid black',
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
+    },
+    charHead: {
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-start'
+    },
+    rollSection: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      height: '100%',
+      minHeight: '100%',
+      width: '30%',
     }
   }
 
@@ -237,7 +254,9 @@ function CampaignPage(props) {
         </div>
       </div>
 
-      <h3>Characters in campaign:</h3>
+      <div style={styles.charHead}>
+        <h3>Characters in campaign:</h3>
+      </div>
       <div style={styles.main}>
 
         {/* Camapaign Characters List */}
@@ -253,16 +272,21 @@ function CampaignPage(props) {
           ))}
         </div>
 
-        {/* roll log */}
-        <div style={styles.log}>
-          {log.map((roll, i) => (
-            <p key={i}><span style={{fontWeight: 'bold'}}>{roll.time} - </span><span style={{fontWeight: 'bold'}}>{roll.char.name}</span> rolled {roll.number} D{roll.type}: <span style={{fontWeight: 'bold'}}>{roll.total}</span></p>
-          ))}
+        <div style={styles.rollSection}>
+
+          <div style={styles.log}>
+            {log.map((roll, i) => (
+              <p key={i}><span style={{fontWeight: 'bold'}}>{roll.time} - </span><span style={{fontWeight: 'bold'}}>{roll.char.name}</span> rolled {roll.number} D{roll.type}: <span style={{fontWeight: 'bold'}}>{roll.total}</span></p>
+            ))}
+          </div>
+
+          {playerChar && <Roller socket={socket}/>}
+
         </div>
+        {/* roll log */}
 
       </div>
 
-      {playerChar && <Roller socket={socket}/>}
 
       {/* Shows list of user characters if they don't have any in the campaign */}
       {
@@ -288,7 +312,6 @@ function CampaignPage(props) {
         </>
       }
 
-      {owner === user && <button onClick={testSocket}>TEST</button>}
       {owner === user && <button onClick={save} disabled={saving}>Save Campaign</button>}
 
       <If condition={!campaignID}>
@@ -313,6 +336,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {saveCampaign, disconnectFromCampaign, getCharacters}
+const mapDispatchToProps = {saveCampaign, disconnectFromCampaign, getCharacters, setCampaignPath}
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignPage);
