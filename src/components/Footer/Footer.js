@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Typography, AppBar, Toolbar} from '@material-ui/core';
+import {Typography} from '@material-ui/core';
 import {Link} from 'react-router-dom'
 
 export default function Footer() {
@@ -28,7 +28,7 @@ export default function Footer() {
   }
 
   return (
-    <div style={styles.footer}>
+    <div style={styles.footer} className='footer'>
       <div style={styles.toolbar}>
         <Typography component='p' style={styles.link}>&copy; Dungeons & Developers</Typography>
         <Link to='/about' style={styles.link}>
