@@ -76,7 +76,7 @@ function Roller({socket, campaignCharacters, user, campaignID}) {
 
   const styles = {
     form: {
-      width: '30%',
+      width: '100%',
       minHeight: '100px',
       display: 'flex',
       alignItems: 'center',
