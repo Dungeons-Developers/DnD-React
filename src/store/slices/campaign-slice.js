@@ -13,7 +13,8 @@ const campaignSlice = createSlice({
     notes: [],
     characters: [],
     saving: false,
-    allCampaigns: []
+    allCampaigns: [],
+    campaignPath: ''
   },
   
   reducers: {
@@ -36,11 +37,15 @@ const campaignSlice = createSlice({
 
     toggleSaving: (state, action) => {
       state.saving = !state.saving;
+    },
+
+    setCampaignPath: (state, action) => {
+      state.campaignPath = action.payload;
     }
   }
 });
 
-export const { getCampaign, disconnectFromCampaign, toggleSaving, setUsersCampaigns } = campaignSlice.actions;
+export const { getCampaign, disconnectFromCampaign, toggleSaving, setUsersCampaigns, setCampaignPath } = campaignSlice.actions;
 
 export const getUserCampaigns = (payload) => {
 
