@@ -19,7 +19,7 @@ import { If } from 'react-if';
 import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
 import { updateCharacter, deleteCharacter } from '../../store/slices/character-slice';
-
+import '../../styles/index.scss';
 import theme from '../../theme/theme';
 
 
@@ -61,13 +61,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+    overflow: "scroll"
   },
 }));
 
 
 export function CharacterDetails(props) {
 
-  console.log('charprop from show/edit', props.Character);
   const styleClasses = useStyles();
   const [tab, setTab] = React.useState(0);
   const { user, remove, pageTheme, update } = props;
@@ -76,30 +76,34 @@ export function CharacterDetails(props) {
     theme: pageTheme === 'dark' ? theme.dark : theme.light,
     color: {
       color: 'inherit'
-    }
+    }, 
+    flow: {
+      overflow: 'scroll'
+    } 
   }
 
   const defaults = {
     user: user,
-    name: '',
-    class: '',
-    race: '',
-    alignment: '',
-    deity: '',
-    skill_1: '',
-    skill_2: '',
-    armor: '',
-    pack: '',
-    weapon_1: '',
-    weapon_2: '',
+    name: props.Character ? props.Character.name : '',
+    class: props.Character ? props.Character.class : '',
+    race: props.Character ? props.Character.race : '',
+    alignment: props.Character ? props.Character.alignment : '',
+    deity: props.Character ? props.Character.deity : '',
+    skill_1: props.Character ? props.Character.skill_1 : '',
+    skill_2: props.Character ? props.Character.skill_2 : '',
+    armor: props.Character ? props.Character.armor : '',
+    pack: props.Character ? props.Character.pack : '',
+    weapon_1: props.Character ? props.Character.weapon_1 : '',
+    weapon_2: props.Character ? props.Character.weapon_2 : '',
     // ability_scores: '',
-    str: '',
-    dex: '',
-    con: '',
-    int: '',
-    wis: '',
-    cha: '',
-    level: '',
+    str: props.Character ? props.Character.str : '',
+    dex: props.Character ? props.Character.dex : '',
+    con: props.Character ? props.Character.con : '',
+    int: props.Character ? props.Character.int : '',
+    wis: props.Character ? props.Character.wis : '',
+    cha: props.Character ? props.Character.cha : '',
+    level: props.Character ? props.Character.level : '',
+    _id: props.Character ? props.Character._id : '',
     // isInCampaign: false,
   };
 
@@ -121,43 +125,41 @@ export function CharacterDetails(props) {
 
   return (
     <div className={styleClasses.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{...style.theme.accent, ...style.flow}}>
 
-        <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example">
+        <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example" style={{...style.theme.accent, ...style.theme}}>
           <Tab label="details" {...a11yProps(0)} />
           {props.edit && <Tab label="edit" {...a11yProps(1)} />}
           {props.delete && <Tab label="delete" {...a11yProps(2)} />}
-
         </Tabs>
       </AppBar>
 
       {/* need to get charName dynamically populating from store data */}
-      {/* DETAILS TAB  */}
-      <TabPanel value={tab} index={0} style={{ ...style.theme.accent }}>
-        <h2 id="simple-modal-title">Char Name {props.Character.name}</h2>
+  {/* DETAILS TAB  */}
+      <TabPanel value={tab} index={0} style={{...style.theme.accent, ...style.theme, ...style.flow}}>
+        <h2 id="simple-modal-title">{props.Character.name}</h2>
         <p className="charStats">Level: {props.Character.level} </p>
         <p className="charStats">Race: {props.Character.race}</p>
         <p className="charStats">Class: {props.Character.class}</p>
         <p className="charStats">Alignment: {props.Character.alignment}</p>
         <p className="charStats">Deity: {props.Character.deity}</p>
-        <p className="charStats">Proficiencies: Skill 1: {props.Character.skill_1}, Skill 2: {props.Character.skill_2}</p>
-        <p className="charStats">Ability Scores:<br />
-        STR: {props.Character.str}<br />
-        DEX: {props.Character.dex}<br />
-        CON: {props.Character.con}<br />
-        INT: {props.Character.int}<br />
-        WIS: {props.Character.wis}<br />
+        <p className="charStats">Proficiencies: Skill 1: {props.Character.skill_1} // Skill 2: {props.Character.skill_2}</p>
+        <p className="charStats">Ability Scores:<br/>
+        STR: {props.Character.str}<br/>
+        DEX: {props.Character.dex}<br/>
+        CON: {props.Character.con}<br/>
+        INT: {props.Character.int}<br/>
+        WIS: {props.Character.wis}<br/>
         CHA: {props.Character.cha}
         </p>
-        <p className="charEquip">Equipment:<br />
-         Pack: {props.Character.pack},
-         Armor: {props.Character.armor},
-         Weapon 1: {props.Character.weapon_1},
+        <p className="charEquip">Equipment:<br/>
+         Pack: {props.Character.pack} //
+         Armor: {props.Character.armor} // 
+         Weapon 1: {props.Character.weapon_1} //
          Weapon 2: {props.Character.weapon_2}</p>
         <p id="simple-modal-description">
-          Bio:
-        {props.Character.bio ? props.Character.bio : " This character has a mysterious past, yet to be written."}
-
+        {/* Bio: 
+        {props.Character.bio ? props.Character.bio : " This character has a mysterious past, yet to be written."} */}
         </p>
       </TabPanel>
       {/* Make text fields dropdowns where necessary 
@@ -443,10 +445,10 @@ export function CharacterDetails(props) {
                   <FormHelperText>Select a new weapon 2</FormHelperText>
                 </FormControl>
               </Grid>
-              <br />
-              <br />
-              {/* BIO */}
-              <Grid item xs={12} sm={12} >
+       <br/>
+       <br/>
+           {/* BIO
+           <Grid item xs={12} sm={12} >
                 <FormControl fullWidth>
                   <InputLabel id="update-character-bio"></InputLabel>
                   <TextField
@@ -460,27 +462,27 @@ export function CharacterDetails(props) {
                   />
                   <FormHelperText>Edit your bio</FormHelperText>
                 </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <Button fullWidth color="primary" variant="contained" type="submit">
-                  Save
+              </Grid> */}
+        <Grid item xs={12}>
+        <Button fullWidth color="primary" variant="contained" type="submit" style={{...style.theme, ...style.theme.accent}}>
+          Save
         </Button>
-              </Grid>
-            </Grid>
-          </form>
-        </TabPanel>
-      </If>
-      {/* DELETE TAB */}
-      <If condition={props.delete}>
-        <TabPanel value={tab} index={2}>
-          <h2 id="simple-modal-title">Delete {props.Character.name}?</h2>
-          <form className="character-delete-form" autoComplete="off" onSubmit={(e) => {
-            e.preventDefault();
-            remove(props.Character);
-
-          }}>
-            <Button fullWidth color="primary" variant="contained" type="submit">
-              Delete
+        </Grid>
+        </Grid>
+        </form>
+      </TabPanel>
+  </If>
+{/* DELETE TAB */}
+    <If condition={props.delete}>
+      <TabPanel value={tab} index={2}>
+        <h2 id="simple-modal-title">Delete {props.Character.name}?</h2>
+        <form className="character-delete-form" autoComplete="off" onSubmit={(e) => {
+          e.preventDefault();
+          remove(props.Character);
+          
+        }}>
+        <Button fullWidth color="primary" variant="contained" type="submit" style={{...style.theme, ...style.theme.accent}}>
+          Delete
         </Button>
           </form>
         </TabPanel>
