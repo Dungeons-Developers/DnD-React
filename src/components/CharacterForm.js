@@ -315,11 +315,11 @@ function CharacterForm(props) {
                     </FormControl>
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} style={{maxHeight: '300px', minHeight: '200px'}}>
                     <Dice insertScore={tryAddScore} scoreOptions={scoreOptions} />
                   </Grid>
 
-                  <Grid item xs={12} sm={6}>
+                  <Grid item xs={12} sm={6} style={{maxHeight: '300px', minHeight: '200px'}}>
                     <Typography>You rolled a...</Typography>
                     {scoreOptions.map((value, index) => {
                       return <Typography key={index} value={value}>{value}</Typography>
