@@ -33,7 +33,7 @@ function Header({ token, path, pageTheme }) {
 
   useEffect(() => {
     styles.theme = pageTheme === 'dark' ? theme.dark : theme.light;
-  }, [pageTheme]);
+  }, [pageTheme, styles]);
 
 
   return (

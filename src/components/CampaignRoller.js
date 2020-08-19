@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
 
 import useForm from '../hooks/useForm';
 
-import {Button, Paper, TextField, FormControl, InputLabel, MenuItem, Select} from '@material-ui/core';
-import {withStyles} from '@material-ui/core/styles';
-import {red} from '@material-ui/core/colors';
+import { Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -17,34 +17,14 @@ const ColorButton = withStyles((theme) => ({
   },
 }))(Button);
 
-const CssTextField = withStyles({
-  root: {
-    '& label.Mui-focused': {
-      color: 'red',
-    },
-    '& .MuiInput-underline:after': {
-      borderBottomColor: 'red',
-    },
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: 'red',
-      },
-      '&.Mui-focused fieldset': {
-        borderColor: 'red',
-      },
-    },
-  },
-})(TextField);
-
-
 
 function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
-  
+
   const defaults = {
     type: '',
     number: ''
   }
- 
+
   function submit(e) {
     e.preventDefault();
 
@@ -60,7 +40,7 @@ function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
     let today = new Date();
     let time = today.getHours() + ":" + today.getMinutes();
 
-    socket.emit('roll', {time, room: campaignID, char: playerChar, type: fields.type, number: fields.number, total: sum});
+    socket.emit('roll', { time, room: campaignID, char: playerChar, type: fields.type, number: fields.number, total: sum });
 
     e.target.reset();
   }
@@ -72,7 +52,7 @@ function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
   // const [playerChar] = useState(campaignCharacters.filter(char => char.user === user)[0]);
 
 
-  const {handleChange, fields} = useForm(defaults);
+  const { handleChange, fields } = useForm(defaults);
 
   const styles = {
     form: {
@@ -118,88 +98,88 @@ function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
 
   return (
     <>
-    <div>
+      <div>
 
-    </div>
-    <form autoComplete='off' onSubmit={submit} style={styles.form}>
-      <div style={styles.selects}>
-        
-        <FormControl style={styles.options}>
-          <InputLabel id="type">Type</InputLabel>
-          <Select
-            id="type" 
-            label="Type"
-            name='type'
-            margin="normal" 
-            value={fields.type}
-            onChange={formChange}
-            
-            required
-          >
-            <MenuItem value={20} default>
-              D20
-            </MenuItem>
-            <MenuItem value={12}>
-              D12
-            </MenuItem>
-            <MenuItem value={10}>
-              D10
-            </MenuItem>
-            <MenuItem value={8}>
-              D8
-            </MenuItem>
-            <MenuItem value={6}>
-              D6
-            </MenuItem>
-            <MenuItem value={4}>
-              D4
-            </MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl style={styles.options}>
-          <InputLabel id="number">#</InputLabel>
-          <Select
-            id="number" 
-            label="Number"
-            name='number'
-            color="default"
-            margin="normal" 
-            value={fields.number}
-            onChange={formChange}
-            
-          >
-            <MenuItem value={1} default>
-              1
-            </MenuItem>
-            <MenuItem value={2}>
-              2
-            </MenuItem>
-            <MenuItem value={3}>
-              3
-            </MenuItem>
-            <MenuItem value={4}>
-              4
-            </MenuItem>
-            <MenuItem value={5}>
-              5
-            </MenuItem>
-            <MenuItem value={6}>
-              6
-            </MenuItem>
-          </Select>
-        </FormControl>
-        
       </div>
-      <ColorButton 
-        variant="contained" 
-        color="secondary" 
-        type="submit" 
-        margin="normal"
-        disabled={!fields.type || !fields.number}
-      >
-        Roll
+      <form autoComplete='off' onSubmit={submit} style={styles.form}>
+        <div style={styles.selects}>
+
+          <FormControl style={styles.options}>
+            <InputLabel id="type">Type</InputLabel>
+            <Select
+              id="type"
+              label="Type"
+              name='type'
+              margin="normal"
+              value={fields.type}
+              onChange={formChange}
+
+              required
+            >
+              <MenuItem value={20} default>
+                D20
+            </MenuItem>
+              <MenuItem value={12}>
+                D12
+            </MenuItem>
+              <MenuItem value={10}>
+                D10
+            </MenuItem>
+              <MenuItem value={8}>
+                D8
+            </MenuItem>
+              <MenuItem value={6}>
+                D6
+            </MenuItem>
+              <MenuItem value={4}>
+                D4
+            </MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl style={styles.options}>
+            <InputLabel id="number">#</InputLabel>
+            <Select
+              id="number"
+              label="Number"
+              name='number'
+              color="default"
+              margin="normal"
+              value={fields.number}
+              onChange={formChange}
+
+            >
+              <MenuItem value={1} default>
+                1
+            </MenuItem>
+              <MenuItem value={2}>
+                2
+            </MenuItem>
+              <MenuItem value={3}>
+                3
+            </MenuItem>
+              <MenuItem value={4}>
+                4
+            </MenuItem>
+              <MenuItem value={5}>
+                5
+            </MenuItem>
+              <MenuItem value={6}>
+                6
+            </MenuItem>
+            </Select>
+          </FormControl>
+
+        </div>
+        <ColorButton
+          variant="contained"
+          color="secondary"
+          type="submit"
+          margin="normal"
+          disabled={!fields.type || !fields.number}
+        >
+          Roll
       </ColorButton>
-    </form>
+      </form>
     </>
   )
 }

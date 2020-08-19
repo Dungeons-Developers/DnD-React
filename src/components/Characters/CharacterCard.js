@@ -8,7 +8,6 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
 import CharacterShowEdit from './CharacterShowEdit';
 import Box from '@material-ui/core/Box';
@@ -27,10 +26,10 @@ const useStyles = makeStyles({
 
 function CharacterCard(props) {
 
-  const {pageTheme} = props;
+  const { pageTheme } = props;
 
   const style = {
-    theme: pageTheme === 'dark' ? theme.dark: theme.light,
+    theme: pageTheme === 'dark' ? theme.dark : theme.light,
     color: {
       color: 'inherit'
     }
@@ -46,50 +45,50 @@ function CharacterCard(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  
+
   return (
     <>
-    <div className="CharacterCard" style={{...props.style}}>
-    <Card className={classes.root} style={{...style.theme.accent, ...style.color}}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          alt="D&D Avatar"
-          height="130"
-          image={`https://source.unsplash.com/300x300/?${props.character.class}`}
-          title={props.character.name}
-        />
-        <CardContent >
-          <Typography gutterBottom variant="h6" component="h3">
-            {props.character.name}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" style={style.color}>
-            Lvl {props.character.level}&nbsp;
+      <div className="CharacterCard" style={{ ...props.style }}>
+        <Card className={classes.root} style={{ ...style.theme.accent, ...style.color }}>
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              alt="D&D Avatar"
+              height="130"
+              image={`https://source.unsplash.com/300x300/?${props.character.class}`}
+              title={props.character.name}
+            />
+            <CardContent >
+              <Typography gutterBottom variant="h6" component="h3">
+                {props.character.name}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p" style={style.color}>
+                Lvl {props.character.level}&nbsp;
             {props.character.race}&nbsp;
-            {props.character.class}<br/>
-            {/* {props.character.isInCampaign ? "In Campaign" : "Not in Campaign"} */}
-            
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-       
-      <Button size="small" color="primary" onClick={handleOpen} style={style.color}>
-        Character Details
+            {props.character.class}<br />
+                {/* {props.character.isInCampaign ? "In Campaign" : "Not in Campaign"} */}
+
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+          <CardActions>
+
+            <Button size="small" color="primary" onClick={handleOpen} style={style.color}>
+              Character Details
       </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-         <Box my="1rem">
-      <CharacterShowEdit Character={props.character} edit={props.edit} delete={props.delete}/>
-        </Box>
-      </Modal>
-      </CardActions>
-    </Card>
-    </div>
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            >
+              <Box my="1rem">
+                <CharacterShowEdit Character={props.character} edit={props.edit} delete={props.delete} />
+              </Box>
+            </Modal>
+          </CardActions>
+        </Card>
+      </div>
     </>
   );
 }

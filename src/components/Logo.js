@@ -1,13 +1,13 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
+import React from 'react';
+import { connect } from 'react-redux';
 
 
 function Logo(props) {
 
-  const {pageTheme} = props;
+  const { pageTheme } = props;
 
   return (
-    <img src={`/assets/logo${pageTheme}mode.svg`} alt="logo" height={props.height ? props.height : 100}/>
+    <img src={`/assets/logo${pageTheme}mode.svg`} alt="logo" height={props.height ? props.height : 100} />
   )
 }
 
