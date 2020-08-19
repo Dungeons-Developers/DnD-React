@@ -14,6 +14,8 @@ import Logo from '../components/Logo'
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 
+import theme from '../theme/theme';
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -69,14 +71,13 @@ function LandingPage(props) {
             justifyContent="flex-start"
             alignItems="center"
             minHeight="60vh">
-            <Paper square>
+            <Paper square style={theme.dark.accent}>
               <Tabs
                 variant="fullWidth"
                 value={openTab}
-                indicatorColor="primary"
-                textColor="primary"
                 onChange={handleChange}
                 aria-label="disabled tabs example"
+                style={{color: '#EEEEEE'}}
               >
                 <Tab label="Login" value={0} />
                 <Tab label="SignUp" value={1} />
