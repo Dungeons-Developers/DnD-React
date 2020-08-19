@@ -34,7 +34,7 @@ function Footer({ pageTheme, token, path }) {
 
   useEffect(() => {
     styles.theme = pageTheme === 'dark' ? theme.dark : theme.light;
-  }, [pageTheme]);
+  }, [pageTheme, styles]);
 
   return (
     <If condition={token !== null && path !== '/play'}>
