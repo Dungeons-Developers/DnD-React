@@ -74,9 +74,10 @@ export const updateCharacter = payload => {
 
   return async dispatch => {
     try {
-      let response = await axios.patch(`https://dnd-api-server.herokuapp.com/v1/api/character/${payload._id}`, payload);
+      await axios.patch(`https://dnd-api-server.herokuapp.com/v1/api/character/${payload._id}`, payload);
+      // let response = await axios.patch(`https://dnd-api-server.herokuapp.com/v1/api/character/${payload._id}`, payload);
 
-      let res = response.data;
+      // let res = response.data;
       dispatch(updateChar(payload));
     } catch (e) {
       console.log(e);
