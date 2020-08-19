@@ -1,12 +1,12 @@
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import theme from '../theme/theme';
 
 import { Container, Paper } from '@material-ui/core';
 
 
-function About({pageTheme}) {
+function About({ pageTheme }) {
   const styles = {
     div: {
       width: '100%',
@@ -39,49 +39,49 @@ function About({pageTheme}) {
 
   return (
     <div style={styles.div}>
-    <Container>
-      <Paper style={{...styles.paper, ...styles.theme.accent, ...styles.color}}>
-        <img src='/assets/claytonjones.png' alt='Clayton Jones'/>
-        <div style={styles.info}>
-          <h2 style ={styles.text}>Clayton Jones</h2>
-          <h3 style ={styles.text}>Lead Developer</h3>
-          <p style ={styles.text}>Frontend developer by day, gamer and musician by night. Always succeeds when rolling dexterity to crack an egg single handed.</p>
-        </div>
-      </Paper>
-    </Container>
+      <Container>
+        <Paper style={{ ...styles.paper, ...styles.theme.accent, ...styles.color }}>
+          <img src='/assets/claytonjones.png' alt='Clayton Jones' />
+          <div style={styles.info}>
+            <h2 style={styles.text}>Clayton Jones</h2>
+            <h3 style={styles.text}>Lead Developer</h3>
+            <p style={styles.text}>Frontend developer by day, gamer and musician by night. Always succeeds when rolling dexterity to crack an egg single handed.</p>
+          </div>
+        </Paper>
+      </Container>
 
-    <Container>
-      <Paper style={{...styles.paper, ...styles.theme.accent, ...styles.color}}>
-        <div style={styles.info}>
-          <h2 style ={styles.text}>Daniel Nguyen</h2>
-          <h3 style ={styles.text}>Project Manager</h3>
-          <p style ={styles.text}>Chaotic Neutral problem wrangler. Underwhelmed until overwhelmed. Enjoys pwning noobz and staying hydrated.</p>
-        </div>
-        <img src='/assets/dannguyen.png' alt='Daniel Nguyen' />
-      </Paper>
-    </Container>
+      <Container>
+        <Paper style={{ ...styles.paper, ...styles.theme.accent, ...styles.color }}>
+          <div style={styles.info}>
+            <h2 style={styles.text}>Daniel Nguyen</h2>
+            <h3 style={styles.text}>Project Manager</h3>
+            <p style={styles.text}>Chaotic Neutral problem wrangler. Underwhelmed until overwhelmed. Enjoys pwning noobz and staying hydrated.</p>
+          </div>
+          <img src='/assets/dannguyen.png' alt='Daniel Nguyen' />
+        </Paper>
+      </Container>
 
-    <Container>
-      <Paper style={{...styles.paper, ...styles.theme.accent, ...styles.color}}>
-        <img src='/assets/madisonstehle.png' alt='Madison Stehle' />
-        <div style={styles.info}>
-          <h2 style ={styles.text}>Madison Stehle</h2>
-          <h3 style ={styles.text}>Code Reviewer</h3>
-          <p style ={styles.text}>The elves know her as [redacted], the dwarves know her as [redacted], but you know her as Madison. Pastimes include reading an unhealthy number of books and putting out metaphorical fires.</p>
-        </div>
-      </Paper>
-    </Container>
+      <Container>
+        <Paper style={{ ...styles.paper, ...styles.theme.accent, ...styles.color }}>
+          <img src='/assets/madisonstehle.png' alt='Madison Stehle' />
+          <div style={styles.info}>
+            <h2 style={styles.text}>Madison Stehle</h2>
+            <h3 style={styles.text}>Code Reviewer</h3>
+            <p style={styles.text}>The elves know her as [redacted], the dwarves know her as [redacted], but you know her as Madison. Pastimes include reading an unhealthy number of books and putting out metaphorical fires.</p>
+          </div>
+        </Paper>
+      </Container>
 
-    <Container>
-      <Paper style={{...styles.paper, ...styles.theme.accent, ...styles.color}}>
-        <div style={styles.info}>
-          <h2 style ={styles.text}>Joel Watson</h2>
-          <h3 style ={styles.text}>DevOps</h3>
-          <p style ={styles.text}>Look, a description</p>
-        </div>
-        <img src='/assets/joelwatson.png' alt='Joel Watson' />
-      </Paper>
-    </Container>
+      <Container>
+        <Paper style={{ ...styles.paper, ...styles.theme.accent, ...styles.color }}>
+          <div style={styles.info}>
+            <h2 style={styles.text}>Joel Watson</h2>
+            <h3 style={styles.text}>DevOps</h3>
+            <p style={styles.text}>Just your run of the mill gnome ranger with proficiencies in programming and eating bacon.</p>
+          </div>
+          <img src='/assets/joelwatson.png' alt='Joel Watson' />
+        </Paper>
+      </Container>
     </div>
 
   )

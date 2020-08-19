@@ -51,9 +51,9 @@ export const login = (payload) => {
       );
 
       let res = response.data;
-      Cookies.set('token', res.token, { expires: 1, sameSite: 'secure' });
-      Cookies.set('username', res.user.username, { expires: 1, sameSite: 'secure' });
-      Cookies.set('userId', res.user._id, { expires: 1, sameSite: 'secure' });
+      Cookies.set('token', res.token, { expires: 1, sameSite: 'none', secure: true });
+      Cookies.set('username', res.user.username, { expires: 1, sameSite: 'none', secure: true });
+      Cookies.set('userId', res.user._id, { expires: 1, sameSite: 'none', secure: true });
       dispatch(getUser(res))
     } catch (e) {
       console.log(e);
@@ -71,9 +71,9 @@ export const create = (payload) => {
       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/signup', { username, password });
 
       let res = response.data;
-      Cookies.set('token', res.token, { expires: 1, sameSite: 'secure' });
-      Cookies.set('username', res.user.username, { expires: 1, sameSite: 'secure' });
-      Cookies.set('userId', res.user._id, { expires: 1, sameSite: 'secure' });
+      Cookies.set('token', res.token, { expires: 1, sameSite: 'none', secure: true });
+      Cookies.set('username', res.user.username, { expires: 1, sameSite: 'none', secure: true });
+      Cookies.set('userId', res.user._id, { expires: 1, sameSite: 'none', secure: true });
       dispatch(getUser(res))
     } catch (e) {
       console.log(e);
