@@ -1,17 +1,17 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {If} from 'react-if';
-import {Redirect} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { If } from 'react-if';
+import { Redirect } from 'react-router-dom';
 
 
 
-import {TextField, Container, Button, Paper} from '@material-ui/core';
-import {withStyles} from '@material-ui/core/styles';
-import {red, gray} from '@material-ui/core/colors'
+import { TextField, Container, Button, Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors'
 
 import useForm from '../hooks/useForm';
 
-import {findCampaign, getUserCampaigns} from '../store/slices/campaign-slice';
+import { findCampaign, getUserCampaigns } from '../store/slices/campaign-slice';
 
 import theme from '../theme/theme';
 
@@ -27,7 +27,7 @@ const ColorButton = withStyles((theme) => ({
 
 const CssTextField = withStyles({
   root: {
-    
+
     '& label.Mui-focused': {
       color: 'inherit',
     },
@@ -54,7 +54,7 @@ const CssTextField = withStyles({
   },
 })(TextField);
 
-function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaigns, pageTheme}) {
+function JoinForm({ findCampaign, campaignID, campaigns, username, getUserCampaigns, pageTheme }) {
 
   useEffect(() => {
     getUserCampaigns(username);
@@ -74,7 +74,7 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
     handleChange(e.target.id, e.target.value)
   }
 
-  const {handleChange, handleSubmit, fields} = useForm(defaults);
+  const { handleChange, handleSubmit, fields } = useForm(defaults);
 
   const styles = {
     container: {
@@ -107,7 +107,7 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
       justifyContent: 'center',
       minWidth: '220px'
     },
-    theme: pageTheme === 'dark' ? theme.dark: theme.light,
+    theme: pageTheme === 'dark' ? theme.dark : theme.light,
     color: {
       color: 'inherit'
     }
@@ -116,24 +116,24 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
   return (
     <Container style={styles.container} className='join-form'>
       <div style={styles.container}>
-        <h2 style={{textAlign: 'center'}}>Enter the ID of the campaign you wish to join, or select on from below.</h2>
-        <p style={{textAlign: 'center'}}>If you don't have any campaigns of your own, create one, or ask a friend to join theirs!</p>
+        <h2 style={{ textAlign: 'center' }}>Enter the ID of the campaign you wish to join, or select on from below.</h2>
+        <p style={{ textAlign: 'center' }}>If you don't have any campaigns of your own, create one, or ask a friend to join theirs!</p>
       </div>
       <form autoComplete='off' onSubmit={submit} style={styles.form}>
         <div>
-          <CssTextField 
-            id="campaignID" 
-            label="CampaignID" 
+          <CssTextField
+            id="campaignID"
+            label="CampaignID"
             color="default"
-            margin="normal" 
-            onChange={formChange} 
+            margin="normal"
+            onChange={formChange}
             value={fields.campaignID}
           />
         </div>
-        <ColorButton 
-          variant="contained" 
-          color="secondary" 
-          type="submit" 
+        <ColorButton
+          variant="contained"
+          color="secondary"
+          type="submit"
           margin="normal"
           disabled={!fields.campaignID}
         >
@@ -145,8 +145,8 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
           <h3>Your campaigns:</h3>
           <div style={styles.campList}>
             {campaigns.map((cam, i) => (
-              <Paper 
-                style={{...styles.paper, ...styles.theme.accent, ...styles.color}}
+              <Paper
+                style={{ ...styles.paper, ...styles.theme.accent, ...styles.color }}
                 variant='outlined'
                 key={i}
               >
@@ -155,7 +155,7 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
                 <ColorButton
                   size='small'
                   margin='normal'
-                  onClick={() => findCampaign({campaignID: cam._id})}
+                  onClick={() => findCampaign({ campaignID: cam._id })}
                 >
                   Join
                 </ColorButton>
@@ -166,13 +166,13 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
       </If>
 
       <If condition={!!campaignID}>
-          <Redirect to='/play'/>
+        <Redirect to='/play' />
       </If>
     </Container>
   )
 }
 
-const mapDispatchToProps = {findCampaign, getUserCampaigns};
+const mapDispatchToProps = { findCampaign, getUserCampaigns };
 
 const mapStateToProps = state => {
   return {

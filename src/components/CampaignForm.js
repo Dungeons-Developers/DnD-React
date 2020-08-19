@@ -1,26 +1,25 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {If} from 'react-if';
-import {Redirect} from 'react-router-dom';
+import React from 'react';
+import { connect } from 'react-redux';
+import { If } from 'react-if';
+import { Redirect } from 'react-router-dom';
 
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import {withStyles, Paper} from '@material-ui/core';
-import {red} from '@material-ui/core/colors'
+import { withStyles, Paper } from '@material-ui/core';
+import { red } from '@material-ui/core/colors'
 
 import useForm from '../hooks/useForm';
 
-import {createCampaign} from '../store/slices/campaign-slice';
+import { createCampaign } from '../store/slices/campaign-slice';
 
 import theme from '../theme/theme';
 
 const CssTextField = withStyles({
   root: {
-    
+
     '& label.Mui-focused': {
       color: 'inherit',
     },
@@ -58,7 +57,7 @@ const ColorButton = withStyles((theme) => ({
 }))(Button);
 
 
-function CampaignForm({createCampaign, user, campaignID, pageTheme}) {
+function CampaignForm({ createCampaign, user, campaignID, pageTheme }) {
 
   const styles = {
     container: {
@@ -67,7 +66,7 @@ function CampaignForm({createCampaign, user, campaignID, pageTheme}) {
       justifyContent: 'center',
       width: '100%'
     },
-    theme: pageTheme === 'dark' ? theme.dark: theme.light,
+    theme: pageTheme === 'dark' ? theme.dark : theme.light,
     color: {
       color: 'inherit'
     }
@@ -103,12 +102,12 @@ function CampaignForm({createCampaign, user, campaignID, pageTheme}) {
             <Grid container spacing={3}>
 
               <Grid item xs={12} sm={6}>
-                <CssTextField 
-                  id="title" 
-                  label="Title" 
-                  color="primary" 
-                  margin="normal" 
-                  onChange={formChange} 
+                <CssTextField
+                  id="title"
+                  label="Title"
+                  color="primary"
+                  margin="normal"
+                  onChange={formChange}
                   value={fields.title}
                   style={styles.color}
                   fullWidth
@@ -116,61 +115,61 @@ function CampaignForm({createCampaign, user, campaignID, pageTheme}) {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <CssTextField 
-                  id="setting" 
-                  label="Setting" 
-                  color="primary" 
-                  margin="normal" 
-                  onChange={formChange} 
-                  fullWidth
-                />
-              </Grid>
-
-              <Grid item xs={12}>
-                  <CssTextField 
-                    id="description" 
-                    label="description" 
-                    variant="outlined" 
-                    margin="normal" 
-                    multiline 
-                    rows={6} 
-                    color="primary" 
-                    onChange={formChange}
-                    fullwidth
-                    style={{width: '100%'}}
-                  />
-              </Grid>
-
-              <Grid item xs={12}>
-                <CssTextField 
-                  id="notes" 
-                  label="notes" 
-                  variant="outlined" 
-                  margin="normal" 
-                  multiline 
-                  rows={4} 
-                  color="primary" 
+                <CssTextField
+                  id="setting"
+                  label="Setting"
+                  color="primary"
+                  margin="normal"
                   onChange={formChange}
-                  fullwidth 
-                  style={{width: '100%'}}
+                  fullWidth
                 />
               </Grid>
 
               <Grid item xs={12}>
-                <ColorButton 
-                  variant="contained" 
-                  color="primary" 
-                  type="submit" 
-                  margin="normal" 
-                  disabled={ !fields.title || !fields.setting || !fields.description }
+                <CssTextField
+                  id="description"
+                  label="description"
+                  variant="outlined"
+                  margin="normal"
+                  multiline
+                  rows={6}
+                  color="primary"
+                  onChange={formChange}
+                  fullwidth
+                  style={{ width: '100%' }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <CssTextField
+                  id="notes"
+                  label="notes"
+                  variant="outlined"
+                  margin="normal"
+                  multiline
+                  rows={4}
+                  color="primary"
+                  onChange={formChange}
+                  fullwidth
+                  style={{ width: '100%' }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <ColorButton
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  margin="normal"
+                  disabled={!fields.title || !fields.setting || !fields.description}
                   fullWidth
-                  >
+                >
                   Create
                 </ColorButton>
               </Grid>
 
               <If condition={!!campaignID}>
-                  <Redirect to='/play'/>
+                <Redirect to='/play' />
               </If>
             </Grid>
           </form>
