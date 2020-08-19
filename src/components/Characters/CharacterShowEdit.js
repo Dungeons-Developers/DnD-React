@@ -19,7 +19,7 @@ import {If, Then, Else} from 'react-if';
 import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
 import { updateCharacter, deleteCharacter, getCharacters } from '../../store/slices/character-slice';
-
+import '../../styles/index.scss';
 import theme from '../../theme/theme';
 
 
@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
+    overflow: "scroll"
   },
 }));
 
@@ -76,7 +77,10 @@ export function CharacterDetails(props) {
     theme: pageTheme === 'dark' ? theme.dark: theme.light,
     color: {
       color: 'inherit'
-    }
+    }, 
+    flow: {
+      overflow: 'scroll'
+    } 
   }
 
   const defaults = {
@@ -111,12 +115,6 @@ export function CharacterDetails(props) {
     e.target.reset();
   }
 
-  function deleteSubmit(e) {
-    e.preventDefault();
-    handleSubmit(remove);
-    e.target.reset();
-  }
-
   function formChange(e) {
     handleChange(e.target.name, e.target.value);
   }
@@ -127,9 +125,9 @@ export function CharacterDetails(props) {
   
   return (
     <div className={styleClasses.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{...style.theme.accent, ...style.flow}}>
 
-        <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example">
+        <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example" style={{...style.theme.accent, ...style.theme}}>
           <Tab label="details" {...a11yProps(0)} />
           {props.edit && <Tab label="edit" {...a11yProps(1)} />}
           {props.delete && <Tab label="delete" {...a11yProps(2)} />}
@@ -139,8 +137,8 @@ export function CharacterDetails(props) {
 
       {/* need to get charName dynamically populating from store data */}
   {/* DETAILS TAB  */}
-      <TabPanel value={tab} index={0} style={{...style.theme.accent}}>
-        <h2 id="simple-modal-title">Char Name {props.Character.name}</h2>
+      <TabPanel value={tab} index={0} style={{...style.theme.accent, ...style.theme, ...style.flow}}>
+        <h2 id="simple-modal-title">{props.Character.name}</h2>
         <p className="charStats">Level: {props.Character.level} </p>
         <p className="charStats">Race: {props.Character.race}</p>
         <p className="charStats">Class: {props.Character.class}</p>
@@ -163,7 +161,6 @@ export function CharacterDetails(props) {
         <p id="simple-modal-description">
         Bio: 
         {props.Character.bio ? props.Character.bio : " This character has a mysterious past, yet to be written."}
-
         </p>
       </TabPanel>
       {/* Make text fields dropdowns where necessary 
@@ -485,7 +482,7 @@ export function CharacterDetails(props) {
           remove(props.Character);
           
         }}>
-        <Button fullWidth color="primary" variant="contained" type="submit">
+        <Button fullWidth color="primary" variant="contained" type="submit" style={{...style.theme}}>
           Delete
         </Button>
         </form>
