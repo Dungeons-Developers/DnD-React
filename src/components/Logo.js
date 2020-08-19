@@ -7,7 +7,7 @@ function Logo(props) {
   const {pageTheme} = props;
 
   return (
-    <img src={`/assets/dnd${pageTheme}mode.svg`} alt="logo" height={props.height ? props.height : 100}/>
+    <img src={`/assets/logo${pageTheme}mode.svg`} alt="logo" height={props.height ? props.height : 100}/>
   )
 }
 
