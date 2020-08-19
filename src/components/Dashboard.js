@@ -13,7 +13,13 @@ import Typography from '@material-ui/core/Typography';
 
 import { logout } from '../store/slices/user-slice'
 
-function Dashboard({ username, logout }) {
+import theme from '../theme/theme';
+
+function Dashboard({ username, logout, pageTheme }) {
+
+  const style = {
+    theme: pageTheme === 'dark' ? theme.dark: theme.light
+  }
 
   return (
     <Box
@@ -36,7 +42,7 @@ function Dashboard({ username, logout }) {
           <Typography align='center' variant='overline' component='p'>Create Character</Typography>
           <Tooltip title='Create Character'>
             <Link to='/create-character'>
-              <Paper elevation={3}>
+              <Paper elevation={3} style={{...style.theme.accent}}>
                 <Box p="3rem" >
                   <IconButton aria-label="Create Character">
                     <PersonAddIcon style={{ fill: '#BE2224' }} />
@@ -50,7 +56,7 @@ function Dashboard({ username, logout }) {
           <Typography align='center' variant='overline' component='p'>Join Campaign</Typography>
           <Tooltip title='Join Campaign'>
             <Link to='/join'>
-              <Paper elevation={3}>
+              <Paper elevation={3} style={{...style.theme.accent}}>
                 <Box p="3rem">
                   <IconButton aria-label="Join Campaign">
                     <PeopleIcon style={{ fill: '#BE2224' }} />
@@ -64,7 +70,7 @@ function Dashboard({ username, logout }) {
           <Typography align='center' variant='overline' component='p'>Create Campaign</Typography>
           <Tooltip title='Create Campaign'>
             <Link to='/create-campaign'>
-              <Paper elevation={3}>
+              <Paper elevation={3} style={{...style.theme.accent}}>
                 <Box p="3rem">
 
                   <IconButton aria-label="Create Campaign">
@@ -81,7 +87,8 @@ function Dashboard({ username, logout }) {
 }
 
 const mapStateToProps = (state) => ({
-  username: state.users.username
+  username: state.users.username,
+  pageTheme: state.theme.theme
 });
 
 const mapDispatchToProps = {

@@ -20,8 +20,12 @@ import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
 import { updateCharacter, deleteCharacter } from '../../store/slices/character-slice';
 
+import theme from '../../theme/theme';
+
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
+
 
   return (
     <div
@@ -66,7 +70,14 @@ export function CharacterDetails(props) {
   console.log('charprop from show/edit', props.Character);
   const styleClasses = useStyles();
   const [tab, setTab] = React.useState(0);
-  const { create, user, remove } = props;
+  const { create, user, remove, pageTheme } = props;
+
+  const style = {
+    theme: pageTheme === 'dark' ? theme.dark: theme.light,
+    color: {
+      color: 'inherit'
+    }
+  }
 
   const defaults = {
     user: user,
@@ -128,7 +139,7 @@ export function CharacterDetails(props) {
 
       {/* need to get charName dynamically populating from store data */}
   {/* DETAILS TAB  */}
-      <TabPanel value={tab} index={0}>
+      <TabPanel value={tab} index={0} style={{...style.theme.accent}}>
         <h2 id="simple-modal-title">Char Name {props.Character.name}</h2>
         <p className="charStats">Level: {props.Character.level} </p>
         <p className="charStats">Race: {props.Character.race}</p>
@@ -481,7 +492,8 @@ export function CharacterDetails(props) {
 }
 
 const mapStateToProps = state => ({
-  user: state.users.user
+  user: state.users.user,
+  pageTheme: state.theme.theme
 })
 
 const mapDispatchToProps = {

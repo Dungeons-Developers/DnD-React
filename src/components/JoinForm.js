@@ -13,6 +13,8 @@ import useForm from '../hooks/useForm';
 
 import {findCampaign, getUserCampaigns} from '../store/slices/campaign-slice';
 
+import theme from '../theme/theme';
+
 const ColorButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText(red[500]),
@@ -25,24 +27,34 @@ const ColorButton = withStyles((theme) => ({
 
 const CssTextField = withStyles({
   root: {
+    
     '& label.Mui-focused': {
-      color: 'red',
+      color: 'inherit',
+    },
+    '& label': {
+      color: 'inherit',
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: 'red',
+      color: 'inherit',
+      borderBottomColor: 'inherit',
+    },
+    '& .MuiInput-underline': {
+      color: 'inherit',
     },
     '& .MuiOutlinedInput-root': {
+      color: 'inherit',
       '& fieldset': {
-        borderColor: 'red',
+        borderColor: 'inherit',
       },
       '&.Mui-focused fieldset': {
-        borderColor: 'red',
+        color: 'inherit',
+        borderColor: 'inherit',
       },
     },
   },
 })(TextField);
 
-function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaigns}) {
+function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaigns, pageTheme}) {
 
   useEffect(() => {
     getUserCampaigns(username);
@@ -94,6 +106,10 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
       alignItems: 'center',
       justifyContent: 'center',
       minWidth: '220px'
+    },
+    theme: pageTheme === 'dark' ? theme.dark: theme.light,
+    color: {
+      color: 'inherit'
     }
   }
 
@@ -130,7 +146,7 @@ function JoinForm({findCampaign, campaignID, campaigns, username, getUserCampaig
           <div style={styles.campList}>
             {campaigns.map((cam, i) => (
               <Paper 
-                style={styles.paper}
+                style={{...styles.paper, ...styles.theme.accent, ...styles.color}}
                 variant='outlined'
                 key={i}
               >
@@ -162,7 +178,8 @@ const mapStateToProps = state => {
   return {
     campaignID: state.campaign.campaignID,
     campaigns: state.campaign.allCampaigns,
-    username: state.users.username
+    username: state.users.username,
+    pageTheme: state.theme.theme
   }
 }
 
