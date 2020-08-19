@@ -18,7 +18,7 @@ import Grid from '@material-ui/core/Grid';
 import {If, Then, Else} from 'react-if';
 import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
-import { updateCharacter, deleteCharacter, getCharacters } from '../../store/slices/character-slice';
+import { updateCharacter, deleteCharacter } from '../../store/slices/character-slice';
 import '../../styles/index.scss';
 import theme from '../../theme/theme';
 
@@ -68,7 +68,6 @@ const useStyles = makeStyles((theme) => ({
 
 export function CharacterDetails(props) {
 
-  console.log('charprop from show/edit', props.Character);
   const styleClasses = useStyles();
   const [tab, setTab] = React.useState(0);
   const { user, remove, pageTheme, update } = props;
@@ -85,25 +84,26 @@ export function CharacterDetails(props) {
 
   const defaults = {
     user: user,
-    name: '',
-    class: '',
-    race: '',
-    alignment: '',
-    deity: '',
-    skill_1: '',
-    skill_2: '',
-    armor: '',
-    pack: '',
-    weapon_1: '',
-    weapon_2: '',
+    name: props.Character ? props.Character.name : '',
+    class: props.Character ? props.Character.class : '',
+    race: props.Character ? props.Character.race : '',
+    alignment: props.Character ? props.Character.alignment : '',
+    deity: props.Character ? props.Character.deity : '',
+    skill_1: props.Character ? props.Character.skill_1 : '',
+    skill_2: props.Character ? props.Character.skill_2 : '',
+    armor: props.Character ? props.Character.armor : '',
+    pack: props.Character ? props.Character.pack : '',
+    weapon_1: props.Character ? props.Character.weapon_1 : '',
+    weapon_2: props.Character ? props.Character.weapon_2 : '',
     // ability_scores: '',
-    str:'',
-    dex:'',
-    con:'',
-    int:'',
-    wis:'',
-    cha:'',
-    level: '',
+    str: props.Character ? props.Character.str : '',
+    dex: props.Character ? props.Character.dex : '',
+    con: props.Character ? props.Character.con : '',
+    int: props.Character ? props.Character.int : '',
+    wis: props.Character ? props.Character.wis : '',
+    cha: props.Character ? props.Character.cha : '',
+    level: props.Character ? props.Character.level : '',
+    _id: props.Character ? props.Character._id : '',
     // isInCampaign: false,
   };
 
@@ -131,7 +131,6 @@ export function CharacterDetails(props) {
           <Tab label="details" {...a11yProps(0)} />
           {props.edit && <Tab label="edit" {...a11yProps(1)} />}
           {props.delete && <Tab label="delete" {...a11yProps(2)} />}
-      
         </Tabs>
       </AppBar>
 
@@ -144,7 +143,7 @@ export function CharacterDetails(props) {
         <p className="charStats">Class: {props.Character.class}</p>
         <p className="charStats">Alignment: {props.Character.alignment}</p>
         <p className="charStats">Deity: {props.Character.deity}</p>
-        <p className="charStats">Proficiencies: Skill 1: {props.Character.skill_1}, Skill 2: {props.Character.skill_2}</p>
+        <p className="charStats">Proficiencies: Skill 1: {props.Character.skill_1} // Skill 2: {props.Character.skill_2}</p>
         <p className="charStats">Ability Scores:<br/>
         STR: {props.Character.str}<br/>
         DEX: {props.Character.dex}<br/>
@@ -154,13 +153,13 @@ export function CharacterDetails(props) {
         CHA: {props.Character.cha}
         </p>
         <p className="charEquip">Equipment:<br/>
-         Pack: {props.Character.pack}, 
-         Armor: {props.Character.armor}, 
-         Weapon 1: {props.Character.weapon_1}, 
+         Pack: {props.Character.pack} //
+         Armor: {props.Character.armor} // 
+         Weapon 1: {props.Character.weapon_1} //
          Weapon 2: {props.Character.weapon_2}</p>
         <p id="simple-modal-description">
-        Bio: 
-        {props.Character.bio ? props.Character.bio : " This character has a mysterious past, yet to be written."}
+        {/* Bio: 
+        {props.Character.bio ? props.Character.bio : " This character has a mysterious past, yet to be written."} */}
         </p>
       </TabPanel>
       {/* Make text fields dropdowns where necessary 
@@ -448,7 +447,7 @@ export function CharacterDetails(props) {
               </Grid>
        <br/>
        <br/>
-           {/* BIO */}
+           {/* BIO
            <Grid item xs={12} sm={12} >
                 <FormControl fullWidth>
                   <InputLabel id="update-character-bio"></InputLabel>
@@ -463,9 +462,9 @@ export function CharacterDetails(props) {
                   />
                   <FormHelperText>Edit your bio</FormHelperText>
                 </FormControl>
-              </Grid>
+              </Grid> */}
         <Grid item xs={12}>
-        <Button fullWidth color="primary" variant="contained" type="submit">
+        <Button fullWidth color="primary" variant="contained" type="submit" style={{...style.theme, ...style.theme.accent}}>
           Save
         </Button>
         </Grid>
@@ -482,7 +481,7 @@ export function CharacterDetails(props) {
           remove(props.Character);
           
         }}>
-        <Button fullWidth color="primary" variant="contained" type="submit" style={{...style.theme}}>
+        <Button fullWidth color="primary" variant="contained" type="submit" style={{...style.theme, ...style.theme.accent}}>
           Delete
         </Button>
         </form>
