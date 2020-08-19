@@ -15,10 +15,10 @@ import { logout } from '../store/slices/user-slice'
 
 import theme from '../theme/theme';
 
-function Dashboard({ username, logout, pageTheme }) {
+function Dashboard({ username, pageTheme }) {
 
   const style = {
-    theme: pageTheme === 'dark' ? theme.dark: theme.light
+    theme: pageTheme === 'dark' ? theme.dark : theme.light
   }
 
   return (
@@ -31,7 +31,6 @@ function Dashboard({ username, logout, pageTheme }) {
     >
 
       <Typography variant="h2">Welcome {username}</Typography>
-      <button onClick={() => logout(null)}>Logout</button>
       <Box
         display="flex"
         flex="1"
@@ -42,7 +41,7 @@ function Dashboard({ username, logout, pageTheme }) {
           <Typography align='center' variant='overline' component='p'>Create Character</Typography>
           <Tooltip title='Create Character'>
             <Link to='/create-character'>
-              <Paper elevation={3} style={{...style.theme.accent}}>
+              <Paper elevation={3} style={{ ...style.theme.accent }}>
                 <Box p="3rem" >
                   <IconButton aria-label="Create Character">
                     <PersonAddIcon style={{ fill: '#BE2224' }} />
@@ -56,7 +55,7 @@ function Dashboard({ username, logout, pageTheme }) {
           <Typography align='center' variant='overline' component='p'>Join Campaign</Typography>
           <Tooltip title='Join Campaign'>
             <Link to='/join'>
-              <Paper elevation={3} style={{...style.theme.accent}}>
+              <Paper elevation={3} style={{ ...style.theme.accent }}>
                 <Box p="3rem">
                   <IconButton aria-label="Join Campaign">
                     <PeopleIcon style={{ fill: '#BE2224' }} />
@@ -70,7 +69,7 @@ function Dashboard({ username, logout, pageTheme }) {
           <Typography align='center' variant='overline' component='p'>Create Campaign</Typography>
           <Tooltip title='Create Campaign'>
             <Link to='/create-campaign'>
-              <Paper elevation={3} style={{...style.theme.accent}}>
+              <Paper elevation={3} style={{ ...style.theme.accent }}>
                 <Box p="3rem">
 
                   <IconButton aria-label="Create Campaign">
@@ -91,8 +90,4 @@ const mapStateToProps = (state) => ({
   pageTheme: state.theme.theme
 });
 
-const mapDispatchToProps = {
-  logout,
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps)(Dashboard);

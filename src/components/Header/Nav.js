@@ -1,12 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Link } from 'react-router-dom';
 
 import { Breadcrumbs, Typography } from '@material-ui/core';
 
+import { logout } from '../../store/slices/user-slice'
 
 
-export default function Nav(props) {
+function Nav({ logout }) {
 
   const styles = {
     ul: {
@@ -23,6 +25,11 @@ export default function Nav(props) {
     link: {
       textDecoration: 'none',
       color: 'inherit'
+    },
+    logout: {
+      textDecoration: 'none',
+      color: 'inherit',
+      cursor: 'pointer',
     }
   }
 
@@ -43,7 +50,15 @@ export default function Nav(props) {
           Join Campaign
         </Typography>
       </Link>
+      <Typography style={styles.logout} onClick={() => logout(null)}>
+        Logout
+      </Typography>
     </Breadcrumbs>
   )
 }
 
+const mapDispatchToProps = {
+  logout,
+}
+
+export default connect(null, mapDispatchToProps)(Nav)
