@@ -32,6 +32,9 @@ export function CharacterDisplay(props) {
     color: {
       color: 'inherit',
       underlineNone: 'none',
+    },
+    createCard: {
+      height: 300,
     }
   }
 
@@ -54,7 +57,7 @@ export function CharacterDisplay(props) {
 
   //push character create form as card
   charactersHTML.push(<Grid item xs={4} md={3} lg={2} key="characterCreateFormGrid">
-    <Card className={classes.root} key="characterCreateFormCard" style={{...style.theme.accent, ...style.color}}>
+    <Card className={classes.root} key="characterCreateFormCard" style={{...style.theme.accent, ...style.color, ...style.createCard}} height="300">
     <CardActionArea>
       <CardMedia
         component="img"
