@@ -1,23 +1,26 @@
-import React, {useEffect, useState} from 'react';
-import {If} from 'react-if';
-import {Redirect} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { If } from 'react-if';
+import { Redirect } from 'react-router-dom';
 
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 import io from 'socket.io-client';
 
-import {Button, Paper} from '@material-ui/core';
-import {withStyles} from '@material-ui/core/styles';
-import {red} from '@material-ui/core/colors';
+import { Button, Paper } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
 
 import CharacterCard from '../components/Characters/CharacterCard';
 
-import {saveCampaign, disconnectFromCampaign, setCampaignPath} from '../store/slices/campaign-slice';
-import {getCharacters} from '../store/slices/character-slice';
+import { saveCampaign, disconnectFromCampaign, setCampaignPath } from '../store/slices/campaign-slice';
+import { getCharacters } from '../store/slices/character-slice';
 
 import Roller from '../components/CampaignRoller';
 
-const socket = io.connect('http://localhost:4000');
+// const socket = io.connect('http://localhost:4000');
+const socket = io.connect('https://dnd-api-server.herokuapp.com/');
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -47,7 +50,6 @@ function CampaignPage(props) {
     owner,
     title,
     description,
-    notes,
     campaignCharacters,
     user,
     userCharacters,
@@ -64,13 +66,23 @@ function CampaignPage(props) {
   const [playerChar, setPlayerChar] = useState(campaignCharacters.filter(char => char.user === user)[0]);
 
   const [log, setLog] = useState([]);
-  
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
 
   console.log('player char:', playerChar);
 
   // console.log('camp char:', campaignCharacters);
-
-  // const socket = io.connect('https://dnd-api-server.herokuapp.com/');
 
   socket.emit('join', campaignID);
 
@@ -103,16 +115,12 @@ function CampaignPage(props) {
     getCharacters(user);
     setCampaignPath('/play');
 
-    return () => {setCampaignPath('')}
-  }, []);
-
-  function testSocket() {
-    socket.emit('test', {room: campaignID, message: 'HI'});
-  }
+    return () => { setCampaignPath('') }
+  }, [getCharacters, setCampaignPath, user]);
 
   function joinChar(char) {
     console.log('joinChar fn');
-    socket.emit('character-join', {room: campaignID, character: char})
+    socket.emit('character-join', { room: campaignID, character: char })
     setPlayerChar(char);
   }
 
@@ -172,7 +180,7 @@ function CampaignPage(props) {
     campChars: {
       width: '60%',
       height: '100%',
-      overflow: 'scroll',
+      overflowY: 'auto',
       display: 'flex',
       flexWrap: 'wrap',
       alignItems: 'center',
@@ -208,7 +216,7 @@ function CampaignPage(props) {
       padding: '0 5px',
       minWidth: '150px',
       height: '60%',
-      overflow: 'scroll',
+      overflowY: 'auto',
       border: '1px solid black',
       flexDirection: 'column',
       justifyContent: 'flex-start',
@@ -237,15 +245,31 @@ function CampaignPage(props) {
       {/* Title */}
       <div style={styles.titleContainer}>
         <div style={styles.campInfo}>
-          <h4 style={{margin: 0}}>Owner: {owner}</h4>
-          <h4 style={{margin: 0}}>User: {user}</h4>
+          <h4 style={{ margin: 0 }}>Owner: {owner}</h4>
+          <h4 style={{ margin: 0 }}>User: {user}</h4>
         </div>
-        <div style={styles.title}>
-          <h1 style={{margin: 0}}>{title}</h1>
-          <h4 style={{margin: 0}}>CampaignID: {campaignID}</h4>
+        <div style={styles.title} onClick={handleClick}>
+          <h1 style={{ margin: 0 }}>{title}</h1>
+          <h4 style={{ margin: 0 }}>CampaignID: {campaignID}</h4>
         </div>
+        <Popover
+          id={id}
+          open={open}
+          anchorEl={anchorEl}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+        >
+          <Typography>{description}</Typography>
+        </Popover>
         <div style={styles.campInfo}>
-          <ColorButton 
+          <ColorButton
             onClick={disconnect}
             size='small'
           >
@@ -260,13 +284,13 @@ function CampaignPage(props) {
       <div style={styles.main}>
 
         {/* Camapaign Characters List */}
-        <div style={styles.campChars}> 
+        <div style={styles.campChars}>
           {currentChars.map((char, i) => (
-            <CharacterCard 
+            <CharacterCard
               character={char}
               delete={false}
               edit={owner === user ? true : false}
-              style={{width: '25%'}}
+              style={{ width: '25%' }}
               key={i}
             />
           ))}
@@ -276,11 +300,11 @@ function CampaignPage(props) {
 
           <div style={styles.log}>
             {log.map((roll, i) => (
-              <p key={i}><span style={{fontWeight: 'bold'}}>{roll.time} - </span><span style={{fontWeight: 'bold'}}>{roll.char.name}</span> rolled {roll.number} D{roll.type}: <span style={{fontWeight: 'bold'}}>{roll.total}</span></p>
+              <p key={i}><span style={{ fontWeight: 'bold' }}>{roll.time} - </span><span style={{ fontWeight: 'bold' }}>{roll.char.name}</span> rolled {roll.number} D{roll.type}: <span style={{ fontWeight: 'bold' }}>{roll.total}</span></p>
             ))}
           </div>
 
-          {playerChar && <Roller socket={socket}/>}
+          {playerChar && <Roller socket={socket} />}
 
         </div>
         {/* roll log */}
@@ -292,30 +316,30 @@ function CampaignPage(props) {
       {
         !playerChar &&
         <>
-        <h4>Add a Character:</h4>
-        <div style={styles.userChars}>
-          {userCharacters.map((char, i) => (
-            <Paper style={styles.paper} key={i}>
-              <p style={styles.classInfo}>{char.name}</p>
-              <p style={styles.classInfo}>Class: {char.class}</p>
-              <p style={styles.classInfo}>Lvl: {char.level}</p>
-              <AddButton
-                onClick={() => { joinChar(char) }}
-                size='small'
-                variant='contained'
-              >
-                Add
+          <h4>Add a Character:</h4>
+          <div style={styles.userChars}>
+            {userCharacters.map((char, i) => (
+              <Paper style={styles.paper} key={i}>
+                <p style={styles.classInfo}>{char.name}</p>
+                <p style={styles.classInfo}>Class: {char.class}</p>
+                <p style={styles.classInfo}>Lvl: {char.level}</p>
+                <AddButton
+                  onClick={() => { joinChar(char) }}
+                  size='small'
+                  variant='contained'
+                >
+                  Add
               </AddButton>
-            </Paper>
-          ))}
-        </div>
+              </Paper>
+            ))}
+          </div>
         </>
       }
 
       {owner === user && <button onClick={save} disabled={saving}>Save Campaign</button>}
 
       <If condition={!campaignID}>
-        <Redirect to='/join'/>
+        <Redirect to='/join' />
       </If>
     </div>
   )
@@ -336,6 +360,6 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {saveCampaign, disconnectFromCampaign, getCharacters, setCampaignPath}
+const mapDispatchToProps = { saveCampaign, disconnectFromCampaign, getCharacters, setCampaignPath }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CampaignPage);

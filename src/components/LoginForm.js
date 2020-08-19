@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import {withStyles} from '@material-ui/core';
-import {red} from '@material-ui/core/colors'
+import { withStyles } from '@material-ui/core';
+import { red } from '@material-ui/core/colors'
 
 import useForm from '../hooks/useForm'
 
 import { login } from '../store/slices/user-slice';
-
-import theme from '../theme/theme';
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -25,7 +23,7 @@ const ColorButton = withStyles((theme) => ({
 
 const CssTextField = withStyles({
   root: {
-    
+
     '& label.Mui-focused': {
       color: '#EEEEEE',
     },

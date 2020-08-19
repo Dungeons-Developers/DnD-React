@@ -6,7 +6,6 @@ import LandingPage from './pages/LandingPage';
 import AboutPage from './pages/AboutPage';
 import CharacterDisplay from './components/Characters/CharacterDisplay';
 import Dashboard from './components/Dashboard';
-import CharacterCard from './components/Characters/CharacterCard';
 import CharacterForm from './components/CharacterForm';
 import CampaignForm from './components/CampaignForm';
 import CampaignPage from './pages/CampaignPage';
@@ -48,7 +47,7 @@ export default function App() {
 
           <PrivateRoute exact path='/characters'>
             <Container>
-            <CharacterDisplay />
+              <CharacterDisplay />
             </Container>
           </PrivateRoute>
 

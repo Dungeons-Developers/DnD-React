@@ -14,14 +14,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import useForm from '../hooks/useForm';
 import { withStyles } from '@material-ui/core/styles';
-import { red, gray } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 import Dice from '../components/Dice';
 
 import { createCharacter, insertScore, disableScore, removeScore } from '../store/slices/character-slice';
 
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../data/charOptions.json';
 import { Typography } from '@material-ui/core';
-
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -35,7 +34,7 @@ const ColorButton = withStyles((theme) => ({
 
 function CharacterForm(props) {
 
-  const { character_id, scoreOptions, create, user, addScore, disableScore, disabledScores, removeScore } = props;
+  const { scoreOptions, create, user, disableScore, disabledScores } = props;
 
   const [submitted, setSubmitted] = useState(false)
 
@@ -315,11 +314,11 @@ function CharacterForm(props) {
                     </FormControl>
                   </Grid>
 
-                  <Grid item xs={12} sm={6} style={{maxHeight: '300px', minHeight: '200px'}}>
+                  <Grid item xs={12} sm={6} style={{ maxHeight: '300px', minHeight: '200px' }}>
                     <Dice insertScore={tryAddScore} scoreOptions={scoreOptions} />
                   </Grid>
 
-                  <Grid item xs={12} sm={6} style={{maxHeight: '300px', minHeight: '200px'}}>
+                  <Grid item xs={12} sm={6} style={{ maxHeight: '300px', minHeight: '200px' }}>
                     <Typography>You rolled a...</Typography>
                     {scoreOptions.map((value, index) => {
                       return <Typography key={index} value={value}>{value}</Typography>
