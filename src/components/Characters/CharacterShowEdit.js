@@ -18,7 +18,7 @@ import Grid from '@material-ui/core/Grid';
 import {If, Then, Else} from 'react-if';
 import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
-import { updateCharacter, deleteCharacter } from '../../store/slices/character-slice';
+import { updateCharacter, deleteCharacter, getCharacters } from '../../store/slices/character-slice';
 
 import theme from '../../theme/theme';
 
@@ -70,7 +70,7 @@ export function CharacterDetails(props) {
   console.log('charprop from show/edit', props.Character);
   const styleClasses = useStyles();
   const [tab, setTab] = React.useState(0);
-  const { create, user, remove, pageTheme } = props;
+  const { user, remove, pageTheme, update } = props;
 
   const style = {
     theme: pageTheme === 'dark' ? theme.dark: theme.light,
@@ -107,7 +107,7 @@ export function CharacterDetails(props) {
 
   function editSubmit(e) {
     e.preventDefault();
-    handleSubmit(create);
+    handleSubmit(update);
     e.target.reset();
   }
 
@@ -480,7 +480,11 @@ export function CharacterDetails(props) {
     <If condition={props.delete}>
       <TabPanel value={tab} index={2}>
         <h2 id="simple-modal-title">Delete {props.Character.name}?</h2>
-        <form className="character-delete-form" autoComplete="off" onSubmit={deleteSubmit}>
+        <form className="character-delete-form" autoComplete="off" onSubmit={(e) => {
+          e.preventDefault();
+          remove(props.Character);
+          
+        }}>
         <Button fullWidth color="primary" variant="contained" type="submit">
           Delete
         </Button>
@@ -492,12 +496,12 @@ export function CharacterDetails(props) {
 }
 
 const mapStateToProps = state => ({
-  user: state.users.user,
+  user: state.users.username,
   pageTheme: state.theme.theme
 })
 
 const mapDispatchToProps = {
-  create: updateCharacter,
+  update: updateCharacter,
   remove: deleteCharacter,
 };
 

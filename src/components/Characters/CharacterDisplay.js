@@ -30,7 +30,8 @@ export function CharacterDisplay(props) {
   const style = {
     theme: pageTheme === 'dark' ? theme.dark: theme.light,
     color: {
-      color: 'inherit'
+      color: 'inherit',
+      underlineNone: 'none',
     }
   }
 
@@ -75,7 +76,7 @@ export function CharacterDisplay(props) {
     </CardActionArea>
     <CardActions>
      
-    <Link to="/create-character">
+    <Link to="/create-character" style={style.color} className="MuiLink-underlineNone" underline="none" text-decoration="none">
     <Button size="small" color="primary" style={style.color}>
       Create Character
     </Button>
