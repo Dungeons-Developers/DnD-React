@@ -3,13 +3,14 @@ import {connect} from 'react-redux';
 import {If} from 'react-if';
 import {Redirect} from 'react-router-dom';
 
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
-import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
-import {withStyles} from '@material-ui/core';
+import {withStyles, Paper} from '@material-ui/core';
 import {red} from '@material-ui/core/colors'
-
 
 import useForm from '../hooks/useForm';
 
@@ -63,7 +64,8 @@ function CampaignForm({createCampaign, user, campaignID, pageTheme}) {
     container: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      width: '100%'
     },
     theme: pageTheme === 'dark' ? theme.dark: theme.light,
     color: {
@@ -73,7 +75,7 @@ function CampaignForm({createCampaign, user, campaignID, pageTheme}) {
 
   const defaults = {
     user: user ? user.username : 'u',
-    title: 'Simple Title',
+    title: '',
     setting: '',
     description: '',
     notes: [],
@@ -94,84 +96,87 @@ function CampaignForm({createCampaign, user, campaignID, pageTheme}) {
   }
 
   return (
-    <Container style={styles.container}>
-      <form className="campaign-form" autoComplete="off" onSubmit={submit} style={styles.color}>
+    <Box mt="0.5rem" style={styles.container}>
+      <Paper square>
+        <Box p='1rem'>
+          <form className="campaign-form" autoComplete="off" onSubmit={submit} style={styles.color}>
+            <Grid container spacing={3}>
 
-        <div>
-          <CssTextField 
-            id="title" 
-            label="Title" 
-            color="primary" 
-            margin="normal" 
-            onChange={formChange} 
-            value={fields.title}
-            style={styles.color}
-          />
-        </div>
+              <Grid item xs={12} sm={6}>
+                <CssTextField 
+                  id="title" 
+                  label="Title" 
+                  color="primary" 
+                  margin="normal" 
+                  onChange={formChange} 
+                  value={fields.title}
+                  style={styles.color}
+                  fullWidth
+                />
+              </Grid>
 
-        <div>
-          <CssTextField 
-            id="setting" 
-            label="Setting" 
-            color="primary" 
-            margin="normal" 
-            onChange={formChange} 
-          />
-        </div>
+              <Grid item xs={12} sm={6}>
+                <CssTextField 
+                  id="setting" 
+                  label="Setting" 
+                  color="primary" 
+                  margin="normal" 
+                  onChange={formChange} 
+                  fullWidth
+                />
+              </Grid>
 
-        <div>
-          <CssTextField 
-            id="description" 
-            label="description" 
-            variant="outlined" 
-            margin="normal" 
-            multiline 
-            rows={6} 
-            color="primary" 
-            onChange={formChange} 
-          />
-        </div>
+              <Grid item xs={12}>
+                  <CssTextField 
+                    id="description" 
+                    label="description" 
+                    variant="outlined" 
+                    margin="normal" 
+                    multiline 
+                    rows={6} 
+                    color="primary" 
+                    onChange={formChange}
+                    fullwidth
+                    style={{width: '100%'}}
+                  />
+              </Grid>
 
-        <div>
-          <CssTextField 
-            id="notes" 
-            label="notes" 
-            variant="outlined" 
-            margin="normal" 
-            multiline 
-            rows={4} 
-            color="primary" 
-            onChange={formChange} 
-          />
-        </div>
+              <Grid item xs={12}>
+                <CssTextField 
+                  id="notes" 
+                  label="notes" 
+                  variant="outlined" 
+                  margin="normal" 
+                  multiline 
+                  rows={4} 
+                  color="primary" 
+                  onChange={formChange}
+                  fullwidth 
+                  style={{width: '100%'}}
+                />
+              </Grid>
 
-        {/* invite friends functionality? */}
-        {/* <div>
-          <TextField  
-            id="characters" 
-            label="Invite Friends" 
-            margin="normal" 
-            color="primary" 
-            onChange={formChange} 
-          />
-        </div> */}
+              <Grid item xs={12}>
+                <ColorButton 
+                  variant="contained" 
+                  color="primary" 
+                  type="submit" 
+                  margin="normal" 
+                  disabled={ !fields.title || !fields.setting || !fields.description }
+                  fullWidth
+                  >
+                  Create
+                </ColorButton>
+              </Grid>
 
-        <ColorButton 
-          variant="contained" 
-          color="primary" 
-          type="submit" 
-          margin="normal" 
-          disabled={ !fields.title || !fields.setting || !fields.description }
-          >
-          Create
-        </ColorButton>
-
-        <If condition={!!campaignID}>
-            <Redirect to='/play'/>
-        </If>
-        
-      </form>
-    </Container>
+              <If condition={!!campaignID}>
+                  <Redirect to='/play'/>
+              </If>
+            </Grid>
+          </form>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
 

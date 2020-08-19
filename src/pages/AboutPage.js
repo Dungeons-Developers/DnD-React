@@ -32,7 +32,7 @@ function About() {
 
   return (
     <div style={styles.div}>
-    <Container maxWidth='xl'>
+    <Container>
       <Paper style={styles.paper}>
         <img src='/assets/claytonjones.png' alt='Clayton Jones'/>
         <div style={styles.info}>
@@ -60,7 +60,7 @@ function About() {
         <div style={styles.info}>
           <h2 style ={styles.text}>Madison Stehle</h2>
           <h3 style ={styles.text}>Code Reviewer</h3>
-          <p style ={styles.text}>Look, a description</p>
+          <p style ={styles.text}>The elves know her as [redacted], the dwarves know her as [redacted], but you know her as Madison. Pastimes include reading an unhealthy number of books and putting out metaphorical fires.</p>
         </div>
       </Paper>
     </Container>
