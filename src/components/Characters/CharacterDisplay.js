@@ -17,6 +17,8 @@ import CharacterCard from '../Characters/CharacterCard';
 
 import {getCharacters} from '../../store/slices/character-slice';
 
+import theme from '../../theme/theme';
+
 //card styles
 const useStyles = makeStyles({
   root: {
@@ -25,7 +27,14 @@ const useStyles = makeStyles({
 });
 
 export function CharacterDisplay(props) {
-  const {getCharacters, user} = props;
+  const {getCharacters, user, pageTheme} = props;
+
+  const style = {
+    theme: pageTheme === 'dark' ? theme.dark: theme.light,
+    color: {
+      color: 'inherit'
+    }
+  }
 
   useEffect(() => {
     getCharacters(user);
@@ -46,7 +55,7 @@ export function CharacterDisplay(props) {
 
   //push character create form as card
   charactersHTML.push(<Grid item xs={4} md={3} lg={2} key="characterCreateFormGrid">
-    <Card className={classes.root} key="characterCreateFormCard">
+    <Card className={classes.root} key="characterCreateFormCard" style={{...style.theme.accent, ...style.color}}>
     <CardActionArea>
       <CardMedia
         component="img"
@@ -59,7 +68,7 @@ export function CharacterDisplay(props) {
         <Typography gutterBottom variant="h5" component="h2">
           +
         </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
+        <Typography variant="body2" color="textSecondary" component="p" style={style.color}>
          Start here!
          <br/>
         
@@ -69,7 +78,7 @@ export function CharacterDisplay(props) {
     <CardActions>
      
     <Link to="/create-character">
-    <Button size="small" color="primary" >
+    <Button size="small" color="primary" style={style.color}>
       Create Character
     </Button>
     </Link>
@@ -104,6 +113,7 @@ const mapDispatchToProps = {getCharacters};
 const mapStateToProps = state => ({
   user: state.users.username,
   characters: state.characters.allCharacters,
+  pageTheme: state.theme.theme
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharacterDisplay);

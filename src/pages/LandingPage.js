@@ -62,7 +62,7 @@ function LandingPage(props) {
             justifyContent="center"
             alignItems="center"
             minHeight="40vh">
-            <Logo />
+            <Logo height={200}/>
           </Box>
           <Box display="flex"
             flexDirection="column"

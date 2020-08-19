@@ -7,12 +7,69 @@ import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 
+import {withStyles} from '@material-ui/core';
+import {red} from '@material-ui/core/colors'
+
+
 import useForm from '../hooks/useForm';
 
 import {createCampaign} from '../store/slices/campaign-slice';
 
+import theme from '../theme/theme';
 
-function CampaignForm({createCampaign, user, campaignID}) {
+const CssTextField = withStyles({
+  root: {
+    
+    '& label.Mui-focused': {
+      color: 'inherit',
+    },
+    '& label': {
+      color: 'inherit',
+    },
+    '& .MuiInput-underline:after': {
+      color: 'inherit',
+      borderBottomColor: 'inherit',
+    },
+    '& .MuiInput-underline': {
+      color: 'inherit',
+    },
+    '& .MuiOutlinedInput-root': {
+      color: 'inherit',
+      '& fieldset': {
+        borderColor: 'inherit',
+      },
+      '&.Mui-focused fieldset': {
+        color: 'inherit',
+        borderColor: 'inherit',
+      },
+    },
+  },
+})(TextField);
+
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
+    },
+  },
+}))(Button);
+
+
+function CampaignForm({createCampaign, user, campaignID, pageTheme}) {
+
+  const styles = {
+    container: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    theme: pageTheme === 'dark' ? theme.dark: theme.light,
+    color: {
+      color: 'inherit'
+    }
+  }
 
   const defaults = {
     user: user ? user.username : 'u',
@@ -37,22 +94,23 @@ function CampaignForm({createCampaign, user, campaignID}) {
   }
 
   return (
-    <Container>
-      <form className="campaign-form" autoComplete="off" onSubmit={submit}>
+    <Container style={styles.container}>
+      <form className="campaign-form" autoComplete="off" onSubmit={submit} style={styles.color}>
 
         <div>
-          <TextField 
+          <CssTextField 
             id="title" 
             label="Title" 
             color="primary" 
             margin="normal" 
             onChange={formChange} 
             value={fields.title}
+            style={styles.color}
           />
         </div>
 
         <div>
-          <TextField 
+          <CssTextField 
             id="setting" 
             label="Setting" 
             color="primary" 
@@ -62,7 +120,7 @@ function CampaignForm({createCampaign, user, campaignID}) {
         </div>
 
         <div>
-          <TextField 
+          <CssTextField 
             id="description" 
             label="description" 
             variant="outlined" 
@@ -75,7 +133,7 @@ function CampaignForm({createCampaign, user, campaignID}) {
         </div>
 
         <div>
-          <TextField 
+          <CssTextField 
             id="notes" 
             label="notes" 
             variant="outlined" 
@@ -98,7 +156,7 @@ function CampaignForm({createCampaign, user, campaignID}) {
           />
         </div> */}
 
-        <Button 
+        <ColorButton 
           variant="contained" 
           color="primary" 
           type="submit" 
@@ -106,7 +164,7 @@ function CampaignForm({createCampaign, user, campaignID}) {
           disabled={ !fields.title || !fields.setting || !fields.description }
           >
           Create
-        </Button>
+        </ColorButton>
 
         <If condition={!!campaignID}>
             <Redirect to='/play'/>
@@ -122,7 +180,8 @@ const mapDispatchToProps = { createCampaign };
 const mapStateToProps = (state) => {
   return {
     user: state.users.user,
-    campaignID: state.campaign.campaignID
+    campaignID: state.campaign.campaignID,
+    pageTheme: state.theme.theme
   }
 }
 
