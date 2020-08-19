@@ -4,10 +4,56 @@ import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import Box from '@material-ui/core/Box'
+import {withStyles} from '@material-ui/core';
+import {red} from '@material-ui/core/colors'
 
 import useForm from '../hooks/useForm'
 
 import { create } from '../store/slices/user-slice';
+
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
+    },
+  },
+}))(Button);
+
+const CssTextField = withStyles({
+  root: {
+    
+    '& label.Mui-focused': {
+      color: '#EEEEEE',
+    },
+    '& label': {
+      color: '#EEEEEE',
+    },
+    '& .MuiInput-underline:after': {
+      color: '#EEEEEE',
+      borderBottomColor: '#EEEEEE',
+    },
+    '& .MuiInput-underline:before': {
+      color: '#EEEEEE',
+      borderBottomColor: '#EEEEEE',
+    },
+    '& .MuiInput-underline': {
+      color: '#EEEEEE',
+    },
+    '& .MuiOutlinedInput-root': {
+      color: '#EEEEEE',
+      '& fieldset': {
+        borderColor: '#EEEEEE',
+      },
+      '&.Mui-focused fieldset': {
+        color: '#EEEEEE',
+        borderColor: '#EEEEEE',
+      },
+    },
+  },
+})(TextField);
+
 
 function SignupForm({create}) {
 
@@ -44,7 +90,7 @@ function SignupForm({create}) {
   return (
     <form className='login-form' autoComplete="off" onSubmit={submit}>
       <div>
-        <TextField
+        <CssTextField
           id="username"
           label="Username"
           fullWidth
@@ -52,7 +98,7 @@ function SignupForm({create}) {
           required />
       </div>
       <div>
-        <TextField
+        <CssTextField
           id="password"
           label="Password"
           fullWidth
@@ -61,7 +107,7 @@ function SignupForm({create}) {
           required />
       </div>
       <div>
-        <TextField
+        <CssTextField
           id="confirmed"
           label="Confirm Password"
           fullWidth
@@ -72,13 +118,13 @@ function SignupForm({create}) {
           required />
       </div>
       <Box my="1rem">
-        <Button
+        <ColorButton
           variant="contained"
           fullWidth
           color="primary"
           type='submit' >
           Signup
-        </Button>
+        </ColorButton>
       </Box>
     </form>
   );
