@@ -11,7 +11,6 @@ import AddToQueueIcon from '@material-ui/icons/AddToQueue';
 import PeopleIcon from '@material-ui/icons/People';
 import Typography from '@material-ui/core/Typography';
 
-import { logout } from '../store/slices/user-slice'
 
 import theme from '../theme/theme';
 
