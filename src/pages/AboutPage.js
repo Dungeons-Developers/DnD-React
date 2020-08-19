@@ -1,9 +1,12 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
+import theme from '../theme/theme';
 
 import { Container, Paper } from '@material-ui/core';
 
 
-function About() {
+function About({pageTheme}) {
   const styles = {
     div: {
       width: '100%',
@@ -26,6 +29,10 @@ function About() {
     },
     text: {
       margin: 3
+    },
+    theme: pageTheme === 'dark' ? theme.dark : theme.light,
+    color: {
+      color: 'inherit'
     }
   };
 
@@ -33,18 +40,18 @@ function About() {
   return (
     <div style={styles.div}>
     <Container>
-      <Paper style={styles.paper}>
+      <Paper style={{...styles.paper, ...styles.theme.accent, ...styles.color}}>
         <img src='/assets/claytonjones.png' alt='Clayton Jones'/>
         <div style={styles.info}>
           <h2 style ={styles.text}>Clayton Jones</h2>
           <h3 style ={styles.text}>Lead Developer</h3>
-          <p style ={styles.text}>Look, a description</p>
+          <p style ={styles.text}>Frontend developer by day, gamer and musician by night. Always succeeds when rolling dexterity to crack an egg single handed.</p>
         </div>
       </Paper>
     </Container>
 
     <Container>
-      <Paper style={styles.paper}>
+      <Paper style={{...styles.paper, ...styles.theme.accent, ...styles.color}}>
         <div style={styles.info}>
           <h2 style ={styles.text}>Daniel Nguyen</h2>
           <h3 style ={styles.text}>Project Manager</h3>
@@ -55,7 +62,7 @@ function About() {
     </Container>
 
     <Container>
-      <Paper style={styles.paper}>
+      <Paper style={{...styles.paper, ...styles.theme.accent, ...styles.color}}>
         <img src='/assets/madisonstehle.png' alt='Madison Stehle' />
         <div style={styles.info}>
           <h2 style ={styles.text}>Madison Stehle</h2>
@@ -66,7 +73,7 @@ function About() {
     </Container>
 
     <Container>
-      <Paper style={styles.paper}>
+      <Paper style={{...styles.paper, ...styles.theme.accent, ...styles.color}}>
         <div style={styles.info}>
           <h2 style ={styles.text}>Joel Watson</h2>
           <h3 style ={styles.text}>DevOps</h3>
@@ -80,4 +87,10 @@ function About() {
   )
 }
 
-export default About;
+const mapStateToProps = state => {
+  return {
+    pageTheme: state.theme.theme,
+  }
+}
+
+export default connect(mapStateToProps)(About);
