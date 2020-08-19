@@ -9,8 +9,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Modal from '@material-ui/core/Modal';
-import CharacterShowEdit from './CharacterShowEdit';
 import Box from '@material-ui/core/Box';
 import { Link } from 'react-router-dom';
 import CharacterCard from '../Characters/CharacterCard';
@@ -32,7 +30,11 @@ export function CharacterDisplay(props) {
   const style = {
     theme: pageTheme === 'dark' ? theme.dark: theme.light,
     color: {
-      color: 'inherit'
+      color: 'inherit',
+      underlineNone: 'none',
+    },
+    createCard: {
+      height: 300,
     }
   }
 
@@ -55,7 +57,7 @@ export function CharacterDisplay(props) {
 
   //push character create form as card
   charactersHTML.push(<Grid item xs={4} md={3} lg={2} key="characterCreateFormGrid">
-    <Card className={classes.root} key="characterCreateFormCard" style={{...style.theme.accent, ...style.color}}>
+    <Card className={classes.root} key="characterCreateFormCard" style={{...style.theme.accent, ...style.color, ...style.createCard}} height="300">
     <CardActionArea>
       <CardMedia
         component="img"
@@ -77,7 +79,7 @@ export function CharacterDisplay(props) {
     </CardActionArea>
     <CardActions>
      
-    <Link to="/create-character">
+    <Link to="/create-character" style={style.color} className="MuiLink-underlineNone" underline="none" text-decoration="none">
     <Button size="small" color="primary" style={style.color}>
       Create Character
     </Button>

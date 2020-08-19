@@ -33,12 +33,18 @@ const characterSlice = createSlice({
         if (action.payload._id === char._id) char = action.payload;
         return char;
       })
+    },
+    filterChar: (state, action) => {
+      let array = state.allCharacters.filter((char) => {
+        return char._id !== action.payload;
+      })
+      state.allCharacters = array;
     }
   }
 });
 
 
-export const { setAllCharacters, addChar, updateChar, insertScore, disableScore, removeScore } = characterSlice.actions;
+export const { setAllCharacters, addChar, updateChar, insertScore, disableScore, removeScore, filterChar } = characterSlice.actions;
 
 export const getCharacters = payload => {
   return async dispatch => {
@@ -64,6 +70,8 @@ export const createCharacter = payload => {
 }
 
 export const updateCharacter = payload => {
+  console.log('inUpdate',payload);
+
   return async dispatch => {
     try {
       let response = await axios.patch(`https://dnd-api-server.herokuapp.com/v1/api/character/${payload._id}`, payload);
@@ -77,14 +85,12 @@ export const updateCharacter = payload => {
 }
 
 export const deleteCharacter = payload => {
-  console.log(payload);
-
   return async dispatch => {
     try {
       let response = await axios.delete(`https://dnd-api-server.herokuapp.com/v1/api/character/${payload._id}`, payload);
 
-      let res = response.data;
-      console.log(res);
+      let res = response.data; 
+      dispatch(filterChar(res));
     } catch (e) {
       console.log(e);
     }
