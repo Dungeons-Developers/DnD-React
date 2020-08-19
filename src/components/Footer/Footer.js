@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
 
 import {Typography} from '@material-ui/core';
 import {Link} from 'react-router-dom'
 
-export default function Footer() {
+import theme from '../../theme/theme';
+
+function Footer({pageTheme}) {
 
   const styles = {
     footer: {
@@ -23,12 +26,17 @@ export default function Footer() {
     },
     link: {
       textDecoration: 'none',
-      color: 'black'
-    }
+      color: 'inherit'
+    },
+    theme: pageTheme === 'dark' ? theme.dark: theme.light
   }
 
+  useEffect(() => {
+    styles.theme = pageTheme === 'dark' ? theme.dark: theme.light;
+  }, [pageTheme]);
+
   return (
-    <div style={styles.footer} className='footer'>
+    <div style={{...styles.footer, ...styles.theme.header}} className='footer'>
       <div style={styles.toolbar}>
         <Typography component='p' style={styles.link}>&copy; Dungeons & Developers</Typography>
         <Link to='/about' style={styles.link}>
@@ -38,3 +46,11 @@ export default function Footer() {
     </div>
   )
 }
+
+const mapStateToProps = state => {
+  return {
+    pageTheme: state.theme.theme
+  }
+}
+
+export default connect(mapStateToProps)(Footer)

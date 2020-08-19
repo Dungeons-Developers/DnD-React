@@ -13,6 +13,9 @@ import Modal from '@material-ui/core/Modal';
 import CharacterShowEdit from './CharacterShowEdit';
 import Box from '@material-ui/core/Box';
 
+import theme from '../../theme/theme'
+
+
 //card styles
 const useStyles = makeStyles({
   root: {
@@ -21,7 +24,17 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CharacterCard(props) {
+function CharacterCard(props) {
+
+  const {pageTheme} = props;
+
+  const style = {
+    theme: pageTheme === 'dark' ? theme.dark: theme.light,
+    color: {
+      color: 'inherit'
+    }
+  }
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -35,8 +48,8 @@ export default function CharacterCard(props) {
   
   return (
     <>
-    <div className="CharacterCard" style={props.style}>
-    <Card className={classes.root}>
+    <div className="CharacterCard" style={{...props.style}}>
+    <Card className={classes.root} style={{...style.theme.accent, ...style.color}}>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -45,11 +58,11 @@ export default function CharacterCard(props) {
           image={`https://source.unsplash.com/300x300/?${props.character.class}`}
           title={props.character.name}
         />
-        <CardContent>
+        <CardContent >
           <Typography gutterBottom variant="h6" component="h3">
             {props.character.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textSecondary" component="p" style={style.color}>
             Lvl {props.character.level}&nbsp;
             {props.character.race}&nbsp;
             {props.character.class}<br/>
@@ -60,7 +73,7 @@ export default function CharacterCard(props) {
       </CardActionArea>
       <CardActions>
        
-      <Button size="small" color="primary" onClick={handleOpen}>
+      <Button size="small" color="primary" onClick={handleOpen} style={style.color}>
         Character Details
       </Button>
       <Modal
@@ -79,3 +92,11 @@ export default function CharacterCard(props) {
     </>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    pageTheme: state.theme.theme
+  }
+}
+
+export default connect(mapStateToProps)(CharacterCard);

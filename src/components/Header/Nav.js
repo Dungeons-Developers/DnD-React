@@ -27,9 +27,9 @@ export default function Nav(props) {
   }
 
   return (
-    <Breadcrumbs aria-label="breadcrumb">
+    <Breadcrumbs aria-label="breadcrumb" style={styles.link}>
       <Link to='/characters' style={styles.link}>
-        <Typography >
+        <Typography style={styles.link}>
           My Characters
         </Typography>
       </Link>
@@ -41,11 +41,6 @@ export default function Nav(props) {
       <Link to='/join' style={styles.link}>
         <Typography >
           Join Campaign
-        </Typography>
-      </Link>
-      <Link to='/invites' style={styles.link}>
-        <Typography >
-          Invites
         </Typography>
       </Link>
     </Breadcrumbs>
