@@ -17,7 +17,8 @@ const ColorButton = withStyles((theme) => ({
   },
 }))(Button);
 
-function Roller({ socket, campaignCharacters, user, campaignID }) {
+
+function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
 
   const defaults = {
     type: '',
@@ -48,7 +49,7 @@ function Roller({ socket, campaignCharacters, user, campaignID }) {
     handleChange(e.target.name, e.target.value);
   }
 
-  const [playerChar] = useState(campaignCharacters.filter(char => char.user === user)[0]);
+  // const [playerChar] = useState(campaignCharacters.filter(char => char.user === user)[0]);
 
 
   const { handleChange, fields } = useForm(defaults);

@@ -304,7 +304,8 @@ function CampaignPage(props) {
             ))}
           </div>
 
-          {playerChar && <Roller socket={socket} />}
+          {playerChar && <Roller socket={socket} playerChar={playerChar}/>}
+
 
         </div>
         {/* roll log */}
