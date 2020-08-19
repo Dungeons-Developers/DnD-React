@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { If, Then } from 'react-if'
@@ -10,14 +10,11 @@ import {
 
 import theme from '../../theme/theme';
 
-import {toggleTheme} from '../../store/slices/theme-slice';
-
 import Logo from '../Logo';
 import Nav from './Nav';
+import ThemeSwitch from './ThemeSwitch';
 
-function Header({ token, path, pageTheme, toggleTheme }) {
-
- 
+function Header({ token, path, pageTheme }) {
 
   const styles = {
     appbar: {
@@ -31,11 +28,11 @@ function Header({ token, path, pageTheme, toggleTheme }) {
       justifyContent: 'space-between',
       width: '100%',
     },
-    theme: pageTheme === 'dark' ? theme.dark: theme.light
+    theme: pageTheme === 'dark' ? theme.dark : theme.light
   }
 
   useEffect(() => {
-    styles.theme = pageTheme === 'dark' ? theme.dark: theme.light;
+    styles.theme = pageTheme === 'dark' ? theme.dark : theme.light;
   }, [pageTheme]);
 
 
@@ -43,14 +40,14 @@ function Header({ token, path, pageTheme, toggleTheme }) {
     <React.Fragment>
       <If condition={token !== null && path !== '/play'}>
         <Then>
-          <header position='fixed' style={{...styles.appbar, ...styles.theme.header}}>
+          <header position='fixed' style={{ ...styles.appbar, ...styles.theme.header }}>
             <Toolbar style={styles.toolbar}>
               <Tooltip title='Home'>
                 <Link to='/'>
                   <Logo />
                 </Link>
               </Tooltip>
-              <button onClick={() => toggleTheme(null)}>TOGGLE THEME</button>
+              <ThemeSwitch />
               <Nav />
             </Toolbar>
           </header>
@@ -66,6 +63,4 @@ const mapStateToProps = (state) => ({
   pageTheme: state.theme.theme
 });
 
-const mapDispatchToProps = {toggleTheme}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default connect(mapStateToProps)(Header)
