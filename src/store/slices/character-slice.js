@@ -25,6 +25,8 @@ const characterSlice = createSlice({
     },
     addChar: (state, action) => {
       state.allCharacters.push(action.payload)
+      state.disabled_scores = [];
+      state.score_options = [];
     },
     updateChar: (state, action) => {
       let array = state.allCharacters.map((char) => {

@@ -38,7 +38,7 @@ function Dashboard({ username, pageTheme }) {
         alignItems="center"
       >
         <Box mx=".5rem">
-          <Typography align='center' variant='overline' component='p'>Create Character</Typography>
+          <Typography align='center' className='dashboard-card' variant='overline' component='p'>Create Character</Typography>
           <Tooltip title='Create Character'>
             <Link to='/create-character'>
               <Paper elevation={3} style={{ ...style.theme.accent }}>
@@ -52,7 +52,7 @@ function Dashboard({ username, pageTheme }) {
           </Tooltip>
         </Box>
         <Box mx=".5rem">
-          <Typography align='center' variant='overline' component='p'>Join Campaign</Typography>
+          <Typography align='center' className='dashboard-card' variant='overline' component='p'>Join Campaign</Typography>
           <Tooltip title='Join Campaign'>
             <Link to='/join'>
               <Paper elevation={3} style={{ ...style.theme.accent }}>
@@ -66,7 +66,7 @@ function Dashboard({ username, pageTheme }) {
           </Tooltip>
         </Box>
         <Box mx=".5rem">
-          <Typography align='center' variant='overline' component='p'>Create Campaign</Typography>
+          <Typography align='center' className='dashboard-card' variant='overline' component='p'>Create Campaign</Typography>
           <Tooltip title='Create Campaign'>
             <Link to='/create-campaign'>
               <Paper elevation={3} style={{ ...style.theme.accent }}>
