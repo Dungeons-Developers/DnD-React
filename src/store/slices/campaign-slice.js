@@ -84,7 +84,7 @@ export const createCampaign = (payload) => {
    return async dispatch => {
      try {
       console.log('campaign to create:',payload);
-       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/campaign', {payload});
+       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/campaign', payload);
       //  let response = await axios.post('http://localhost:4000/v1/api/campaign', payload);
 
        let campaign = response.data;
