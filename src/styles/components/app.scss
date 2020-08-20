@@ -1,11 +1,10 @@
 .App {
   display: flex;
-}
 
-.main {
-  // position: fixed;
-  // border: 1px solid red;
-  // overflow: scroll;
+  & .MuiTypography-root,
+  & .MuiButtonBase-root {
+    font-family: NodestoCapsCondensed !important;
+  }
 }
 
 .cardTab {

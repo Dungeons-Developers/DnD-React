@@ -28,8 +28,9 @@ function Dashboard({ username, pageTheme }) {
       alignItems="center"
       flexDirection='column'
     >
-
-      <Typography variant="h2">Welcome {username}</Typography>
+      <Box mt='2rem'>
+        <Typography variant="h2">Welcome {username}</Typography>
+      </Box>
       <Box
         display="flex"
         flex="1"
