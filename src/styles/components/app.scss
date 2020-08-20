@@ -5,8 +5,13 @@
   & .MuiButtonBase-root {
     font-family: NodestoCapsCondensed !important;
   }
+
 }
 
+form > input {
+  color: inherit;
+}
 .cardTab {
   overflow: scroll;
 }
+

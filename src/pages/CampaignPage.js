@@ -19,6 +19,8 @@ import { getCharacters } from '../store/slices/character-slice';
 
 import Roller from '../components/CampaignRoller';
 
+import theme from '../theme/theme';
+
 // const socket = io.connect('http://localhost:4000');
 const socket = io.connect('https://dnd-api-server.herokuapp.com/');
 
@@ -58,7 +60,8 @@ function CampaignPage(props) {
     wholeCampaign,
     disconnectFromCampaign,
     getCharacters,
-    setCampaignPath
+    setCampaignPath,
+    pageTheme
   } = props;
 
   const [currentChars, setCurrentChars] = useState(campaignCharacters);
@@ -201,7 +204,8 @@ function CampaignPage(props) {
       margin: 0,
       padding: '2px 0',
       fontWeight: 'bold',
-      fontSize: '12px'
+      fontSize: '12px',
+      color: 'inherit'
     },
     main: {
       display: 'flex',
@@ -215,6 +219,7 @@ function CampaignPage(props) {
       width: '100%',
       padding: '0 5px',
       minWidth: '150px',
+      maxHeight: '300px',
       height: '60%',
       overflowY: 'auto',
       border: '1px solid black',
@@ -235,6 +240,13 @@ function CampaignPage(props) {
       height: '100%',
       minHeight: '100%',
       width: '30%',
+    },
+    card: {
+      width: '25%'
+    },
+    theme: pageTheme === 'dark' ? theme.dark : theme.light,
+    color: {
+      color: 'inherit'
     }
   }
 
@@ -290,7 +302,7 @@ function CampaignPage(props) {
               character={char}
               delete={false}
               edit={owner === user ? true : false}
-              style={{ width: '25%' }}
+              style={{ ...styles.card }}
               key={i}
             />
           ))}
@@ -320,7 +332,7 @@ function CampaignPage(props) {
           <h4>Add a Character:</h4>
           <div style={styles.userChars}>
             {userCharacters.map((char, i) => (
-              <Paper style={styles.paper} key={i}>
+              <Paper style={{...styles.paper, ...styles.theme.accent, ...styles.color}} key={i}>
                 <p style={styles.classInfo}>{char.name}</p>
                 <p style={styles.classInfo}>Class: {char.class}</p>
                 <p style={styles.classInfo}>Lvl: {char.level}</p>
@@ -358,6 +370,7 @@ const mapStateToProps = (state) => {
     user: state.users.username,
     userCharacters: state.characters.allCharacters,
     saving: state.campaign.saving,
+    pageTheme: state.theme.theme
   }
 }
 

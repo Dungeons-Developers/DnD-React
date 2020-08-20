@@ -7,6 +7,8 @@ import { Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/
 import { withStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 
+import theme from '../theme/theme';
+
 const ColorButton = withStyles((theme) => ({
   root: {
     color: theme.palette.getContrastText(red[500]),
@@ -18,7 +20,7 @@ const ColorButton = withStyles((theme) => ({
 }))(Button);
 
 
-function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
+function Roller({socket, campaignCharacters, user, campaignID, playerChar, pageTheme}) {
 
   const defaults = {
     type: '',
@@ -72,6 +74,10 @@ function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
     options: {
       width: '30%',
       minWidth: '50px'
+    },
+    theme: pageTheme === 'dark' ? theme.dark : theme.light,
+    color: {
+      color: 'inherit'
     }
   }
 
@@ -101,11 +107,11 @@ function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
       <div>
 
       </div>
-      <form autoComplete='off' onSubmit={submit} style={styles.form}>
-        <div style={styles.selects}>
+      <form autoComplete='off' onSubmit={submit} style={{...styles.form, ...styles.color}}>
+        <div style={{...styles.selects, ...styles.color}}>
 
-          <FormControl style={styles.options}>
-            <InputLabel id="type">Type</InputLabel>
+          <FormControl style={{...styles.options, ...styles.color}}>
+            <InputLabel id="type" style={styles.color}>Type</InputLabel>
             <Select
               id="type"
               label="Type"
@@ -113,7 +119,7 @@ function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
               margin="normal"
               value={fields.type}
               onChange={formChange}
-
+              style={styles.color}
               required
             >
               <MenuItem value={20} default>
@@ -137,7 +143,7 @@ function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
             </Select>
           </FormControl>
           <FormControl style={styles.options}>
-            <InputLabel id="number">#</InputLabel>
+            <InputLabel id="number" style={styles.color}>#</InputLabel>
             <Select
               id="number"
               label="Number"
@@ -146,7 +152,7 @@ function Roller({socket, campaignCharacters, user, campaignID, playerChar}) {
               margin="normal"
               value={fields.number}
               onChange={formChange}
-
+              style={styles.color}
             >
               <MenuItem value={1} default>
                 1
@@ -188,7 +194,8 @@ const mapStateToProps = (state) => {
   return {
     user: state.users.username,
     campaignCharacters: state.campaign.characters,
-    campaignID: state.campaign.campaignID
+    campaignID: state.campaign.campaignID,
+    pageTheme: state.theme.theme
   }
 }
 
