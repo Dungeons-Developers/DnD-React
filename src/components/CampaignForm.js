@@ -96,9 +96,9 @@ function CampaignForm({ createCampaign, user, campaignID, pageTheme }) {
 
   return (
     <Box mt="0.5rem" style={styles.container}>
-      <Paper square>
-        <Box p='1rem'>
-          <form className="campaign-form" autoComplete="off" onSubmit={submit} style={styles.color}>
+      <Paper square style={{...styles.theme.accent, ...styles.color}}>
+        <Box p='1rem' style={styles.color}>
+          <form className="campaign-form" autoComplete="off" onSubmit={submit} style={{...styles.color}}>
             <Grid container spacing={3}>
 
               <Grid item xs={12} sm={6}>

@@ -13,6 +13,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import useForm from '../hooks/useForm';
+import Container from '@material-ui/core/Container';
 import { withStyles } from '@material-ui/core/styles';
 import { red } from '@material-ui/core/colors';
 import Dice from '../components/Dice';
@@ -21,6 +22,8 @@ import { createCharacter, insertScore, disableScore, removeScore } from '../stor
 
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../data/charOptions.json';
 import { Typography } from '@material-ui/core';
+
+import theme from '../theme/theme';
 
 const ColorButton = withStyles((theme) => ({
   root: {
@@ -32,9 +35,38 @@ const ColorButton = withStyles((theme) => ({
   },
 }))(Button);
 
+const CssTextField = withStyles({
+  root: {
+
+    '& label.Mui-focused': {
+      color: 'inherit',
+    },
+    '& label': {
+      color: 'inherit',
+    },
+    '& .MuiInput-underline:after': {
+      color: 'inherit',
+      borderBottomColor: 'inherit',
+    },
+    '& .MuiInput-underline': {
+      color: 'inherit',
+    },
+    '& .MuiOutlinedInput-root': {
+      color: 'inherit',
+      '& fieldset': {
+        borderColor: 'inherit',
+      },
+      '&.Mui-focused fieldset': {
+        color: 'inherit',
+        borderColor: 'inherit',
+      },
+    },
+  },
+})(TextField);
+
 function CharacterForm(props) {
 
-  const { scoreOptions, create, user, disableScore, disabledScores } = props;
+  const { scoreOptions, create, user, disableScore, disabledScores, pageTheme } = props;
 
   const [submitted, setSubmitted] = useState(false)
 
@@ -46,6 +78,10 @@ function CharacterForm(props) {
       display: 'flex',
       justifyContent: 'space-between',
       flexWrap: 'wrap',
+    },
+    theme: pageTheme === 'dark' ? theme.dark : theme.light,
+    color: {
+      color: 'inherit'
     }
   }
 
@@ -98,13 +134,14 @@ function CharacterForm(props) {
   return (
     <If condition={submitted === false}>
       <Then>
+        <Container maxWidth='lg'>
         <Box mt="0.5rem">
-          <Paper square>
+          <Paper square style={{ ...styles.theme.accent, ...styles.color }}>
             <Box p='1rem'>
-              <form className="character-form" autoComplete="off" onSubmit={submit}>
+              <form className="character-form" autoComplete="off" onSubmit={submit} style={styles.color}>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
-                    <TextField
+                    <CssTextField
                       id="create-character-name"
                       name='name'
                       label="Name"
@@ -114,8 +151,8 @@ function CharacterForm(props) {
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
-                    <FormControl fullWidth>
-                      <InputLabel id="create-character-race-label">Race</InputLabel>
+                    <FormControl fullWidth >
+                      <InputLabel id="create-character-race-label" style={{...styles.color}}>Race</InputLabel>
                       <Select
                         labelId="create-character-race-label"
                         id="create-character-race"
@@ -135,7 +172,7 @@ function CharacterForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="create-character-class-label">Class</InputLabel>
+                      <InputLabel id="create-character-class-label" style={{...styles.color}}>Class</InputLabel>
                       <Select
                         labelId="create-character-class-label"
                         id="create-character-class"
@@ -155,7 +192,7 @@ function CharacterForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="create-character-alignment-label">Alignment</InputLabel>
+                      <InputLabel id="create-character-alignment-label" style={{...styles.color}}>Alignment</InputLabel>
                       <Select
                         labelId="create-character-alignment-label"
                         id="create-character-alignment"
@@ -175,7 +212,7 @@ function CharacterForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="create-character-deity-label">Deity</InputLabel>
+                      <InputLabel id="create-character-deity-label" style={{...styles.color}}>Deity</InputLabel>
                       <Select
                         labelId="create-character-deity-label"
                         id="create-character-deity"
@@ -195,7 +232,7 @@ function CharacterForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="create-character-skill-one-label">Proficient Skill #1</InputLabel>
+                      <InputLabel id="create-character-skill-one-label" style={{...styles.color}}>Proficient Skill #1</InputLabel>
                       <Select
                         labelId="create-character-skill-one-label"
                         id="create-character-skill-one"
@@ -215,7 +252,7 @@ function CharacterForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="create-character-skill-two-label">Proficient Skill #2</InputLabel>
+                      <InputLabel id="create-character-skill-two-label" style={{...styles.color}}>Proficient Skill #2</InputLabel>
                       <Select
                         labelId="create-character-skill-two-label"
                         id="create-character-skill-two"
@@ -235,7 +272,7 @@ function CharacterForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="create-character-armor-label">Armor</InputLabel>
+                      <InputLabel id="create-character-armor-label" style={{...styles.color}}>Armor</InputLabel>
                       <Select
                         labelId="create-character-armor-label"
                         id="create-character-armor"
@@ -255,7 +292,7 @@ function CharacterForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="create-character-pack-label">Adventure Pack</InputLabel>
+                      <InputLabel id="create-character-pack-label" style={{...styles.color}}>Adventure Pack</InputLabel>
                       <Select
                         labelId="create-character-pack-label"
                         id="create-character-pack"
@@ -275,7 +312,7 @@ function CharacterForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="create-character-weapon-one-label">Weapon #1</InputLabel>
+                      <InputLabel id="create-character-weapon-one-label" style={{...styles.color}}>Weapon #1</InputLabel>
                       <Select
                         labelId="create-character-weapon-one-label"
                         id="create-character-weapon-one"
@@ -295,7 +332,7 @@ function CharacterForm(props) {
                   </Grid>
                   <Grid item xs={12} sm={6}>
                     <FormControl fullWidth>
-                      <InputLabel id="create-character-weapon-two-label">Weapon #2</InputLabel>
+                      <InputLabel id="create-character-weapon-two-label" style={{...styles.color}}>Weapon #2</InputLabel>
                       <Select
                         labelId="create-character-weapon-two-label"
                         id="create-character-weapon-two"
@@ -327,7 +364,7 @@ function CharacterForm(props) {
 
                   <Grid item xs={12} direction='row' style={styles.grid}>
                     <FormControl style={styles.menu}>
-                      <InputLabel id="create-character-ability-str-label">Strength</InputLabel>
+                      <InputLabel id="create-character-ability-str-label" style={{...styles.color}}>Strength</InputLabel>
                       <Select
                         labelId="create-character-ability-str"
                         id="create-character-ability-str"
@@ -346,7 +383,7 @@ function CharacterForm(props) {
                     </FormControl>
 
                     <FormControl style={styles.menu}>
-                      <InputLabel id="create-character-ability-dex-label">Dexterity</InputLabel>
+                      <InputLabel id="create-character-ability-dex-label" style={{...styles.color}}>Dexterity</InputLabel>
                       <Select
                         labelId="create-character-ability-dex"
                         id="create-character-ability-dex"
@@ -365,7 +402,7 @@ function CharacterForm(props) {
                     </FormControl>
 
                     <FormControl style={styles.menu}>
-                      <InputLabel id="create-character-ability-con-label">Constitution</InputLabel>
+                      <InputLabel id="create-character-ability-con-label" style={{...styles.color}}>Constitution</InputLabel>
                       <Select
                         labelId="create-character-ability-con"
                         id="create-character-ability-con"
@@ -384,7 +421,7 @@ function CharacterForm(props) {
                     </FormControl>
 
                     <FormControl style={styles.menu}>
-                      <InputLabel id="create-character-ability-int-label">Intelligence</InputLabel>
+                      <InputLabel id="create-character-ability-int-label" style={{...styles.color}}>Intelligence</InputLabel>
                       <Select
                         labelId="create-character-ability-int"
                         id="create-character-ability-int"
@@ -403,7 +440,7 @@ function CharacterForm(props) {
                     </FormControl>
 
                     <FormControl style={styles.menu}>
-                      <InputLabel id="create-character-ability-wis-label">Wisdom</InputLabel>
+                      <InputLabel id="create-character-ability-wis-label" style={{...styles.color}}>Wisdom</InputLabel>
                       <Select
                         labelId="create-character-ability-wis"
                         id="create-character-ability-wis"
@@ -422,7 +459,7 @@ function CharacterForm(props) {
                     </FormControl>
 
                     <FormControl style={styles.menu}>
-                      <InputLabel id="create-character-ability-cha-label">Charisma</InputLabel>
+                      <InputLabel id="create-character-ability-cha-label" style={{...styles.color}}>Charisma</InputLabel>
                       <Select
                         labelId="create-character-ability-cha"
                         id="create-character-ability-cha"
@@ -457,6 +494,7 @@ function CharacterForm(props) {
             </Box>
           </Paper >
         </Box>
+        </Container>
       </Then>
       <Else>
         <Redirect to={{ pathname: "/characters" }} />
@@ -468,7 +506,8 @@ function CharacterForm(props) {
 const mapStateToProps = state => ({
   user: state.users.username,
   scoreOptions: state.characters.score_options,
-  disabledScores: state.characters.disabled_scores
+  disabledScores: state.characters.disabled_scores,
+  pageTheme: state.theme.theme
 })
 
 const mapDispatchToProps = {
