@@ -27,9 +27,9 @@ const userSlice = createSlice({
       state.token = action.payload;
       state.username = action.payload;
       state.userId = action.payload;
-      Cookies.remove('token');
-      Cookies.remove('username');
-      Cookies.remove('userId');
+      Cookies.remove('token', { expires: 1, sameSite: 'none', secure: true });
+      Cookies.remove('username', { expires: 1, sameSite: 'none', secure: true });
+      Cookies.remove('userId', { expires: 1, sameSite: 'none', secure: true });
     },
   }
 });
