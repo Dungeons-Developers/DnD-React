@@ -26,7 +26,7 @@ Our plan for this project is to create a robust tool that allows players to crea
 
 ### View Characters
 
-### Character Select
+### Character Edit/Delete
 
 ### Campaign Create
 
@@ -163,21 +163,12 @@ Regarding working windows, we will stick to class hours (6:30 to 9:30pm, M-Th) a
 
 We are all huge fans of the Dungeons & Dragons universe and the many, many fantasy worlds it has inspired. Building out some kind of D&D-focused application has been a goal for us ever since we started taking classes at Code Fellows. We are also tryhard gamers and wanted to incorporate some kind of shared tracking system into a gaming space that was traditionally managed with paper and pencil. We are hoping that our application can illustrate how making it easy to share, manipulate, and analyze D&D aggregate data could help create a digital online metagame for an analog gamespace.
 
-## Things To Watch For
-null
-
-## Documentation
-tbd
-
 ## [Software Requirements](/requirements.md)
-
-### [Swagger]()
-tbd
 
 ### [JSDocs]()
 tbd
 
-## [Questing Log](/questingLog/log.md)
+## [Questing Log (Change Log)](/questingLog/log.md)
 
 ## Credits
 
