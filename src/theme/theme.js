@@ -10,6 +10,9 @@ const theme = {
     },
     accent: {
       backgroundColor: '#6B819E'
+    },
+    color: {
+      color: '#EEEEEE'
     }
   },
 
@@ -20,6 +23,9 @@ const theme = {
     },
     main: {
       backgroundColor: '#EEEEEE',
+      color: '#111111'
+    },
+    color: {
       color: '#111111'
     }
   }

@@ -73,7 +73,7 @@ export function CharacterDisplay(props) {
         <Link to="/create-character" style={style.color} className="MuiLink-underlineNone" underline="none" text-decoration="none">
           <Button size="small" color="primary" style={style.color}>
             Create Character
-    </Button>
+          </Button>
         </Link>
 
       </CardActions>

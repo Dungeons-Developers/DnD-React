@@ -20,7 +20,48 @@ import useForm from '../../hooks/useForm';
 import { races, classes, weapons, alignment, deity, skills, adventuring_packs, armor } from '../../data/charOptions.json';
 import { updateCharacter, deleteCharacter } from '../../store/slices/character-slice';
 import '../../styles/index.scss';
+import {withStyles} from '@material-ui/core';
+import {red} from '@material-ui/core/colors';
 import theme from '../../theme/theme';
+
+const ColorButton = withStyles((theme) => ({
+  root: {
+    color: theme.palette.getContrastText(red[500]),
+    backgroundColor: red[500],
+    '&:hover': {
+      backgroundColor: red[700],
+    },
+  },
+}))(Button);
+
+const CssTextField = withStyles({
+  root: {
+
+    '& label.Mui-focused': {
+      color: 'inherit',
+    },
+    '& label': {
+      color: 'inherit',
+    },
+    '& .MuiInput-underline:after': {
+      color: 'inherit',
+      borderBottomColor: 'inherit',
+    },
+    '& .MuiInput-underline': {
+      color: 'inherit',
+    },
+    '& .MuiOutlinedInput-root': {
+      color: 'inherit',
+      '& fieldset': {
+        borderColor: 'inherit',
+      },
+      '&.Mui-focused fieldset': {
+        color: 'inherit',
+        borderColor: 'inherit',
+      },
+    },
+  },
+})(TextField);
 
 
 function TabPanel(props) {
@@ -127,7 +168,7 @@ export function CharacterDetails(props) {
     <div className={styleClasses.root}>
       <AppBar position="static" style={{ ...style.theme.accent, ...style.flow }}>
 
-        <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example" style={{ ...style.theme.accent, ...style.theme }}>
+        <Tabs value={tab} onChange={handleTab} aria-label="simple tabs example" style={{ ...style.theme.header, ...style.theme, ...style.theme.color }}>
           <Tab label="details" {...a11yProps(0)} />
           {props.edit && <Tab label="edit" {...a11yProps(1)} />}
           {props.delete && <Tab label="delete" {...a11yProps(2)} />}
@@ -136,15 +177,15 @@ export function CharacterDetails(props) {
 
       {/* need to get charName dynamically populating from store data */}
       {/* DETAILS TAB  */}
-      <TabPanel value={tab} index={0} style={{ ...style.theme.accent, ...style.theme, ...style.flow }}>
-        <h2 id="simple-modal-title">{props.Character.name}</h2>
-        <p className="charStats">Level: {props.Character.level} </p>
-        <p className="charStats">Race: {props.Character.race}</p>
-        <p className="charStats">Class: {props.Character.class}</p>
-        <p className="charStats">Alignment: {props.Character.alignment}</p>
-        <p className="charStats">Deity: {props.Character.deity}</p>
-        <p className="charStats">Proficiencies: Skill 1: {props.Character.skill_1}  Skill 2: {props.Character.skill_2}</p>
-        <p className="charStats">Ability Scores:<br />
+      <TabPanel value={tab} index={0} style={{ ...style.theme.accent, ...style.theme, ...style.flow, ...style.color }}>
+        <h2 id="simple-modal-title" style={style.theme.color}>{props.Character.name}</h2>
+        <p className="charStats" style={style.theme.color}>Level: {props.Character.level} </p>
+        <p className="charStats" style={style.theme.color}>Race: {props.Character.race}</p>
+        <p className="charStats" style={style.theme.color}>Class: {props.Character.class}</p>
+        <p className="charStats" style={style.theme.color}>Alignment: {props.Character.alignment}</p>
+        <p className="charStats" style={style.theme.color}>Deity: {props.Character.deity}</p>
+        <p className="charStats" style={style.theme.color}>Proficiencies: Skill 1: {props.Character.skill_1}  Skill 2: {props.Character.skill_2}</p>
+        <p className="charStats" style={style.theme.color}>Ability Scores:<br />
         STR: {props.Character.str}<br />
         DEX: {props.Character.dex}<br />
         CON: {props.Character.con}<br />
@@ -152,12 +193,12 @@ export function CharacterDetails(props) {
         WIS: {props.Character.wis}<br />
         CHA: {props.Character.cha}
         </p>
-        <p className="charEquip">Equipment:<br />
+        <p className="charEquip" style={style.theme.color}>Equipment:<br />
          Pack: {props.Character.pack}
          Armor: {props.Character.armor}
          Weapon 1: {props.Character.weapon_1}
          Weapon 2: {props.Character.weapon_2}</p>
-        <p id="simple-modal-description">
+        <p id="simple-modal-description" style={style.theme.color}>
           {/* Bio: 
         {props.Character.bio ? props.Character.bio : " This character has a mysterious past, yet to be written."} */}
         </p>
@@ -169,13 +210,13 @@ export function CharacterDetails(props) {
 
       {/* UPDATE TAB  */}
       <If condition={props.edit}>
-        <TabPanel value={tab} index={1}>
-          <form className="character-edit-form" autoComplete="off" onSubmit={editSubmit}>
+        <TabPanel value={tab} index={1} style={{...style.theme.accent, ...style.theme.color}}>
+          <form className="character-edit-form" autoComplete="off" onSubmit={editSubmit} style={{...style.theme.accent, ...style.color}}>
 
             <Grid container spacing={3}>
               {/* NAME CHANGE */}
               <Grid item xs={12}>
-                <TextField
+                <CssTextField
                   id="update-character-name"
                   name='name'
                   label={props.Character.name}
@@ -203,7 +244,7 @@ export function CharacterDetails(props) {
               {/* LEVEL CHANGE */}
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <TextField
+                  <CssTextField
                     id="character-level"
                     name="level"
                     label="Level"
@@ -219,7 +260,7 @@ export function CharacterDetails(props) {
               {/* RACE CHANGE */}
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-race-label">{props.Character.race}</InputLabel>
+                  <InputLabel id="update-character-race-label" style={{...style.color}}>{props.Character.race}</InputLabel>
                   <Select
                     labelId="update-character-race-label"
                     id="update-character-race"
@@ -227,6 +268,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.race}
                     value={fields.race}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -242,7 +284,7 @@ export function CharacterDetails(props) {
               {/* CLASS CHANGE  */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-class-label">{props.Character.class}</InputLabel>
+                  <InputLabel id="update-character-class-label" style={{...style.color}}>{props.Character.class}</InputLabel>
                   <Select
                     labelId="update-character-class-label"
                     id="update-character-class"
@@ -250,6 +292,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.class}
                     value={fields.class}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -265,7 +308,7 @@ export function CharacterDetails(props) {
               {/* ALIGNMENT CHANGE  */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-alignment-label">{props.Character.alignment}</InputLabel>
+                  <InputLabel id="update-character-alignment-label" style={{...style.color}}>{props.Character.alignment}</InputLabel>
                   <Select
                     labelId="update-character-alignment-label"
                     id="update-character-alignment"
@@ -273,6 +316,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.alignment}
                     value={fields.alignment}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -288,7 +332,7 @@ export function CharacterDetails(props) {
               {/* DEITY CHANGE  */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-deity-label">{props.Character.deity}</InputLabel>
+                  <InputLabel id="update-character-deity-label" style={{...style.color}}>{props.Character.deity}</InputLabel>
                   <Select
                     labelId="update-character-deity-label"
                     id="update-character-deity"
@@ -296,6 +340,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.deity}
                     value={fields.deity}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -311,7 +356,7 @@ export function CharacterDetails(props) {
               {/* SKILL1 CHANGE  */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-skill-one-label">Skill 1</InputLabel>
+                  <InputLabel id="update-character-skill-one-label" style={{...style.color}}>Skill 1</InputLabel>
                   <Select
                     labelId="update-character-skill-one-label"
                     id="update-character-skill-one"
@@ -319,6 +364,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.skill_1}
                     value={fields.skill_1}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -334,7 +380,7 @@ export function CharacterDetails(props) {
               {/* SKILL2 CHANGE  */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-skill-two-label">Skill 2</InputLabel>
+                  <InputLabel id="update-character-skill-two-label" style={{...style.color}}>Skill 2</InputLabel>
                   <Select
                     labelId="update-character-skill-two-label"
                     id="update-character-skill-two"
@@ -342,6 +388,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.skill_2}
                     value={fields.skill_2}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -357,7 +404,7 @@ export function CharacterDetails(props) {
               {/* ARMOR CHANGE */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-armor-label">Armor</InputLabel>
+                  <InputLabel id="update-character-armor-label" style={{...style.color}}>Armor</InputLabel>
                   <Select
                     labelId="update-character-armor-label"
                     id="update-character-armor"
@@ -365,6 +412,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.armor}
                     value={fields.armor}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -380,7 +428,7 @@ export function CharacterDetails(props) {
               {/* PACK CHANGE */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-pack-label">Adventure Pack</InputLabel>
+                  <InputLabel id="update-character-pack-label" style={{...style.color}}>Adventure Pack</InputLabel>
                   <Select
                     labelId="update-character-pack-label"
                     id="update-character-pack"
@@ -388,6 +436,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.pack}
                     value={fields.pack}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -403,7 +452,7 @@ export function CharacterDetails(props) {
               {/* WEAPON 1 */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-weapon-one-label">Weapon #1</InputLabel>
+                  <InputLabel id="update-character-weapon-one-label" style={{...style.color}}>Weapon #1</InputLabel>
                   <Select
                     labelId="update-character-weapon-one-label"
                     id="update-character-weapon-one"
@@ -411,6 +460,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.weapon_1}
                     value={fields.weapon_1}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -426,7 +476,7 @@ export function CharacterDetails(props) {
               {/* WEAPON 2 */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel id="update-character-weapon-two-label">Weapon #2</InputLabel>
+                  <InputLabel id="update-character-weapon-two-label" style={{...style.color}}>Weapon #2</InputLabel>
                   <Select
                     labelId="update-character-weapon-two-label"
                     id="update-character-weapon-two"
@@ -434,6 +484,7 @@ export function CharacterDetails(props) {
                     placeholder={props.Character.weapon_2}
                     value={fields.weapon_2}
                     onChange={formChange}
+                    style={style.theme.color}
                   >
                     <MenuItem value="">
                       <em>None</em>
@@ -464,9 +515,9 @@ export function CharacterDetails(props) {
                 </FormControl>
               </Grid> */}
               <Grid item xs={12}>
-                <Button fullWidth color="primary" variant="contained" type="submit" style={{ ...style.theme, ...style.theme.accent }}>
+                <ColorButton fullWidth color="primary" variant="contained" type="submit" >
                   Save
-        </Button>
+                </ColorButton>
               </Grid>
             </Grid>
           </form>
@@ -474,16 +525,16 @@ export function CharacterDetails(props) {
       </If>
       {/* DELETE TAB */}
       <If condition={props.delete}>
-        <TabPanel value={tab} index={2}>
-          <h2 id="simple-modal-title">Delete {props.Character.name}?</h2>
-          <form className="character-delete-form" autoComplete="off" onSubmit={(e) => {
+        <TabPanel value={tab} index={2} style={{...style.theme.accent, ...style.color}}>
+          <h2 id="simple-modal-title" style={style.theme.color}>Delete {props.Character.name}?</h2>
+          <form className="character-delete-form" style={{...style.theme.accent, ...style.color}} autoComplete="off" onSubmit={(e) => {
             e.preventDefault();
             remove(props.Character);
 
           }}>
-            <Button fullWidth color="primary" variant="contained" type="submit" style={{ ...style.theme, ...style.theme.accent }}>
+            <ColorButton fullWidth color="primary" variant="contained" type="submit" >
               Delete
-        </Button>
+            </ColorButton>
           </form>
         </TabPanel>
       </If>

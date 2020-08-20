@@ -116,7 +116,7 @@ function JoinForm({ findCampaign, campaignID, campaigns, username, getUserCampai
   return (
     <Container style={styles.container} className='join-form'>
       <div style={styles.container}>
-        <h2 style={{ textAlign: 'center' }}>Enter the ID of the campaign you wish to join, or select on from below.</h2>
+        <h2 style={{ textAlign: 'center' }}>Enter the ID of the campaign you wish to join, or select one from below.</h2>
         <p style={{ textAlign: 'center' }}>If you don't have any campaigns of your own, create one, or ask a friend to join theirs!</p>
       </div>
       <form autoComplete='off' onSubmit={submit} style={styles.form}>
