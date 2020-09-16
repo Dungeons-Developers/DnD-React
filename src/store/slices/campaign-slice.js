@@ -1,5 +1,6 @@
-import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
+
+import server from '../../api/server';
 
 const campaignSlice = createSlice({
   name: 'campaign',
@@ -14,13 +15,13 @@ const campaignSlice = createSlice({
     characters: [],
     saving: false,
     allCampaigns: [],
-    campaignPath: ''
+    campaignPath: '',
   },
-  
+
   reducers: {
     getCampaign: (state, action) => {
       state.campaignID = action.payload._id;
-      state.user = action.payload.user
+      state.user = action.payload.user;
       state.title = action.payload.title;
       state.setting = action.payload.setting;
       state.description = action.payload.description;
@@ -41,77 +42,77 @@ const campaignSlice = createSlice({
 
     setCampaignPath: (state, action) => {
       state.campaignPath = action.payload;
-    }
-  }
+    },
+  },
 });
 
-export const { getCampaign, disconnectFromCampaign, toggleSaving, setUsersCampaigns, setCampaignPath } = campaignSlice.actions;
+export const {
+  getCampaign,
+  disconnectFromCampaign,
+  toggleSaving,
+  setUsersCampaigns,
+  setCampaignPath,
+} = campaignSlice.actions;
 
 export const getUserCampaigns = (payload) => {
-
-  return async dispatch => {
+  return async (dispatch) => {
     try {
-
-      let response = await axios.get(`https://dnd-api-server.herokuapp.com/v1/api/${payload}/campaigns/`);
+      let response = await server.get(`/${payload}/campaigns/`);
       let allCampaigns = response.data;
 
       dispatch(setUsersCampaigns(allCampaigns));
-
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
-  }
-}
+  };
+};
 
 export const findCampaign = (payload) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       // let response = await axios.get(`http://localhost:4000/v1/api/campaign/${payload.campaignID}`);
-      let response = await axios.get(`https://dnd-api-server.herokuapp.com/v1/api/campaign/${payload.campaignID}`);
+      let response = await server.get(`/campaign/${payload.campaignID}`);
 
       let campaign = response.data;
 
       console.log('camp:', campaign);
 
       dispatch(getCampaign(campaign));
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
-  }
-}
+  };
+};
 
 export const createCampaign = (payload) => {
-   return async dispatch => {
-     try {
-
-       let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/campaign', {payload});
+  return async (dispatch) => {
+    try {
+      let response = await server.post('/campaign', payload);
       //  let response = await axios.post('http://localhost:4000/v1/api/campaign', payload);
 
-       let campaign = response.data;
+      let campaign = response.data;
 
-       dispatch(getCampaign(campaign));
-
-     } catch(e) {
-       console.log(e);
-     }
-   }
-}
+      dispatch(getCampaign(campaign));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+};
 
 export const saveCampaign = (payload) => {
-  const {campaignID, campaign} = payload;
+  const { campaignID, campaign } = payload;
   console.log('campaign:', campaign);
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       dispatch(toggleSaving());
       console.log('saving...');
-      let response = await axios.patch(`https://dnd-api-server.herokuapp.com/v1/api/campaign/${campaignID}`, campaign);
+      let response = await server.patch(`/campaign/${campaignID}`, campaign);
       console.log('save successful?', response.data);
       dispatch(toggleSaving());
-
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
-  }
-}
+  };
+};
 
 export default campaignSlice.reducer;
