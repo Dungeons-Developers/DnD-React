@@ -1,7 +1,8 @@
-import axios from 'axios';
 import { createSlice } from '@reduxjs/toolkit';
 import { encode } from 'js-base64';
 import Cookies from 'js-cookie';
+
+import server from '../../api/server';
 
 const encodeBase64 = ({ username, password }) => {
   const encoded = encode(`${username}:${password}`);
@@ -28,57 +29,80 @@ const userSlice = createSlice({
       state.username = action.payload;
       state.userId = action.payload;
       Cookies.remove('token', { expires: 1, sameSite: 'none', secure: true });
-      Cookies.remove('username', { expires: 1, sameSite: 'none', secure: true });
+      Cookies.remove('username', {
+        expires: 1,
+        sameSite: 'none',
+        secure: true,
+      });
       Cookies.remove('userId', { expires: 1, sameSite: 'none', secure: true });
     },
-  }
+  },
 });
 
 export const { getUser, logout } = userSlice.actions;
 
 export const login = (payload) => {
-  const encoding = encodeBase64(payload)
-  return async dispatch => {
+  const encoding = encodeBase64(payload);
+  return async (dispatch) => {
     try {
-      let response = await axios.post(
-        'https://dnd-api-server.herokuapp.com/v1/api/user',
-        {},
-        {
-          headers: {
-            'Authorization': `Basic ${encoding}`,
-          },
-        }
-      );
+      let response = await server.get('/login', {
+        headers: {
+          Authorization: `Basic ${encoding}`,
+        },
+      });
 
       let res = response.data;
-      Cookies.set('token', res.token, { expires: 1, sameSite: 'none', secure: true });
-      Cookies.set('username', res.user.username, { expires: 1, sameSite: 'none', secure: true });
-      Cookies.set('userId', res.user._id, { expires: 1, sameSite: 'none', secure: true });
-      dispatch(getUser(res))
+      Cookies.set('token', res.token, {
+        expires: 1,
+        sameSite: 'none',
+        secure: true,
+      });
+      Cookies.set('username', res.user.username, {
+        expires: 1,
+        sameSite: 'none',
+        secure: true,
+      });
+      Cookies.set('userId', res.user._id, {
+        expires: 1,
+        sameSite: 'none',
+        secure: true,
+      });
+      dispatch(getUser(res));
     } catch (e) {
       console.log(e);
     }
-  }
-}
+  };
+};
 
 export const create = (payload) => {
   const { username, password } = payload;
 
-  return async dispatch => {
+  return async (dispatch) => {
     try {
-
       // let response = await axios.post('http://localhost:4000/v1/api/signup', { username, password });
-      let response = await axios.post('https://dnd-api-server.herokuapp.com/v1/api/signup', { username, password });
+      let response = await server.post('/user', { username, password });
 
       let res = response.data;
-      Cookies.set('token', res.token, { expires: 1, sameSite: 'none', secure: true });
-      Cookies.set('username', res.user.username, { expires: 1, sameSite: 'none', secure: true });
-      Cookies.set('userId', res.user._id, { expires: 1, sameSite: 'none', secure: true });
-      dispatch(getUser(res))
+      Cookies.set('token', res.token, {
+        expires: 1,
+        sameSite: 'none',
+        secure: true,
+      });
+      Cookies.set('username', res.user.username, {
+        expires: 1,
+        sameSite: 'none',
+        secure: true,
+      });
+      Cookies.set('userId', res.user._id, {
+        expires: 1,
+        sameSite: 'none',
+        secure: true,
+      });
+      dispatch(getUser(res));
     } catch (e) {
       console.log(e);
     }
-  }
-}
+  };
+};
 
 export default userSlice.reducer;
