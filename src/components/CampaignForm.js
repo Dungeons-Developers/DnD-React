@@ -73,7 +73,7 @@ function CampaignForm({ createCampaign, user, campaignID, pageTheme }) {
   }
 
   const defaults = {
-    user: user ? user.username : 'u',
+    user: user ? user : 'default',
     title: '',
     setting: '',
     description: '',
@@ -183,7 +183,7 @@ const mapDispatchToProps = { createCampaign };
 
 const mapStateToProps = (state) => {
   return {
-    user: state.users.user,
+    user: state.users.username,
     campaignID: state.campaign.campaignID,
     pageTheme: state.theme.theme
   }
