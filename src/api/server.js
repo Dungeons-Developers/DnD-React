@@ -2,8 +2,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:3000/v1/api',
-  // baseURL: 'https://dnd-api-server.herokuapp.com/v1/api',
+  // baseURL: 'http://localhost:3000/v1/api',
+  baseURL: 'https://dnd-api-server.herokuapp.com/v1/api',
 });
 
 // interceptors: slick way to pass token
